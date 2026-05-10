@@ -10,4 +10,5 @@ dependencies = [
     "matplotlib>=3.10.8",
     "numpy>=2.4.3",
     "pettingzoo>=1.25.0",
+    "lbforaging==2.0.0"
 ]
