@@ -1,6 +1,7 @@
 import numpy as np
 from base.agent import Agent
 from base.game import SimultaneousGame, AgentID
+from agents.utils import encode, softmax, uniform_policy
 
 
 class IndependentQLearning(Agent):
@@ -25,16 +26,11 @@ class IndependentQLearning(Agent):
         self.epsilon_min   = epsilon_min
 
         self.num_actions = self.game.num_actions(self.agent)
-        self.learned_policy: np.ndarray = np.ones(self.num_actions) / self.num_actions
+        self.learned_policy: np.ndarray = uniform_policy(self.num_actions)
 
         self.q_table: dict[tuple, np.ndarray] = {}
         self._s:           tuple | None = None
         self._prev_action: int   | None = None
-
-    def _encode(self, obs) -> tuple:
-        if hasattr(obs, 'keys'):
-            return tuple(obs[a] for a in sorted(obs.keys()))
-        return tuple(np.asarray(obs).flatten().tolist())
 
     def _q(self, state: tuple) -> np.ndarray:
         if state not in self.q_table:
@@ -45,7 +41,7 @@ class IndependentQLearning(Agent):
         obs = self.game.observe(self.agent)
         if obs is None:
             return
-        next_state = self._encode(obs)
+        next_state = encode(obs)
 
         if self._s is None or self._prev_action is None:
             self._s = next_state
@@ -60,8 +56,7 @@ class IndependentQLearning(Agent):
         )
         self._s = next_state
 
-        exps = np.exp(q_curr - np.max(q_curr))
-        self.learned_policy = exps / exps.sum()
+        self.learned_policy = softmax(q_curr)
 
     def action(self) -> int:
         self.update()

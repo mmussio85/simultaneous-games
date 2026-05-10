@@ -1,13 +1,14 @@
 import numpy as np
 from base.agent import Agent
 from base.game import SimultaneousGame, AgentID, ActionDict
+from agents.utils import uniform_policy
 
 class RegretMatching(Agent):
 
     def __init__(self, game: SimultaneousGame, agent: AgentID, initial=None, seed=None) -> None:
         super().__init__(game=game, agent=agent)
         if (initial is None):
-          self.curr_policy = np.full(self.game.num_actions(self.agent), 1/self.game.num_actions(self.agent))
+          self.curr_policy = uniform_policy(self.game.num_actions(self.agent))
         else:
           self.curr_policy = initial.copy()
         self.cum_regrets = np.zeros(self.game.num_actions(self.agent))
@@ -41,7 +42,7 @@ class RegretMatching(Agent):
         if total > 0:
             self.curr_policy = positive_regrets / total
         else:
-            self.curr_policy = np.full(self.game.num_actions(self.agent), 1/self.game.num_actions(self.agent))
+            self.curr_policy = uniform_policy(self.game.num_actions(self.agent))
         self.sum_policy += self.curr_policy
 
     def update(self) -> None:
