@@ -1,7 +1,7 @@
 import numpy as np
 from base.agent import Agent
 from base.game import SimultaneousGame, AgentID
-from agents.utils import encode, softmax, uniform_policy
+from agents.utils import encode, softmax, uniform_policy, random_argmax, decay_epsilon
 
 
 class IndependentQLearning(Agent):
@@ -65,10 +65,9 @@ class IndependentQLearning(Agent):
             a = int(self.rng.integers(self.num_actions))
         else:
             q = self._q(self._s)
-            # random tie-breaking so all-zero Q-tables don't always pick action 0 (NONE)
-            a = int(self.rng.choice(np.flatnonzero(q == q.max())))
+            a = random_argmax(self.rng, q)
 
-        self.epsilon = max(self.epsilon * self.epsilon_decay, self.epsilon_min)
+        self.epsilon = decay_epsilon(self.epsilon, self.epsilon_decay, self.epsilon_min)
         self._prev_action = a
         return a
 

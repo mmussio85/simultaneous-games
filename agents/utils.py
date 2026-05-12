@@ -28,3 +28,19 @@ def uniform_policy(n: int) -> np.ndarray:
     Cada acción tiene probabilidad 1/n.
     """
     return np.ones(n) / n
+
+
+def random_argmax(rng: np.random.Generator, values: np.ndarray) -> int:
+    """
+    Retorna el índice del valor máximo de un array.
+    Si hay empates, elige uno al azar para evitar sesgos hacia el primer índice.
+    """
+    return int(rng.choice(np.flatnonzero(values == values.max())))
+
+
+def decay_epsilon(epsilon: float, epsilon_decay: float, epsilon_min: float) -> float:
+    """
+    Aplica el decaimiento de epsilon multiplicándolo por epsilon_decay,
+    asegurando que no baje del mínimo epsilon_min.
+    """
+    return max(epsilon * epsilon_decay, epsilon_min)
