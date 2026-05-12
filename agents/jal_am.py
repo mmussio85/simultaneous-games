@@ -112,7 +112,7 @@ class JointActionLearningAM(Agent):
         reward = self.game.reward(self.agent)
 
         if hasattr(obs, 'keys'):
-             # La observación es un diccionario {agente: acción} (ej. RPS).
+            # La observación es un diccionario {agente: acción} (ej. RPS).
             # Esto significa que el juego expone la acción conjunta directamente,
             # por lo que podemos reconstruir a = (a_i, a_{-i}) y actualizar el modelo de oponentes.
             # a_i viene de _prev_action; a_{-i} viene de obs[agente_j] para cada j ≠ i.
