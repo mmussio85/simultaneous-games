@@ -27,3 +27,13 @@ uv.lock
 # IDE
 .vscode/
 .idea/
+*.pdf
+*.pyc
+**/*.pyc
+**/__pycache__/
+**/*.png
+**/**.png
+**/**/*.png
+figures/
+results/
+agents/__pycache__/
