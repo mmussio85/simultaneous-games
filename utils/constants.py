@@ -5,6 +5,7 @@ COLORS = {
     "RM":     "#4CAF50",  # verde
     "IQL":    "#FF9800",  # naranja
     "JAL-AM": "#9C27B0",  # violeta
+    "JALAM": "#9C27B0",  # violeta
     "Random": "#E91E63",  # rosado
 }
 
