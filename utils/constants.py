@@ -9,6 +9,14 @@ COLORS = {
     "Random": "#E91E63",  # rosado
 }
 
+JAL_AM_PALETTE = [
+    COLORS["JAL-AM"],  # Purple 500
+    "#EA80FC",         # Purple A100
+    "#EC407A",         # Pink 400
+]
+
+
+
 plt.rcParams.update({
     "figure.dpi":      150,
     "figure.figsize":  (9, 5),
