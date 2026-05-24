@@ -1,0 +1,20 @@
+\begin{thebibliography}{}
+
+\bibitem[Anónimo, 2008]{Beta}
+Anónimo, A. (2008).
+\newblock Blog del año 2002 con un formato horrible.
+\newblock \url{http://www.blogfeo.blogspot.com}.
+
+\bibitem[Mendoza and Duende, 2022]{Gamma}
+Mendoza, S. and Duende, J. (2022).
+\newblock {\em Libro apantallante que probablemente no leíste y solo lo
+  pusiste por poner algo}.
+\newblock Ediciones Tepito, 1st edition.
+
+\bibitem[Pérez, 2008]{Alpha}
+Pérez, J. (2008).
+\newblock {Artículo de dudosa calidad de una página web patito}.
+\newblock Recuperado de: \url{https://XD.com}.
+\newblock Fecha de consulta: 03/11/2021.
+
+\end{thebibliography}
