@@ -70,9 +70,10 @@ def plot_simplex_trajectory(
     draw_simplex(ax, action_labels)
     coords = policy_to_simplex(policies_over_time)   # (T, 2)
     n = len(coords)
-    for k in range(0, n - 1, max(1, n // 200)):
-        alpha = 0.15 + 0.85 * (k / n)
-        ax.plot(coords[k : k + 2, 0], coords[k : k + 2, 1],
+    step = max(1, n // 400)
+    for k in range(0, n - 1, step):
+        alpha = 0.2 + 0.8 * (k / n)
+        ax.plot(coords[k : k + step + 1, 0], coords[k : k + step + 1, 1],
                 color=color, alpha=alpha, lw=1.2)
     ax.scatter(*coords[0],  c="green", s=80, zorder=7, label="Inicio")
     ax.scatter(*coords[-1], c="blue",  s=80, zorder=7, label="Final")
