@@ -34,6 +34,8 @@ uv.lock
 **/*.png
 **/**.png
 **/**/*.png
-figures/
+!Informe/figures/
+!Informe/figures/**
+/figures/
 results/
 agents/__pycache__/

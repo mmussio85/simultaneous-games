@@ -1,0 +1,504 @@
+
+%Inicio del Preámbulo: Modifícalo bajo tu propio riesgo! Usa los paquetes que requieras para 
+%implementar funcionalidades dentro del documento. Se comenta solo lo esencial, puedes buscar los
+%paquetes y documentarte de su funcionalidad y puedes eliminarlos también si así lo deseas. 
+
+\documentclass[letterpaper,12pt]{article} %Modifica el tipo de documento y el tamaño de la letra.
+\usepackage[utf8]{inputenc} %Formato UTF-8 para caracteres especiales.
+\usepackage[shortlabels]{enumitem}
+\usepackage[spanish,mexico]{babel} 
+\usepackage{amsmath,amssymb,amsfonts,latexsym,cancel}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage[rflt]{floatflt}
+\usepackage[pdftex]{graphicx}
+\usepackage{fancyhdr} %Paquete para el header y el formato de la portada. No sugiero borrarlo!
+\usepackage{float}
+\usepackage{longtable,multirow,booktabs}
+\usepackage{cite}
+\usepackage{wrapfig}
+\usepackage[square,numbers]{natbib}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage[]{sidecap}
+\usepackage{adjustbox}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage[]{xcolor}
+
+
+
+%Fin de Préambulo
+
+
+%Inicio formato de Página. Puedes establecer medidas de la página y modificar el header.
+
+\textheight = 21cm %Medidas de la  página
+\textwidth = 18cm  %Medidas de la página
+\topmargin = -2cm  %Medidas de la página    
+\oddsidemargin = -0.8cm %Medidas de la página
+\pagestyle{fancy} %Diseño de la página
+
+
+\fancyhf{}
+\lhead{Facultad de Ingeniería}%%LeftHead
+\chead{\includegraphics[height=1cm]{figures/ORT.png}}%%CenterHead
+%\lfoot{USM}
+\rhead{Sistemas multiagente}%%RightHead
+
+\setlength{\columnsep}{4mm}%Comandos para el formato de la página.
+%\setlength{\parindent}{4em}%Sangría al comenzar un nuevo párrafo.
+\setlength{\parindent}{0.5in}
+%\setlength{\parindent}{4em}%Sangría al comenzar un nuevo párrafo.
+\setlength{\parskip}{1em}%Distancia entre párrafos.
+\renewcommand{\baselinestretch}{1.5}% Espacio entre línea y línea o interlineado.
+\setlength{\headheight}{33pt}
+\fancyfoot[CE,CO]{\\\thepage} %Logo de LaTeX y pie de página.
+
+%Fin formato de Página
+
+%Aquí inicia el documento. Date como magnate
+\begin{document}
+
+    %LaTeX te hace el índice automáticamente conforme añades secciones en tu documento.
+    \input{portada.tex}
+    \newpage
+    \tableofcontents
+    \newpage
+
+
+\section{Introducción}
+
+Los sistemas multiagente (Multi-Agent Systems, MAS) constituyen un área de estudio de la inteligencia artificial enfocada en escenarios donde múltiples agentes autónomos interactúan dentro de un ambiente compartido para alcanzar determinados objetivos. Estos agentes pueden colaborar, competir o mantener objetivos parcialmente alineados, generando dinámicas complejas de coordinación y toma de decisiones. En este contexto, el aprendizaje por refuerzo multiagente (Multi-Agent Reinforcement Learning, MARL) surge como una extensión del aprendizaje por refuerzo tradicional, permitiendo que varios agentes aprendan simultáneamente mediante interacción repetida con el ambiente y entre ellos.
+
+En MARL, cada agente observa el estado del entorno, ejecuta acciones y recibe recompensas que guían el proceso de aprendizaje. Sin embargo, a diferencia del caso single-agent, la presencia de múltiples agentes introduce desafíos adicionales, tales como la no estacionariedad del entorno, la necesidad de coordinación y la existencia de equilibrios estratégicos. Debido a esto, muchos algoritmos de aprendizaje multiagente combinan conceptos provenientes tanto del aprendizaje por refuerzo como de la teoría de juegos.
+
+El objetivo de este trabajo es implementar y analizar distintos algoritmos clásicos de aprendizaje multiagente, evaluando su comportamiento en diversos ambientes competitivos y cooperativos. En particular, se implementaron los siguientes algoritmos:
+
+\begin{itemize}
+    \item Fictitious Play (FP)
+    \item Regret Matching (RM)
+    \item Independent Q-Learning (IQL)
+    \item Joint-Action Learning with Agent Modeling (JAL-AM)
+\end{itemize}
+
+De acuerdo con la consigna del obligatorio, los algoritmos fueron validados utilizando diferentes ambientes de prueba, incluyendo Matching Pennies, Rock-Paper-Scissors (RPS), Blotto y Foraging. Asimismo, se realizaron múltiples experimentos enfrentando distintos agentes entre sí, por ejemplo FP vs FP, FP vs RM e IQL vs IQL, con el objetivo de analizar propiedades como convergencia, estabilidad, capacidad de coordinación y adaptación estratégica.
+
+Los ambientes seleccionados permiten estudiar diferentes tipos de interacción multiagente. Juegos como Matching Pennies y Rock-Paper-Scissors representan escenarios competitivos de suma cero donde el equilibrio de Nash juega un rol central, mientras que ambientes como Foraging permiten analizar problemas de cooperación y coordinación entre múltiples agentes.
+
+El informe se encuentra organizado de la siguiente manera. En primer lugar, se presenta el marco teórico necesario sobre sistemas multiagente, aprendizaje por refuerzo y teoría de juegos. Luego, se describen los algoritmos implementados y los ambientes utilizados. Posteriormente, se detallan los aspectos de implementación y el diseño experimental empleado para evaluar los algoritmos. Finalmente, se presentan y analizan los resultados obtenidos, discutiendo las fortalezas y limitaciones observadas en cada enfoque.
+
+\section{Marco Teórico}
+
+\subsection{Aprendizaje por Refuerzo Multiagente}
+
+El aprendizaje por refuerzo multiagente (Multi-Agent Reinforcement Learning, MARL) estudia escenarios donde múltiples agentes aprenden simultáneamente mediante interacción con un ambiente compartido. Cada agente observa el estado del entorno, ejecuta acciones y recibe recompensas que guían su aprendizaje.
+
+A diferencia del aprendizaje por refuerzo tradicional, en MARL el entorno se vuelve no estacionario, ya que las políticas de los demás agentes cambian durante el entrenamiento.
+
+\subsection{Juegos Simultáneos}
+
+En este trabajo se consideran principalmente juegos simultáneos, donde todos los agentes seleccionan sus acciones al mismo tiempo.
+
+Un juego puede representarse mediante:
+
+\[
+G = (I, A, R)
+\]
+
+\begin{itemize}
+    \item $I$ es el conjunto de jugadores.
+    \item $A$ representa las acciones disponibles.
+    \item $R$ representa las recompensas asociadas a las acciones conjuntas.
+\end{itemize}
+
+\subsubsection{Equilibrio de Nash}
+
+Un equilibrio de Nash corresponde a una estrategia conjunta donde ningún jugador puede mejorar su recompensa modificando unilateralmente su estrategia.
+
+\[
+\forall i \in I : \pi_i^* \in BR_i(\pi_{-i}^*)
+\]
+
+En juegos como Matching Pennies y Rock-Paper-Scissors, el equilibrio se encuentra en estrategias mixtas.
+
+\subsection{Fictitious Play}
+
+Fictitious Play (FP) es un algoritmo donde cada agente estima las estrategias de los demás jugadores a partir de las acciones observadas previamente y responde utilizando una mejor respuesta.
+
+\subsection{Regret Matching}
+
+Regret Matching (RM) es un algoritmo basado en el concepto de arrepentimiento (regret). Las probabilidades de seleccionar acciones aumentan para aquellas acciones que hubieran generado mejores recompensas en iteraciones anteriores.
+
+\subsection{Independent Q-Learning}
+
+Independent Q-Learning (IQL) aplica Q-Learning de manera independiente para cada agente.
+
+La actualización de la función Q se realiza mediante:
+
+\[
+Q(s,a) \leftarrow Q(s,a) +
+\alpha
+\left[
+r + \gamma \max_{a'} Q(s',a') - Q(s,a)
+\right]
+\]
+
+\subsection{Joint-Action Learning with Agent Modeling}
+
+Joint-Action Learning with Agent Modeling (JAL-AM) extiende Q-Learning incorporando modelos sobre las acciones de los demás agentes, aprendiendo valores asociados a acciones conjuntas.
+
+\[
+Q(s,a_i,a_{-i})
+\]
+
+\section{Ambientes}
+
+Con el objetivo de evaluar el comportamiento de los algoritmos implementados, se realizaron experimentos sobre distintos ambientes competitivos y cooperativos. Cada ambiente presenta características diferentes, permitiendo analizar propiedades como convergencia, estabilidad, adaptación estratégica y coordinación entre agentes.
+
+\subsection{Matching Pennies}
+
+Matching Pennies es un juego competitivo de suma cero para dos jugadores. Cada jugador debe elegir simultáneamente entre dos acciones: \textit{Heads} o \textit{Tails}.
+
+Si ambos jugadores seleccionan la misma acción, el jugador 1 obtiene una recompensa positiva y el jugador 2 una recompensa negativa. En caso contrario, ocurre lo inverso.
+
+La matriz de pagos utilizada es la siguiente:
+
+\[
+\begin{array}{c|cc}
+ & H & T \\
+\hline
+H & (1,-1) & (-1,1) \\
+T & (-1,1) & (1,-1)
+\end{array}
+\]
+
+Este ambiente resulta útil para analizar convergencia hacia estrategias mixtas y equilibrio de Nash.
+
+
+\subsection{Rock-Paper-Scissors}
+
+Rock-Paper-Scissors (RPS) es un juego simultáneo de suma cero donde cada jugador puede seleccionar una de tres acciones: Rock, Paper o Scissors.
+
+Las reglas son las siguientes:
+
+\begin{itemize}
+    \item Rock vence a Scissors.
+    \item Scissors vence a Paper.
+    \item Paper vence a Rock.
+\end{itemize}
+
+La matriz de recompensas utilizada es:
+
+\[
+\begin{array}{c|ccc}
+ & R & P & S \\
+\hline
+R & (0,0) & (-1,1) & (1,-1) \\
+P & (1,-1) & (0,0) & (-1,1) \\
+S & (-1,1) & (1,-1) & (0,0)
+\end{array}
+\]
+
+El equilibrio de Nash de este juego corresponde a una estrategia mixta uniforme.
+
+
+\subsection{Blotto}
+
+Blotto es un juego estratégico donde los agentes deben distribuir recursos limitados entre múltiples campos de batalla. Cada campo es ganado por el jugador que asigna mayor cantidad de recursos.
+
+El objetivo consiste en maximizar la cantidad de campos ganados o la recompensa total obtenida.
+
+Este ambiente introduce un espacio de acciones más complejo que Matching Pennies y RPS, permitiendo analizar la capacidad de exploración y adaptación estratégica de los algoritmos.
+
+
+\subsection{Foraging}
+
+Foraging es un ambiente multiagente donde varios agentes interactúan dentro de un mapa con el objetivo de recolectar recursos distribuidos en el entorno.
+
+Dependiendo de la configuración utilizada, el ambiente puede presentar características cooperativas, competitivas o mixtas. En algunos escenarios, los agentes pueden competir por recursos limitados, mientras que en otros la cooperación resulta necesaria para maximizar la recompensa obtenida.
+
+En este trabajo se utilizaron diferentes configuraciones del ambiente Foraging, incluyendo escenarios con distintos tamaños de mapa y distinta cantidad de agentes. Además, se evaluó específicamente la configuración cooperativa:
+
+\begin{itemize}
+    \item \texttt{Foraging-5x5-2p-1f-v3}
+    \item \texttt{Foraging-8x8-2p-1f-v3}
+    \item \texttt{Foraging-8x8-3p-1f-v3}
+    \item \texttt{Foraging-8x8-3p-1f-coop-v3}
+\end{itemize}
+
+La configuración \texttt{coop} corresponde a un escenario cooperativo donde los agentes deben coordinarse para maximizar la recompensa conjunta.
+
+
+\subsection{Cournot}
+
+Cournot es un juego económico simultáneo donde dos o más empresas compiten eligiendo la cantidad de producto que desean producir. Todas las empresas toman su decisión al mismo tiempo y, una vez definidas las cantidades, el precio de mercado se determina en función de la producción total.
+
+En general, si la producción total aumenta, el precio de mercado disminuye. Por lo tanto, cada agente debe decidir cuánto producir considerando tanto su propio beneficio como el impacto de las decisiones de los demás agentes.
+
+Este ambiente permite analizar comportamientos estratégicos en juegos de competencia económica, donde los agentes buscan maximizar su ganancia individual.
+
+\subsection{Chicken}
+
+El juego de \textit{Chicken} es un juego clásico de conflicto donde dos agentes tienen incentivos a ser agresivos, pero si ambos son agresivos al mismo tiempo, el resultado es muy malo para los dos.
+
+La idea típica es:
+
+\begin{quote}
+Dos autos van uno hacia el otro.\\
+Cada conductor puede mantenerse firme o desviarse.\\
+Si uno se desvía y el otro no, el que no se desvía ``gana''.\\
+Si ambos se desvían, nadie gana del todo, pero evitan el choque.\\
+Si ninguno se desvía, chocan, que es el peor resultado para ambos.
+\end{quote}
+
+\subsection{Battle of sexes}
+Es un juego en donde los jugadores deben elegir entre ir al \textbf{Cine} o a un \textbf{Partido} de fútbol. Prefieren ir juntos, pero \texttt{agent\_0} prefiere el Cine y \texttt{agent\_1} el Partido.
+
+\textbf{A diferencia de Matching Pennies y Blotto, este juego NO es de suma cero}: ambos jugadores pueden obtener utilidad positiva simultáneamente.
+
+Matrices de utilidades $(u_0, u_1)$, donde las filas corresponden a \texttt{agent\_0} y las columnas a \texttt{agent\_1}:
+
+\[
+\begin{array}{c|cc}
+ & \textbf{Cine} & \textbf{Partido} \\
+\hline
+\textbf{Cine} & (2,1) & (0,0) \\
+\textbf{Partido} & (0,0) & (1,2)
+\end{array}
+\]
+
+\texttt{agent\_0} obtiene más utilidad coordinando en Cine; \texttt{agent\_1}, coincidiendo en Partido. La descoordinación da $0$ a ambos.
+
+\section{Experimentos}
+
+
+Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre cada uno de los ambientes descritos anteriormente. En todos los casos se utilizaron 20.000 episodios por experimento y 10 semillas aleatorias distintas, con el objetivo de obtener estimaciones estadísticamente robustas. Los resultados se presentan como el promedio sobre las semillas, acompañado de intervalos de confianza del 95\%.
+
+
+Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre cada uno de los ambientes descritos anteriormente. En todos los casos se utilizaron 20.000 episodios por experimento y 10 semillas aleatorias distintas, con el objetivo de obtener estimaciones estadísticamente robustas. Los resultados se presentan como el promedio sobre las semillas, acompañado de intervalos de confianza del 95\%.
+
+\subsection{Rock-Paper-Scissors}
+
+Rock-Paper-Scissors (RPS) es un juego de suma cero con dos agentes y tres acciones posibles: Rock (R), Paper (P) y Scissors (S). El único equilibrio de Nash del juego corresponde a la estrategia mixta uniforme $\pi^* = (1/3,\, 1/3,\, 1/3)$ para ambos jugadores.
+
+Para analizar el comportamiento de los algoritmos en este ambiente, se ejecutaron experimentos de \textit{self-play} enfrentando a cada algoritmo consigo mismo, así como experimentos de \textit{cross-play} enfrentando algoritmos distintos entre sí y contra un agente aleatorio (Random).
+
+
+
+\subsubsection*{FP vs FP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/fp_vs_fp.png}
+    \caption{FP vs FP en RPS.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/simplex_fp_vs_fp.png}
+    \caption{Trayectoria de políticas para FP vs FP.}
+\end{figure}
+
+En self-play, FP muestra el comportamiento clásico esperado en RPS. Las recompensas oscilan alrededor de cero durante todo el entrenamiento, algo consistente con un juego de suma cero donde ningún agente puede explotar sistemáticamente al otro.
+
+La política instantánea nunca converge completamente, sino que continúa oscilando alrededor del equilibrio de Nash. Sin embargo, la política promedio acumulada sí converge claramente hacia $(1/3,1/3,1/3)$.
+
+Esto también puede observarse en las trayectorias de la política: ambos agentes generan espirales alrededor del centro del triángulo y terminan estabilizándose cerca del equilibrio mixto.
+
+\subsubsection*{RM vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/rm_vs_rm.png}
+    \caption{RM vs RM en RPS.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/simplex_rm_vs_rm.png}
+    \caption{Trayectoria de políticas para RM vs RM en el simplex.}
+\end{figure}
+
+RM mostró un comportamiento todavía más estable que FP. Las oscilaciones de la política instantánea son menores y la política promedio acumulada converge rápidamente hacia el equilibrio de Nash.
+
+En el trayectoria de la política, se observa que las trayectorias permanecen mucho más concentradas cerca del centro, reflejando la propiedad de no-arrepentimiento del algoritmo.
+
+\subsubsection*{IQL vs IQL}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/iql_vs_iql.png}
+    \caption{IQL vs IQL en RPS.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/simplex_iql_vs_iql.png}
+    \caption{Trayectoria de políticas para IQL vs IQL en el simplex.}
+\end{figure}
+
+IQL fue el algoritmo más inestable en RPS. Aunque la política promedio acumulada logra acercarse parcialmente al equilibrio de Nash, la política instantánea presenta fluctuaciones importantes durante todo el entrenamiento.
+
+Esto ocurre porque cada agente aprende asumiendo que el entorno es estacionario, cuando en realidad la política del oponente cambia continuamente.
+
+Las trayectorias en el simplex son considerablemente más erráticas que en FP o RM, mostrando movimientos bruscos y una mayor dispersión alrededor del equilibrio.
+
+Aun así, el promedio acumulado termina relativamente cerca de $(1/3,1/3,1/3)$, aunque con bastante más varianza.
+
+\subsubsection*{JAL-AM vs JAL-AM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/jalam_vs_jalam.png}
+    \caption{JAL-AM vs JAL-AM en RPS.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/simplex_jalam_vs_jalam.png}
+    \caption{Trayectoria de políticas para JAL-AM vs JAL-AM en el simplex.}
+\end{figure}
+
+JAL-AM obtuvo resultados considerablemente mejores que IQL. Al incorporar modelado explícito de las acciones del oponente, el algoritmo logra reducir parcialmente los efectos de la no estacionariedad.
+
+Las oscilaciones de la política instantánea son menores y la política promedio acumulada converge más rápidamente hacia $(1/3, 1/3, 1/3)$ que en IQL. Además, la trayectoria de la estrategia mixta evidencia una mayor concentración alrededor del equilibrio, aunque todavía con más variabilidad que FP o RM.
+
+De todas formas, no se esperaba que JAL-AM tenga un comportamiento perfectamente estable en RPS, dado que Rock-Paper-Scissors es un juego de suma cero donde la mejor respuesta cambia constantemente dependiendo de la política del oponente. En este tipo de entornos, modelar al oponente no garantiza convergencia estable, ya que ambos agentes continúan adaptándose mutuamente todo el tiempo.
+
+Por lo tanto, el hecho de que JAL-AM siga mostrando oscilaciones y trayectorias que orbitan alrededor del equilibrio, sin converger completamente en política instantánea, era un resultado esperable. Aun así, el algoritmo logra mantenerse más cerca del equilibrio que IQL, dado que JAL-AM intenta estimar qué acciones está realizando el oponente y utiliza esa información para actualizar sus valores de manera más informada. Aunque esto no elimina completamente la no estacionariedad, sí permite reducir parcialmente su impacto. 
+
+En cambio en IQL, cada agente actualiza sus valores Q asumiendo que las probabilidades de transición y recompensa no cambian. Sin embargo, en un entorno multiagente esto no se cumple, ya que el oponente también está aprendiendo y modificando continuamente su política. Esto provoca que los valores Q se vuelvan inestables y que la política oscile constantemente.
+
+
+
+
+\subsubsection*{FP vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/fp_vs_rm.png}
+    \caption{FP vs RM en RPS.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/simplex_fp_vs_rm.png}
+    \caption{Trayectoria de políticas para FP vs RM en el simplex.}
+\end{figure}
+
+Cuando FP y RM compiten entre sí, ambos logran aproximar correctamente el equilibrio de Nash.
+
+Las recompensas permanecen centradas alrededor de cero y las políticas promedio convergen rápidamente hacia la distribución uniforme $(1/3,1/3,1/3)$.
+
+Puede observarse que RM parece adaptarse ligeramente más rápido durante las primeras iteraciones, mientras que FP mantiene oscilaciones más amplias. Sin embargo, en el largo plazo ambos terminan comportándose de forma muy similar.
+
+La trayectoria de la estrategia mixta muestra además una diferencia interesante entre ambos algoritmos. FP genera movimientos más suaves y graduales alrededor del equilibrio, mientras que RM presenta curvas más pronunciadas y en algunos momentos se aleja más del centro del triángulo.
+
+Esto ocurre porque RM ajusta directamente sus probabilidades utilizando regrets acumulados. En ciertos momentos, pequeñas diferencias en los regrets pueden provocar cambios más agresivos en la política, aumentando considerablemente la probabilidad de algunas acciones antes de volver a estabilizarse.
+
+FP, en cambio, responde utilizando la frecuencia promedio observada del oponente, generando trayectorias más progresivas y menos abruptas.
+
+Aun así, aunque RM a veces se aleje más instantáneamente del equilibrio, su política promedio acumulada converge más rápido que FP. Esto explica por qué RM logra mantenerse más cerca del equilibrio de Nash en promedio a pesar de presentar movimientos más curvos durante el entrenamiento.
+
+Además, comparando este experimento con RM vs RM, puede observarse que RM parece comportarse de forma más estable cuando juega contra FP. Una posible explicación es que FP genera dinámicas más suaves y predecibles, ya que actualiza sus estrategias utilizando frecuencias promedio acumuladas. Esto produce un entorno menos agresivo para RM que cuando enfrenta otro RM, donde ambos agentes realizan ajustes rápidos basados en regrets acumulados y generan oscilaciones más fuertes simultáneamente.
+
+Como consecuencia, al enfrentarse contra FP, RM parece estabilizarse más rápido y mantener trayectorias más concentradas alrededor del equilibrio.
+
+\subsubsection*{Todos los algoritmos vs agente aleatorio}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/RPS/vs_random_comparison.png}
+    \caption{Reward promedio enfrentando a un agente aleatorio.}
+\end{figure}
+
+Todos los algoritmos logran adaptarse relativamente bien frente a un agente aleatorio.
+
+FP obtiene los mejores resultados, lo cual tiene sentido dado que modela explícitamente la frecuencia de acciones del oponente y responde con mejores respuestas puras.
+
+RM también logra explotar correctamente al agente aleatorio. En cambio, IQL y JAL-AM presentan resultados más variables debido a la exploración y a la naturaleza más inestable del aprendizaje por refuerzo multiagente.
+
+\subsubsection*{Matrices de cross-play}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/RPS/win_rate_matrix.png}
+        \caption{Win rate en cross-play.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/RPS/draw_rate_matrix.png}
+        \caption{Draw rate en cross-play.}
+    \end{minipage}
+\end{figure}
+
+Las matrices de win rate y draw rate muestran resultados interesantes.
+
+En general, FP y RM mantienen enfrentamientos relativamente balanceados entre sí, con win rates cercanas a $0.33$, consistentes con el equilibrio de Nash.
+
+IQL presenta muchos empates cuando juega contra sí mismo, reflejando que ambos agentes terminan oscilando alrededor de políticas similares sin explotarse demasiado.
+
+JAL-AM logra explotar bastante bien a FP, obteniendo una win rate cercana a $0.85$, probablemente porque FP mantiene patrones más predecibles de oscilación que pueden ser modelados por JAL-AM.
+
+\subsubsection*{Distancia al equilibrio de Nash}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/RPS/all_algos_distance_ne.png}
+    \caption{Distancia L1 al equilibrio de Nash.}
+\end{figure}
+
+La comparación final confirma lo observado anteriormente.
+
+FP y RM son los algoritmos que convergen de forma más rápida y estable hacia el equilibrio de Nash. RM presenta la menor distancia sostenida al equilibrio durante gran parte del entrenamiento.
+
+IQL es claramente el algoritmo más inestable y con mayor distancia al equilibrio. JAL-AM mejora significativamente sobre IQL gracias al modelado explícito del oponente, aunque sigue siendo más ruidoso que FP y RM.
+
+\subsubsection*{Conclusiones}
+
+Los experimentos realizados en Rock-Paper-Scissors muestran diferencias claras entre los algoritmos basados en teoría de juegos (FP y RM) y los algoritmos de aprendizaje por refuerzo multiagente (IQL y JAL-AM).
+
+FP y RM fueron los algoritmos que mejor lograron aproximar el equilibrio de Nash del juego. En ambos casos, la política promedio acumulada converge claramente hacia la estrategia mixta uniforme $(1/3,1/3,1/3)$ y las recompensas permanecen centradas alrededor de cero, comportamiento esperable en un juego de suma cero.
+
+RM fue el algoritmo más estable de todos los experimentos realizados. Las oscilaciones de sus políticas fueron menores y la convergencia hacia el equilibrio resultó más rápida que en FP. Esto también puede observarse en las trayectorias de la estrategia mixta, donde RM permanece más concentrado alrededor del centro del triangulo.
+
+FP, por otro lado, mostró un comportamiento más gradual y suave. Sus trayectorias generan espirales más amplias alrededor del equilibrio, aunque igualmente convergen correctamente en promedio.
+
+IQL fue claramente el algoritmo más inestable. Las políticas instantáneas continuaron fluctuando fuertemente incluso luego de miles de episodios, reflejando el problema de no estacionariedad típico del aprendizaje multiagente. Al asumir implícitamente que el entorno es estacionario, IQL tiene dificultades para adaptarse correctamente cuando el oponente también está aprendiendo y modificando continuamente su estrategia.
+
+JAL-AM logró mejorar considerablemente respecto a IQL gracias al modelado explícito del oponente. Las políticas presentaron oscilaciones permanentes, algo esperable en un juego competitivo de suma cero como RPS, sin embargo, las trayectorias resultan más estables y cercanas al equilibrio de Nash que en IQL.
+
+En general, los resultados muestran que:
+\begin{itemize}
+    \item FP y RM son especialmente adecuados para juegos simultáneos estáticos como RPS.
+    \item RM fue el algoritmo más estable y con convergencia más rápida hacia el equilibrio.
+    \item IQL sufre considerablemente la no estacionariedad del entorno multiagente.
+    \item JAL-AM logra mitigar parcialmente este problema mediante modelado explícito del oponente.
+    \item La distancia al equilibrio de Nash resulta una métrica muy útil para visualizar estabilidad y calidad de convergencia de los distintos algoritmos.
+\end{itemize}
+
+Finalmente, los experimentos muestran cómo pequeños cambios en la forma de modelar al oponente producen diferencias importantes en estabilidad y convergencia dentro de entornos multiagente competitivos.
+
+
+\section{Conclusion}
+
+En juegos de sistemas multiagentes, el desempeño de los agentes depende fuertemente de la estructura del juego, de si es competitivo, cooperativo o mixto, y de si el entorno se mantiene estacionario mientras los agentes aprenden. Fictitious Play suele ser útil cuando el agente puede aproximar el comportamiento promedio del oponente y responder a sus frecuencias históricas, aunque puede oscilar si el rival cambia constantemente. Regret Matching tiende a ser robusto en juegos repetidos, porque ajusta su política reduciendo el arrepentimiento acumulado y puede aproximar equilibrios en términos de comportamiento promedio. IQL es simple y práctico, pero suele ser más inestable en escenarios multiagente, ya que cada agente aprende como si los demás fueran parte del entorno, ignorando que también están aprendiendo. JAL-AM, al modelar acciones conjuntas y estimar el comportamiento promedio del rival, suele capturar mejor la dependencia estratégica entre agentes que IQL, aunque también puede sufrir oscilaciones si todos los agentes adaptan sus políticas simultáneamente.
+
+            \nocite{*}
+            \bibliographystyle{apalike}
+            \bibliography{Libros.bib}
+
+
+%Pequeño disclaimer por si usas fotos con derechos de autor que sacaste de Internet. Nunca está de más. 
+\centering \small Los créditos de las fotografías pertenecen a sus respectivos autores. ©
+
+\centering\vspace*{\fill} 
+\end{document}
+
+ %Fin del documento.
