@@ -5,6 +5,7 @@ from utils.experiment import run_experiment
 from utils.plotting   import smooth, plot_with_ci, draw_simplex, plot_simplex_trajectory, summary_table
 from utils.metrics    import dist_to_ne, policy_to_simplex
 from utils.io         import save_results, load_results
+from utils.labels     import agent_display_name
 
 __all__ = [
     # constants
@@ -18,4 +19,6 @@ __all__ = [
     "dist_to_ne", "policy_to_simplex",
     # io
     "save_results", "load_results",
+    # labels
+    "agent_display_name",
 ]
