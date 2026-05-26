@@ -216,20 +216,30 @@ Este ambiente introduce un espacio de acciones más complejo que Matching Pennie
 
 \subsection{Foraging}
 
-Foraging es un ambiente multiagente donde varios agentes interactúan dentro de un mapa con el objetivo de recolectar recursos distribuidos en el entorno.
+Foraging es un ambiente multiagente secuencial en el que varios agentes se desplazan dentro de una grilla para recolectar comida. En cada paso, los agentes observan el estado del entorno, eligen una acción de movimiento o la acción \texttt{LOAD}, y reciben recompensa cuando el recurso es recolectado. A diferencia de juegos matriciales como Matching Pennies o RPS, aquí las decisiones no dependen solamente de una acción simultánea aislada, sino también de la posición de los agentes, la ubicación de la comida y la historia del episodio.
 
-Dependiendo de la configuración utilizada, el ambiente puede presentar características cooperativas, competitivas o mixtas. En algunos escenarios, los agentes pueden competir por recursos limitados, mientras que en otros la cooperación resulta necesaria para maximizar la recompensa obtenida.
+El ambiente permite estudiar coordinación, competencia por recursos escasos y cooperación. En las configuraciones no cooperativas, puede ocurrir que un agente llegue antes a la comida y concentre una mayor parte de la recompensa. En las configuraciones cooperativas, en cambio, los agentes deben coordinar sus posiciones y acciones para recolectar el recurso, por lo que el desempeño individual depende más fuertemente del comportamiento conjunto.
 
-En este trabajo se utilizaron diferentes configuraciones del ambiente Foraging, incluyendo escenarios con distintos tamaños de mapa y distinta cantidad de agentes. Además, se evaluó específicamente la configuración cooperativa:
+\begin{table}[H]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{lllll}
+        \toprule
+        Configuración & Mapa & Agentes & Comida & Característica principal \\
+        \midrule
+        \texttt{Foraging-5x5-2p-1f-v3} & $5 \times 5$ & 2 & 1 & Escenario pequeño, exploración simple. \\
+        \texttt{Foraging-8x8-2p-1f-v3} & $8 \times 8$ & 2 & 1 & Mayor espacio de estados y trayectorias más largas. \\
+        \texttt{Foraging-8x8-3p-1f-v3} & $8 \times 8$ & 3 & 1 & Más agentes compiten o se coordinan alrededor del mismo recurso. \\
+        \texttt{Foraging-8x8-3p-1f-coop-v3} & $8 \times 8$ & 3 & 1 & Modo cooperativo, requiere coordinación para recolectar. \\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Configuraciones evaluadas del ambiente Foraging.}
+\end{table}
 
-\begin{itemize}
-    \item \texttt{Foraging-5x5-2p-1f-v3}
-    \item \texttt{Foraging-8x8-2p-1f-v3}
-    \item \texttt{Foraging-8x8-3p-1f-v3}
-    \item \texttt{Foraging-8x8-3p-1f-coop-v3}
-\end{itemize}
+La evaluación de Foraging se basa principalmente en métricas de desempeño: recompensa promedio por episodio, cantidad promedio de pasos hasta recolectar la comida y distribución de recompensas entre agentes.
 
-La configuración \texttt{coop} corresponde a un escenario cooperativo donde los agentes deben coordinarse para maximizar la recompensa conjunta.
+Además, como es un juego multiagente, también interesa analizar la estabilidad de las políticas aprendidas en relación con el equilibrio de Nash. En este caso no hay un equilibrio simple y conocido como en RPS, porque el juego tiene estados y se desarrolla a lo largo de varios pasos. Por eso, se evalúa de forma empírica si los agentes logran coordinarse y si alguno podría mejorar claramente cambiando su política mientras los demás mantienen la suya.
 
 
 \subsection{Cournot}
@@ -273,9 +283,6 @@ Matrices de utilidades $(u_0, u_1)$, donde las filas corresponden a \texttt{agen
 \texttt{agent\_0} obtiene más utilidad coordinando en Cine; \texttt{agent\_1}, coincidiendo en Partido. La descoordinación da $0$ a ambos.
 
 \section{Experimentos}
-
-
-Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre cada uno de los ambientes descritos anteriormente. En todos los casos se utilizaron 20.000 episodios por experimento y 10 semillas aleatorias distintas, con el objetivo de obtener estimaciones estadísticamente robustas. Los resultados se presentan como el promedio sobre las semillas, acompañado de intervalos de confianza del 95\%.
 
 
 Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre cada uno de los ambientes descritos anteriormente. En todos los casos se utilizaron 20.000 episodios por experimento y 10 semillas aleatorias distintas, con el objetivo de obtener estimaciones estadísticamente robustas. Los resultados se presentan como el promedio sobre las semillas, acompañado de intervalos de confianza del 95\%.
@@ -484,6 +491,197 @@ En general, los resultados muestran que:
 \end{itemize}
 
 Finalmente, los experimentos muestran cómo pequeños cambios en la forma de modelar al oponente producen diferencias importantes en estabilidad y convergencia dentro de entornos multiagente competitivos.
+
+\subsection{Foraging}
+
+A diferencia de los juegos matriciales, Foraging es un ambiente secuencial con estado. Por este motivo, no se evalúa mediante una distancia directa a un equilibrio de Nash conocido, sino usando métricas de aprendizaje por refuerzo: recompensa promedio, pasos promedio hasta recolectar la comida y distribución de recompensas entre agentes.
+
+En estos experimentos se evaluaron IQL y JAL-AM, ya que ambos algoritmos permiten aprender políticas dependientes del estado. Se utilizaron cuatro configuraciones con distinta complejidad:
+
+\begin{itemize}
+    \item \texttt{Foraging-5x5-2p-1f-v3}: grilla pequeña, dos agentes y un recurso.
+    \item \texttt{Foraging-8x8-2p-1f-v3}: grilla más grande, dos agentes y un recurso.
+    \item \texttt{Foraging-8x8-3p-1f-v3}: tres agentes, mayor complejidad de coordinación.
+    \item \texttt{Foraging-8x8-3p-1f-coop-v3}: tres agentes en modo cooperativo, donde la cooperación es necesaria para recolectar el recurso.
+\end{itemize}
+
+\subsubsection*{Configuraciones 0 y 1: grillas con dos agentes}
+
+\textbf{Grilla 5x5.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Foraging/iql_config0_training.png}
+    \caption{Entrenamiento de IQL en Foraging 5x5 con 2 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/Foraging/iql_config0_game.png}
+    \caption{Episodio entrenado con IQL en Foraging 5x5.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Foraging/jalam_config0_training.png}
+    \caption{Entrenamiento de JAL-AM en Foraging 5x5 con 2 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/Foraging/jalam_config0_game.png}
+    \caption{Episodio entrenado con JAL-AM en Foraging 5x5.}
+\end{figure}
+
+En la grilla 5x5 ambos algoritmos aprenden rápidamente a llegar a la comida, sin embargo se observa un comportamiento desbalanceado entre ambos agentes, durante las primeras iteraciones las recompensas son relativamente similares, pero rápidamente \texttt{agent\_0} incrementa su recompensa promedio por episodio y se estabiliza en valores cercanos a $0.7 - 0.8$. En cambio, \texttt{agent\_1} reduce progresivamente su recompensa y permanece en valores considerablemente menores.
+
+JAL-AM muestra una evolución algo más estable que IQL, aunque no elimina el desbalance.
+
+Al observar la ejecución de la política entrenada, se aprecia que ambos agentes se desplazan de forma coordinada hacia la comida y que el recurso se recolecta exitosamente en pocos pasos.
+
+\textbf{Grilla 8x8.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/Foraging/iql_config1_training.png}
+    \caption{Entrenamiento de IQL en Foraging 8x8 con 2 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Foraging/iql_config1_game.png}
+    \caption{Episodio entrenado con IQL en Foraging 8x8.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/Foraging/jalam_config1_training.png}
+    \caption{Entrenamiento de JAL-AM en Foraging 8x8 con 2 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Foraging/jalam_config1_game.png}
+    \caption{Episodio entrenado con JAL-AM en Foraging 8x8.}
+\end{figure}
+
+En la grilla 8x8 se repite la misma dinámica general, pero el aprendizaje es más lento y variable porque el espacio de estados es mayor. IQL aprende trayectorias útiles, aunque mantiene una distribución de recompensas desbalanceada. JAL-AM suaviza las curvas y reduce parcialmente la diferencia entre agentes, pero tampoco logra un reparto completamente equilibrado. En ambos casos, la política entrenada muestra que los agentes se desplazan hacia la comida y logran recolectarla.
+
+\subsubsection*{Configuración 2: grilla 8x8 con tres agentes}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/iql_config2_training.png}
+    \caption{Entrenamiento de IQL en Foraging 8x8 con 3 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/iql_config2_game.png}
+    \caption{Episodio entrenado con IQL en Foraging 8x8 con 3 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam_config2_training.png}
+    \caption{Entrenamiento de JAL-AM en Foraging 8x8 con 3 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam_config2_game.png}
+    \caption{Episodio entrenado con JAL-AM en Foraging 8x8 con 3 agentes.}
+\end{figure}
+
+Con tres agentes aparece una cooperación parcial: dos agentes suelen coordinarse alrededor del recurso y un tercero queda relegado. Esto ocurre tanto con IQL como con JAL-AM. JAL-AM produce curvas algo más suaves, pero no elimina el desbalance entre agentes.
+
+La ejecución de la política entrenada muestra un comportamiento interesante, en el segundo step \texttt{agent\_2} ejecuta \texttt{NONE}, lo que sugiere que aprendió a esperar a su compañero antes de recolectar la comida. De esta forma, la recolección puede ocurrir de manera coordinada y con recompensa compartida.
+
+
+\subsubsection*{Equipos mixtos en grilla 8x8 con tres agentes}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam2iql_config2_training.png}
+    \caption{Entrenamiento de JAL-AM x2 + IQL x1 en Foraging.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam2iql_config2_game.png}
+    \caption{Episodio con JAL-AM x2 + IQL x1.}
+\end{figure}
+
+También se realizaron otros experimentos con equipos mixtos, cambiando la proporción de agentes IQL y JAL-AM. Como los resultados obtenidos fueron muy similares, se muestra únicamente el caso \texttt{JAL-AM x2 + IQL x1} como ejemplo representativo. En general, la mezcla de algoritmos no modifica sustancialmente la dinámica no cooperativa de tres agentes: la coordinación efectiva emerge entre algunos miembros del equipo y un agente puede quedar con baja recompensa. Esto indica que el algoritmo utilizado no es el único factor determinante; la posición relativa, la exploración temprana y las trayectorias aprendidas también influyen fuertemente.
+
+
+\subsubsection*{Configuración 3: grilla 8x8 cooperativa con tres agentes}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/iql_config3_training.png}
+    \caption{Entrenamiento de IQL en Foraging cooperativo 8x8 con 3 agentes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/Foraging/iql_config3_game.png}
+    \caption{Episodio entrenado con IQL en Foraging cooperativo.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/Foraging/jalam_config3_training.png}
+    \caption{Ejecución de la política entrenada con JAL-AM en Foraging cooperativo.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/Foraging/jalam_config3_game.png}
+    \caption{Episodio entrenado con JAL-AM en Foraging cooperativo.}
+\end{figure}
+
+En la configuración cooperativa cambia significativamente la dinámica del aprendizaje. Tanto IQL como JAL-AM convergen rápido y muestran recompensas estables. \texttt{agent\_0} recibe aproximadamente $0.5$, mientras que \texttt{agent\_1} y \texttt{agent\_2} reciben alrededor de $0.25$. Esta diferencia no indica dominancia, sino un reparto esperado, dado que \texttt{agent\_0} tiene nivel 2 y los otros agentes nivel 1, por lo que todos reciben la recompensa correspondiente a su contribución.
+
+A diferencia de las configuraciones anteriores, no aparece un agente completamente excluido. Como la comida requiere cooperación para ser recolectada, todos los agentes se desplazan hacia el recurso y participan del objetivo compartido. La ejecución entrenada requiere más pasos que los escenarios no cooperativos, pero esto refleja la necesidad de coordinar posiciones antes de ejecutar \texttt{LOAD}.
+
+\textbf{Entrenamientos cruzados.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam2iql_config3_training.png}
+    \caption{Entrenamiento de JAL-AM x2 + IQL x1 en Foraging cooperativo.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Foraging/jalam2iql_config3_game.png}
+    \caption{Ejecución de la política entrenada con JAL-AM x2 + IQL x1.}
+\end{figure}
+
+También se evaluaron entrenamientos cruzados combinando IQL y JAL-AM. Como ambos cruces presentan resultados similares, se muestra \texttt{JAL-AM x2 + IQL x1} como caso representativo. 
+En el ambiente cooperativo, los equipos mixtos mantienen el reparto esperado por niveles, además de la gráfica de \texttt{Cantidad de pasos requeridos para completar el episodio}, 
+se observa que necesitan menos pasos que los equipos homogéneos, lo que sugiere trayectorias más eficientes hacia el objetivo compartido.
+
+\subsubsection*{Observaciones}
+
+Los experimentos de Foraging muestran que la estructura del ambiente tiene un impacto central sobre el comportamiento emergente. En escenarios no cooperativos o mixtos, IQL y JAL-AM logran aprender trayectorias efectivas, pero las recompensas suelen distribuirse de forma desigual entre agentes. Esto ocurre especialmente cuando algunos agentes llegan antes al recurso o quedan mejor posicionados durante el entrenamiento.
+
+Este comportamiento es consistente con la definición teórica de los agentes. En IQL, cada agente aprende de forma independiente, por lo que una ventaja temprana de posición o exploración puede reforzarse con el tiempo. 
+JAL-AM reduce parcialmente este problema al modelar las acciones de los demás, podemos ver como tiende a producir curvas más estables, pero sin embargo esto no elimina la no estacionariedad ni garantiza un reparto equilibrado.
+
+Las gráficas de pasos requeridos muestran que, al comienzo del entrenamiento, los episodios suelen estar por encima de los 50 pasos, lo que indica que los agentes todavía no logran llegar a la comida de forma eficiente. A medida que avanzan los episodios, en todos los casos se reduce significativamente la cantidad de pasos necesarios, hasta lograr llegar siempre al recurso.
+
+Las visualizaciones de las políticas entrenadas ayudan a interpretar mejor este resultado. 
+Permiten comprobar que los agentes con mayor recompensa son los que ejecutan \texttt{LOAD} del recurso, 
+pero también muestran que los agentes con menor recompensa en la mayoria de los casos se desplazan correctamente hacia la comida, mostrando que la politica que aprendieron no es una política inútil.
+
+Además, para una misma configuración los agentes comienzan siempre desde las mismas posiciones iniciales porque se utiliza el mismo \textit{seed}. Esto puede favorecer sistemáticamente a un agente si queda mejor ubicado respecto a la comida. Se realizaron pruebas adicionales rotando el \textit{seed} en cada iteración para reducir este sesgo, pero los resultados fueron peores y el desbalance entre agentes se mantuvo.
+
+Cuando el entorno fuerza la cooperación, las diferencias entre agentes se reducen y emerge un comportamiento coordinado más claro. 
+En este caso, la necesidad de actuar conjuntamente domina la dinámica del aprendizaje y favorece políticas donde todos los agentes participan de la recolección del recurso. 
+Además, los experimentos cruzados en el ambiente cooperativo necesitaron menos pasos que aquellos donde todos los agentes utilizaban el mismo algoritmo, lo que sugiere que combinar IQL y JAL-AM puede favorecer trayectorias más eficientes hacia el objetivo compartido. Esto puede deberse a que ambos algoritmos introducen sesgos de aprendizaje complementarios: IQL tiende a aprender trayectorias directas a partir de su propia recompensa, mientras que JAL-AM incorpora información sobre el comportamiento esperado de los demás agentes. En un entorno cooperativo, esta combinación puede facilitar que los agentes se ajusten mejor entre sí y reduzcan movimientos innecesarios.
+Esto nos permite concluir que tanto IQL como JAL-AM aprenden una política adecuada.
 
 
 \section{Conclusion}
