@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1779797398.52725 "main.aux" "main.bbl" "main" 1779797412.74941 0
+["bibtex main"] 1779798089.48023 "main.aux" "main.bbl" "main" 1779798093.61611 0
   "./Libros.bib" 1779659596.31954 649 fb2317c32525c9f2820c67faed9016d2 ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "main.aux" 1779797412.52995 9062 887e8c4163c9eaeb2587a00081a77fb3 "pdflatex"
+  "main.aux" 1779798093.39546 9062 887e8c4163c9eaeb2587a00081a77fb3 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1779797408.69127 "/Users/nataliacampigliastemphelet/master/simultaneous-games/informe/main.tex" "main.pdf" "main" 1779797412.74952 0
-  "/Users/nataliacampigliastemphelet/master/simultaneous-games/informe/main.tex" 1779796645.74691 42117 fbf27562ff33af0404dd1323dace4dab ""
+["pdflatex"] 1779798089.60877 "/Users/nataliacampigliastemphelet/master/simultaneous-games/informe/main.tex" "main.pdf" "main" 1779798093.61623 0
+  "/Users/nataliacampigliastemphelet/master/simultaneous-games/informe/main.tex" 1779798080.82776 42117 fbf27562ff33af0404dd1323dace4dab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -244,11 +244,11 @@
   "figures/RPS/simplex_rm_vs_rm.png" 1779659596.36116 96589 ef46ded583087d8b00972d2d926c1a2b ""
   "figures/RPS/vs_random_comparison.png" 1779659596.36379 39111 2ce6fc5c2cf05684ad44d30966a05609 ""
   "figures/RPS/win_rate_matrix.png" 1779659596.36443 60701 4d96220269de98b211ce9fa38f726308 ""
-  "main.aux" 1779797412.52995 9062 887e8c4163c9eaeb2587a00081a77fb3 "pdflatex"
-  "main.bbl" 1779797398.60319 629 bca06d4c86ef8dbdfbd1fe1b343b15be "bibtex main"
-  "main.out" 1779797412.53125 2839 502ccbdab11adee807670ffb7ea56b66 "pdflatex"
-  "main.tex" 1779796645.74691 42117 fbf27562ff33af0404dd1323dace4dab ""
-  "main.toc" 1779797412.53143 1711 a4c1ce039f05c2bb9db867c7ee9f409f "pdflatex"
+  "main.aux" 1779798093.39546 9062 887e8c4163c9eaeb2587a00081a77fb3 "pdflatex"
+  "main.bbl" 1779798089.60589 627 ee2f7cd314e5b36dfd7b83bab6d69d47 "bibtex main"
+  "main.out" 1779798093.39685 2839 502ccbdab11adee807670ffb7ea56b66 "pdflatex"
+  "main.tex" 1779798080.82776 42117 fbf27562ff33af0404dd1323dace4dab ""
+  "main.toc" 1779798093.39704 1711 a4c1ce039f05c2bb9db867c7ee9f409f "pdflatex"
   "portada.tex" 1779659596.37564 961 b336bda21dee9f9d7291007d5350542e ""
   (generated)
   "main.aux"
