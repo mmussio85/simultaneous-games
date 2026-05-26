@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 18:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.24)  26 MAY 2026 09:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1001,7 +1001,7 @@ Package: ragged2e 2023/06/22 v3.6 ragged2e Package
 \JustifyingParindent=\skip93
 )
 (./portada.tex
-<figures/ORT.png, id=87, 2055.68pt x 1410.26875pt>
+<figures/ORT.png, id=91, 2055.68pt x 1410.26875pt>
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
 Package pdftex.def Info: figures/ORT.png  used on input line 6.
@@ -1064,181 +1064,373 @@ Package pdftex.def Info: figures/ORT.png  used on input line 203.
  [7]
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 224.
+Package pdftex.def Info: figures/ORT.png  used on input line 222.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
  [8]
-Overfull \hbox (11.11368pt too wide) in paragraph at lines 241--242
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 251.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [9]
+Overfull \hbox (11.11368pt too wide) in paragraph at lines 251--252
 []\OT1/cmr/m/n/12 Este am-bien-te per-mi-te ana-li-zar com-por-ta-mien-tos es-t
 rat^^Segi-cos en jue-gos de com-pe-ten-cia econ^^Somi-
  []
 
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 249.
+Package pdftex.def Info: figures/ORT.png  used on input line 281.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
-[9]
-File: figures/ORT.png Graphic file (type png)
-<use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 279.
-(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [10]
-<figures/RPS/fp_vs_fp.png, id=168, 1300.86pt x 361.35pt>
+[10]
+<figures/RPS/fp_vs_fp.png, id=174, 1300.86pt x 361.35pt>
 File: figures/RPS/fp_vs_fp.png Graphic file (type png)
 <use figures/RPS/fp_vs_fp.png>
-Package pdftex.def Info: figures/RPS/fp_vs_fp.png  used on input line 295.
+Package pdftex.def Info: figures/RPS/fp_vs_fp.png  used on input line 302.
 (pdftex.def)             Requested size: 512.1496pt x 142.26578pt.
-<figures/RPS/simplex_fp_vs_fp.png, id=169, 939.51pt x 433.62pt>
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 305.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [11]
+<figures/RPS/simplex_fp_vs_fp.png, id=179, 939.51pt x 433.62pt>
 File: figures/RPS/simplex_fp_vs_fp.png Graphic file (type png)
 <use figures/RPS/simplex_fp_vs_fp.png>
 Package pdftex.def Info: figures/RPS/simplex_fp_vs_fp.png  used on input line 3
-01.
+08.
 (pdftex.def)             Requested size: 512.1496pt x 236.37445pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 304.
+Package pdftex.def Info: figures/ORT.png  used on input line 315.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [11 <./figures/RPS/fp_vs_fp.png>]
-<figures/RPS/rm_vs_rm.png, id=177, 1300.86pt x 361.35pt>
+ [12 <./figures/RPS/fp_vs_fp.png> <./figures/RPS/simplex_fp_vs_fp.png>]
+<figures/RPS/rm_vs_rm.png, id=189, 1300.86pt x 361.35pt>
 File: figures/RPS/rm_vs_rm.png Graphic file (type png)
 <use figures/RPS/rm_vs_rm.png>
-Package pdftex.def Info: figures/RPS/rm_vs_rm.png  used on input line 315.
+Package pdftex.def Info: figures/RPS/rm_vs_rm.png  used on input line 322.
 (pdftex.def)             Requested size: 512.1496pt x 142.26578pt.
-File: figures/ORT.png Graphic file (type png)
-<use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 318.
-(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [12 <./figures/RPS/simplex_fp_vs_fp.png>]
-<figures/RPS/simplex_rm_vs_rm.png, id=184, 939.51pt x 433.62pt>
+<figures/RPS/simplex_rm_vs_rm.png, id=190, 939.51pt x 433.62pt>
 File: figures/RPS/simplex_rm_vs_rm.png Graphic file (type png)
 <use figures/RPS/simplex_rm_vs_rm.png>
 Package pdftex.def Info: figures/RPS/simplex_rm_vs_rm.png  used on input line 3
-21.
+28.
 (pdftex.def)             Requested size: 512.1496pt x 236.37445pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 328.
+Package pdftex.def Info: figures/ORT.png  used on input line 331.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [13 <./figures/RPS/rm_vs_rm.png> <./figures/RPS/simplex_rm_vs_rm.png>]
-<figures/RPS/iql_vs_iql.png, id=195, 1300.86pt x 361.35pt>
+ [13 <./figures/RPS/rm_vs_rm.png>]
+<figures/RPS/iql_vs_iql.png, id=199, 1300.86pt x 361.35pt>
 File: figures/RPS/iql_vs_iql.png Graphic file (type png)
 <use figures/RPS/iql_vs_iql.png>
-Package pdftex.def Info: figures/RPS/iql_vs_iql.png  used on input line 333.
+Package pdftex.def Info: figures/RPS/iql_vs_iql.png  used on input line 340.
 (pdftex.def)             Requested size: 512.1496pt x 142.26578pt.
-<figures/RPS/simplex_iql_vs_iql.png, id=196, 939.51pt x 433.62pt>
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 343.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [14 <./figures/RPS/simplex_rm_vs_rm.png>]
+<figures/RPS/simplex_iql_vs_iql.png, id=206, 939.51pt x 433.62pt>
 File: figures/RPS/simplex_iql_vs_iql.png Graphic file (type png)
 <use figures/RPS/simplex_iql_vs_iql.png>
 Package pdftex.def Info: figures/RPS/simplex_iql_vs_iql.png  used on input line
- 339.
+ 346.
 (pdftex.def)             Requested size: 512.1496pt x 236.37445pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 344.
+Package pdftex.def Info: figures/ORT.png  used on input line 353.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
 
-[14 <./figures/RPS/iql_vs_iql.png> <./figures/RPS/simplex_iql_vs_iql.png>]
-<figures/RPS/jalam_vs_jalam.png, id=206, 1300.86pt x 361.35pt>
+[15 <./figures/RPS/iql_vs_iql.png> <./figures/RPS/simplex_iql_vs_iql.png>]
+<figures/RPS/jalam_vs_jalam.png, id=216, 1300.86pt x 361.35pt>
 File: figures/RPS/jalam_vs_jalam.png Graphic file (type png)
 <use figures/RPS/jalam_vs_jalam.png>
-Package pdftex.def Info: figures/RPS/jalam_vs_jalam.png  used on input line 355
+Package pdftex.def Info: figures/RPS/jalam_vs_jalam.png  used on input line 362
 .
 (pdftex.def)             Requested size: 512.1496pt x 142.26578pt.
-<figures/RPS/simplex_jalam_vs_jalam.png, id=207, 939.51pt x 433.62pt>
+<figures/RPS/simplex_jalam_vs_jalam.png, id=217, 939.51pt x 433.62pt>
 File: figures/RPS/simplex_jalam_vs_jalam.png Graphic file (type png)
 <use figures/RPS/simplex_jalam_vs_jalam.png>
 Package pdftex.def Info: figures/RPS/simplex_jalam_vs_jalam.png  used on input 
-line 361.
+line 368.
 (pdftex.def)             Requested size: 512.1496pt x 236.37445pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 364.
+Package pdftex.def Info: figures/ORT.png  used on input line 371.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
 
-[15 <./figures/RPS/jalam_vs_jalam.png>]
+[16 <./figures/RPS/jalam_vs_jalam.png>]
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 372.
+Package pdftex.def Info: figures/ORT.png  used on input line 379.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [16 <./figures/RPS/simplex_jalam_vs_jalam.png>]
-<figures/RPS/fp_vs_rm.png, id=221, 1300.86pt x 361.35pt>
+ [17 <./figures/RPS/simplex_jalam_vs_jalam.png>]
+<figures/RPS/fp_vs_rm.png, id=231, 1300.86pt x 361.35pt>
 File: figures/RPS/fp_vs_rm.png Graphic file (type png)
 <use figures/RPS/fp_vs_rm.png>
-Package pdftex.def Info: figures/RPS/fp_vs_rm.png  used on input line 382.
+Package pdftex.def Info: figures/RPS/fp_vs_rm.png  used on input line 389.
 (pdftex.def)             Requested size: 512.1496pt x 142.26578pt.
-<figures/RPS/simplex_fp_vs_rm.png, id=222, 939.51pt x 433.62pt>
+<figures/RPS/simplex_fp_vs_rm.png, id=232, 939.51pt x 433.62pt>
 File: figures/RPS/simplex_fp_vs_rm.png Graphic file (type png)
 <use figures/RPS/simplex_fp_vs_rm.png>
 Package pdftex.def Info: figures/RPS/simplex_fp_vs_rm.png  used on input line 3
-88.
+95.
 (pdftex.def)             Requested size: 512.1496pt x 236.37445pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 391.
+Package pdftex.def Info: figures/ORT.png  used on input line 398.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [17 <./figures/RPS/fp_vs_rm.png>]
+ [18 <./figures/RPS/fp_vs_rm.png>]
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 401.
+Package pdftex.def Info: figures/ORT.png  used on input line 408.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [18 <./figures/RPS/simplex_fp_vs_rm.png>]
-<figures/RPS/vs_random_comparison.png, id=236, 722.7pt x 361.35pt>
+ [19 <./figures/RPS/simplex_fp_vs_rm.png>]
+<figures/RPS/vs_random_comparison.png, id=247, 722.7pt x 361.35pt>
 File: figures/RPS/vs_random_comparison.png Graphic file (type png)
 <use figures/RPS/vs_random_comparison.png>
 Package pdftex.def Info: figures/RPS/vs_random_comparison.png  used on input li
-ne 414.
+ne 421.
 (pdftex.def)             Requested size: 358.50314pt x 179.252pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 417.
+Package pdftex.def Info: figures/ORT.png  used on input line 424.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [19]
-<figures/RPS/win_rate_matrix.png, id=242, 505.89pt x 433.62pt>
+ [20]
+<figures/RPS/win_rate_matrix.png, id=252, 505.89pt x 433.62pt>
 File: figures/RPS/win_rate_matrix.png Graphic file (type png)
 <use figures/RPS/win_rate_matrix.png>
 Package pdftex.def Info: figures/RPS/win_rate_matrix.png  used on input line 43
-0.
+7.
 (pdftex.def)             Requested size: 245.8296pt x 210.71567pt.
-<figures/RPS/draw_rate_matrix.png, id=243, 505.89pt x 433.62pt>
+<figures/RPS/draw_rate_matrix.png, id=253, 505.89pt x 433.62pt>
 File: figures/RPS/draw_rate_matrix.png Graphic file (type png)
 <use figures/RPS/draw_rate_matrix.png>
 Package pdftex.def Info: figures/RPS/draw_rate_matrix.png  used on input line 4
-36.
+43.
 (pdftex.def)             Requested size: 245.8296pt x 210.71567pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 440.
+Package pdftex.def Info: figures/ORT.png  used on input line 447.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [20 <./figures/RPS/vs_random_comparison.png>]
-<figures/RPS/all_algos_distance_ne.png, id=251, 794.97pt x 361.35pt>
+ [21 <./figures/RPS/vs_random_comparison.png>]
+<figures/RPS/all_algos_distance_ne.png, id=261, 794.97pt x 361.35pt>
 File: figures/RPS/all_algos_distance_ne.png Graphic file (type png)
 <use figures/RPS/all_algos_distance_ne.png>
 Package pdftex.def Info: figures/RPS/all_algos_distance_ne.png  used on input l
-ine 453.
+ine 460.
 (pdftex.def)             Requested size: 512.1496pt x 232.80154pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 456.
+Package pdftex.def Info: figures/ORT.png  used on input line 463.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [21 <./figures/RPS/win_rate_matrix.png> <./figures/RPS/draw_rate_matrix.png>]
+ [22 <./figures/RPS/win_rate_matrix.png> <./figures/RPS/draw_rate_matrix.png>]
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 468.
+Package pdftex.def Info: figures/ORT.png  used on input line 475.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [22 <./figures/RPS/all_algos_distance_ne.png>]
+ [23 <./figures/RPS/all_algos_distance_ne.png>]
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 482.
+Package pdftex.def Info: figures/ORT.png  used on input line 489.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [23] (./main.bbl
+ [24]
+<figures/Foraging/iql_config0_training.png, id=282, 1156.32pt x 289.08pt>
+File: figures/Foraging/iql_config0_training.png Graphic file (type png)
+<use figures/Foraging/iql_config0_training.png>
+Package pdftex.def Info: figures/Foraging/iql_config0_training.png  used on inp
+ut line 514.
+(pdftex.def)             Requested size: 409.72124pt x 102.42783pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 8.
+Package pdftex.def Info: figures/ORT.png  used on input line 517.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [24])
+ [25]
+<figures/Foraging/iql_config0_game.png, id=289, 549.252pt x 166.221pt>
+File: figures/Foraging/iql_config0_game.png Graphic file (type png)
+<use figures/Foraging/iql_config0_game.png>
+Package pdftex.def Info: figures/Foraging/iql_config0_game.png  used on input l
+ine 520.
+(pdftex.def)             Requested size: 358.50314pt x 108.4938pt.
+<figures/Foraging/jalam_config0_training.png, id=290, 1156.32pt x 289.08pt>
+File: figures/Foraging/jalam_config0_training.png Graphic file (type png)
+<use figures/Foraging/jalam_config0_training.png>
+Package pdftex.def Info: figures/Foraging/jalam_config0_training.png  used on i
+nput line 526.
+(pdftex.def)             Requested size: 409.72124pt x 102.42783pt.
+<figures/Foraging/jalam_config0_game.png, id=291, 549.252pt x 166.221pt>
+File: figures/Foraging/jalam_config0_game.png Graphic file (type png)
+<use figures/Foraging/jalam_config0_game.png>
+Package pdftex.def Info: figures/Foraging/jalam_config0_game.png  used on input
+ line 532.
+(pdftex.def)             Requested size: 358.50314pt x 108.4938pt.
 File: figures/ORT.png Graphic file (type png)
 <use figures/ORT.png>
-Package pdftex.def Info: figures/ORT.png  used on input line 502.
+Package pdftex.def Info: figures/ORT.png  used on input line 535.
 (pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
- [25{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.e
+ [26 <./figures/Foraging/iql_config0_training.png> <./figures/Foraging/iql_conf
+ig0_game.png> <./figures/Foraging/jalam_config0_training.png>]
+<figures/Foraging/iql_config1_training.png, id=302, 1156.32pt x 289.08pt>
+File: figures/Foraging/iql_config1_training.png Graphic file (type png)
+<use figures/Foraging/iql_config1_training.png>
+Package pdftex.def Info: figures/Foraging/iql_config1_training.png  used on inp
+ut line 546.
+(pdftex.def)             Requested size: 460.9315pt x 115.23296pt.
+<figures/Foraging/iql_config1_game.png, id=303, 823.3962pt x 332.442pt>
+File: figures/Foraging/iql_config1_game.png Graphic file (type png)
+<use figures/Foraging/iql_config1_game.png>
+Package pdftex.def Info: figures/Foraging/iql_config1_game.png  used on input l
+ine 552.
+(pdftex.def)             Requested size: 409.72124pt x 165.42418pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 555.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [27 <./figures/Foraging/jalam_config0_game.png> <./figures/Foraging/iql_config
+1_training.png>]
+<figures/Foraging/jalam_config1_training.png, id=312, 1156.32pt x 289.08pt>
+File: figures/Foraging/jalam_config1_training.png Graphic file (type png)
+<use figures/Foraging/jalam_config1_training.png>
+Package pdftex.def Info: figures/Foraging/jalam_config1_training.png  used on i
+nput line 558.
+(pdftex.def)             Requested size: 460.9315pt x 115.23296pt.
+<figures/Foraging/jalam_config1_game.png, id=313, 823.3962pt x 332.442pt>
+File: figures/Foraging/jalam_config1_game.png Graphic file (type png)
+<use figures/Foraging/jalam_config1_game.png>
+Package pdftex.def Info: figures/Foraging/jalam_config1_game.png  used on input
+ line 564.
+(pdftex.def)             Requested size: 409.72124pt x 165.42418pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 569.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [28 <./figures/Foraging/iql_config1_game.png> <./figures/Foraging/jalam_config
+1_training.png> <./figures/Foraging/jalam_config1_game.png>]
+<figures/Foraging/iql_config2_training.png, id=325, 1156.32pt x 289.08pt>
+File: figures/Foraging/iql_config2_training.png Graphic file (type png)
+<use figures/Foraging/iql_config2_training.png>
+Package pdftex.def Info: figures/Foraging/iql_config2_training.png  used on inp
+ut line 574.
+(pdftex.def)             Requested size: 512.1496pt x 128.03368pt.
+<figures/Foraging/iql_config2_game.png, id=326, 549.252pt x 166.221pt>
+File: figures/Foraging/iql_config2_game.png Graphic file (type png)
+<use figures/Foraging/iql_config2_game.png>
+Package pdftex.def Info: figures/Foraging/iql_config2_game.png  used on input l
+ine 580.
+(pdftex.def)             Requested size: 512.1496pt x 154.99225pt.
+<figures/Foraging/jalam_config2_training.png, id=327, 1156.32pt x 289.08pt>
+File: figures/Foraging/jalam_config2_training.png Graphic file (type png)
+<use figures/Foraging/jalam_config2_training.png>
+Package pdftex.def Info: figures/Foraging/jalam_config2_training.png  used on i
+nput line 586.
+(pdftex.def)             Requested size: 512.1496pt x 128.03368pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 589.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [29 <./figures/Foraging/iql_config2_training.png> <./figures/Foraging/iql_conf
+ig2_game.png>]
+<figures/Foraging/jalam_config2_game.png, id=337, 549.252pt x 166.221pt>
+File: figures/Foraging/jalam_config2_game.png Graphic file (type png)
+<use figures/Foraging/jalam_config2_game.png>
+Package pdftex.def Info: figures/Foraging/jalam_config2_game.png  used on input
+ line 592.
+(pdftex.def)             Requested size: 512.1496pt x 154.99225pt.
+<figures/Foraging/jalam2iql_config2_training.png, id=338, 1156.32pt x 289.08pt>
+
+File: figures/Foraging/jalam2iql_config2_training.png Graphic file (type png)
+<use figures/Foraging/jalam2iql_config2_training.png>
+Package pdftex.def Info: figures/Foraging/jalam2iql_config2_training.png  used 
+on input line 605.
+(pdftex.def)             Requested size: 512.1496pt x 128.03368pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 608.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [30 <./figures/Foraging/jalam_config2_training.png> <./figures/Foraging/jalam_
+config2_game.png>]
+<figures/Foraging/jalam2iql_config2_game.png, id=347, 549.252pt x 166.221pt>
+File: figures/Foraging/jalam2iql_config2_game.png Graphic file (type png)
+<use figures/Foraging/jalam2iql_config2_game.png>
+Package pdftex.def Info: figures/Foraging/jalam2iql_config2_game.png  used on i
+nput line 611.
+(pdftex.def)             Requested size: 512.1496pt x 154.99225pt.
+<figures/Foraging/iql_config3_training.png, id=348, 1156.32pt x 289.08pt>
+File: figures/Foraging/iql_config3_training.png Graphic file (type png)
+<use figures/Foraging/iql_config3_training.png>
+Package pdftex.def Info: figures/Foraging/iql_config3_training.png  used on inp
+ut line 622.
+(pdftex.def)             Requested size: 512.1496pt x 128.03368pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 625.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [31 <./figures/Foraging/jalam2iql_config2_training.png> <./figures/Foraging/ja
+lam2iql_config2_game.png>]
+<figures/Foraging/iql_config3_game.png, id=359, 823.3962pt x 498.663pt>
+File: figures/Foraging/iql_config3_game.png Graphic file (type png)
+<use figures/Foraging/iql_config3_game.png>
+Package pdftex.def Info: figures/Foraging/iql_config3_game.png  used on input l
+ine 628.
+(pdftex.def)             Requested size: 384.1122pt x 232.62918pt.
+<figures/Foraging/jalam_config3_training.png, id=360, 1156.32pt x 289.08pt>
+File: figures/Foraging/jalam_config3_training.png Graphic file (type png)
+<use figures/Foraging/jalam_config3_training.png>
+Package pdftex.def Info: figures/Foraging/jalam_config3_training.png  used on i
+nput line 634.
+(pdftex.def)             Requested size: 384.1122pt x 96.02747pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 637.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+
+[32 <./figures/Foraging/iql_config3_training.png> <./figures/Foraging/iql_confi
+g3_game.png>]
+<figures/Foraging/jalam_config3_game.png, id=370, 823.3962pt x 498.663pt>
+File: figures/Foraging/jalam_config3_game.png Graphic file (type png)
+<use figures/Foraging/jalam_config3_game.png>
+Package pdftex.def Info: figures/Foraging/jalam_config3_game.png  used on input
+ line 640.
+(pdftex.def)             Requested size: 384.1122pt x 232.62918pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 647.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [33 <./figures/Foraging/jalam_config3_training.png> <./figures/Foraging/jalam_
+config3_game.png>]
+<figures/Foraging/jalam2iql_config3_training.png, id=379, 1156.32pt x 289.08pt>
+
+File: figures/Foraging/jalam2iql_config3_training.png Graphic file (type png)
+<use figures/Foraging/jalam2iql_config3_training.png>
+Package pdftex.def Info: figures/Foraging/jalam2iql_config3_training.png  used 
+on input line 652.
+(pdftex.def)             Requested size: 512.1496pt x 128.03368pt.
+<figures/Foraging/jalam2iql_config3_game.png, id=380, 823.3962pt x 332.442pt>
+File: figures/Foraging/jalam2iql_config3_game.png Graphic file (type png)
+<use figures/Foraging/jalam2iql_config3_game.png>
+Package pdftex.def Info: figures/Foraging/jalam2iql_config3_game.png  used on i
+nput line 658.
+(pdftex.def)             Requested size: 512.1496pt x 206.7815pt.
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 665.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [34 <./figures/Foraging/jalam2iql_config3_training.png> <./figures/Foraging/ja
+lam2iql_config3_game.png>]
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 680.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [35]
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 690.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [36] (./main.bbl)
+File: figures/ORT.png Graphic file (type png)
+<use figures/ORT.png>
+Package pdftex.def Info: figures/ORT.png  used on input line 700.
+(pdftex.def)             Requested size: 41.46732pt x 28.45274pt.
+ [37{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.e
 nc}] (./main.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
@@ -1248,13 +1440,13 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 83EAB933A8F90EBD1E16E3B2D3B76771;2741.
+(rerunfilecheck)             Checksum: 502CCBDAB11ADEE807670FFB7EA56B66;2839.
  ) 
 Here is how much of TeX's memory you used:
- 26630 strings out of 467525
- 491506 string characters out of 5418982
+ 26820 strings out of 467525
+ 498961 string characters out of 5418982
  969170 words of memory out of 5000000
- 54998 multiletter control sequences out of 15000+600000
+ 55149 multiletter control sequences out of 15000+600000
  637188 words of font info for 76 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,15n,104p,1121b,576s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1273,10 +1465,10 @@ live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texli
 ve/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texliv
 e/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive
 /2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on main.pdf (25 pages, 3305609 bytes).
+Output written on main.pdf (37 pages, 4788693 bytes).
 PDF statistics:
- 375 PDF objects out of 1000 (max. 8388607)
- 285 compressed objects within 3 object streams
- 74 named destinations out of 1000 (max. 500000)
- 248 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 506 PDF objects out of 1000 (max. 8388607)
+ 363 compressed objects within 4 object streams
+ 113 named destinations out of 1000 (max. 500000)
+ 356 words of extra memory for PDF output out of 10000 (max. 10000000)
 
