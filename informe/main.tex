@@ -1,4 +1,3 @@
-
 %Inicio del Preámbulo: Modifícalo bajo tu propio riesgo! Usa los paquetes que requieras para 
 %implementar funcionalidades dentro del documento. Se comenta solo lo esencial, puedes buscar los
 %paquetes y documentarte de su funcionalidad y puedes eliminarlos también si así lo deseas. 
@@ -244,11 +243,21 @@ Además, como es un juego multiagente, también interesa analizar la estabilidad
 
 \subsection{Cournot}
 
-Cournot es un juego económico simultáneo donde dos o más empresas compiten eligiendo la cantidad de producto que desean producir. Todas las empresas toman su decisión al mismo tiempo y, una vez definidas las cantidades, el precio de mercado se determina en función de la producción total.
+Cournot es un juego económico simultáneo donde dos o más empresas compiten eligiendo cuánto producir de un mismo bien. Todas las empresas toman su decisión al mismo tiempo y, una vez definidas las cantidades, el precio de mercado se determina a partir de la producción total.
 
-En general, si la producción total aumenta, el precio de mercado disminuye. Por lo tanto, cada agente debe decidir cuánto producir considerando tanto su propio beneficio como el impacto de las decisiones de los demás agentes.
+La idea central es que, si la producción total aumenta, el precio de mercado disminuye. Por lo tanto, cada agente debe decidir cuánto producir considerando tanto su propio beneficio como el efecto que sus acciones tienen sobre el precio que reciben todos los participantes. Esto genera una tensión estratégica: producir más puede aumentar las ventas individuales, pero también puede reducir el precio de mercado.
 
-Este ambiente permite analizar comportamientos estratégicos en juegos de competencia económica, donde los agentes buscan maximizar su ganancia individual.
+En el caso clásico con dos empresas, demanda inversa lineal $P(Q)=a-bQ$ y costo marginal constante $c$, donde $Q=q_1+q_2$, la ganancia de cada empresa puede escribirse como:
+\[
+\pi_i(q_i,q_j)=q_i(a-b(q_i+q_j)-c).
+\]
+
+El equilibrio de Nash se alcanza cuando ninguna empresa puede mejorar su ganancia cambiando unilateralmente su cantidad producida, manteniendo fija la producción de la otra. En el caso simétrico de dos empresas, el equilibrio está dado por:
+\[
+q_1^* = q_2^* = \frac{a-c}{3b}.
+\]
+
+Esto significa que ambas empresas producen la misma cantidad y que ninguna tiene incentivos a desviarse si la otra mantiene su producción fija. En los experimentos, este equilibrio sirve como referencia para evaluar si los algoritmos aprenden cantidades cercanas a la mejor respuesta mutua y si sus políticas convergen hacia un comportamiento estable.
 
 \subsection{Chicken}
 
@@ -682,6 +691,80 @@ Cuando el entorno fuerza la cooperación, las diferencias entre agentes se reduc
 En este caso, la necesidad de actuar conjuntamente domina la dinámica del aprendizaje y favorece políticas donde todos los agentes participan de la recolección del recurso. 
 Además, los experimentos cruzados en el ambiente cooperativo necesitaron menos pasos que aquellos donde todos los agentes utilizaban el mismo algoritmo, lo que sugiere que combinar IQL y JAL-AM puede favorecer trayectorias más eficientes hacia el objetivo compartido. Esto puede deberse a que ambos algoritmos introducen sesgos de aprendizaje complementarios: IQL tiende a aprender trayectorias directas a partir de su propia recompensa, mientras que JAL-AM incorpora información sobre el comportamiento esperado de los demás agentes. En un entorno cooperativo, esta combinación puede facilitar que los agentes se ajusten mejor entre sí y reduzcan movimientos innecesarios.
 Esto nos permite concluir que tanto IQL como JAL-AM aprenden una política adecuada.
+
+\subsection{Cournot}
+
+En los experimentos de Cournot se evaluó si los algoritmos logran aproximar el equilibrio de Nash en un juego de competencia por cantidades. Con los parámetros utilizados, el equilibrio teórico para dos firmas se encuentra en $q^*=4$ y una ganancia de $32$ por firma. Para tres firmas, el equilibrio pasa a $q^*=3$ y la ganancia esperada por firma baja a $18$, ya que la producción total del mercado aumenta y el precio de equilibrio disminuye.
+
+\subsubsection*{Dos jugadores}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_rm_2jugadores.png}
+    \caption{Convergencia de Regret Matching en Cournot con 2 jugadores.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_fp_2jugadores.png}
+    \caption{Convergencia de Fictitious Play en Cournot con 2 jugadores.}
+\end{figure}
+
+Tanto Regret Matching como Fictitious Play logran aproximar correctamente el equilibrio de Nash. En ambos casos, las cantidades elegidas por las firmas terminan cerca de $q=4$ y las ganancias se estabilizan alrededor del valor teórico. FP converge de forma muy limpia luego de algunas iteraciones iniciales, mientras que RM presenta pequeñas oscilaciones alrededor del equilibrio antes de estabilizarse.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/experimento_mixto_rm_vs_fp.png}
+    \caption{Experimento mixto entre Regret Matching y Fictitious Play en Cournot.}
+\end{figure}
+
+En el experimento mixto entre RM y FP, ambos agentes convergen rápidamente hacia la cantidad de equilibrio. La media móvil muestra que RM se ajusta antes, mientras que FP necesita algunas iteraciones más para estabilizar su estimación de la estrategia del rival. Aun así, ambos terminan coordinando en el valor esperado teóricamente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_iql_2jugadores.png}
+    \caption{Convergencia de IQL en Cournot con 2 jugadores.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_jalam_2jugadores.png}
+    \caption{Convergencia de JAL-AM en Cournot con 2 jugadores.}
+\end{figure}
+
+IQL y JAL-AM muestran un comportamiento más inestable. Las cantidades elegidas oscilan de forma marcada y no se mantienen cerca del equilibrio de Nash. En varias iteraciones aparecen ganancias superiores a la ganancia de equilibrio, pero esto no implica que las políticas sean estratégicamente estables: esos puntos pueden ser explotables si un agente cambia unilateralmente su producción. En este sentido, una ganancia alta puntual no alcanza para concluir que el algoritmo aprendió el equilibrio.
+
+\subsubsection*{Tres jugadores}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_rm_3jugadores.png}
+    \caption{Convergencia de Regret Matching en Cournot con 3 jugadores.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/convergencia_fp_3jugadores.png}
+    \caption{Convergencia de Fictitious Play en Cournot con 3 jugadores.}
+\end{figure}
+
+Al pasar de dos a tres firmas, el equilibrio por firma baja de $q=4$ a $q=3$. Esto es consistente con el modelo de Cournot: al haber más competidores, cada firma produce menos individualmente, pero la producción total del mercado aumenta. En esta configuración, FP converge de manera muy clara hacia $q=3$, mientras que RM también se mantiene cerca del equilibrio, aunque con más fluctuaciones en las cantidades y ganancias.
+
+\subsubsection*{Comparación final}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/comparacion_final_algoritmos.png}
+    \caption{Comparación final de algoritmos contra el equilibrio de Nash en Cournot.}
+\end{figure}
+
+La comparación final resume las diferencias entre algoritmos. En dos jugadores, RM y FP terminan exactamente en la cantidad de Nash $q=4$ y con ganancia cercana a $32$. En cambio, IQL y JAL-AM terminan alrededor de $q=3.5$ y con ganancias de aproximadamente $35$, mayores que la ganancia de Nash. Sin embargo, este resultado no representa un equilibrio, ya que si ambos producen por debajo de $q=4$, existe incentivo para que una firma aumente unilateralmente su producción.
+
+\subsubsection*{Observaciones}
+
+Los resultados de Cournot muestran que los algoritmos basados en teoría de juegos, especialmente FP y RM, capturan mejor la estructura estratégica del problema. Esto se debe a que el equilibrio depende directamente de responder de manera óptima a la cantidad esperada de los otros jugadores.
+
+Por otro lado, IQL y JAL-AM reflejan las dificultades del aprendizaje por refuerzo en entornos multiagente no estacionarios. Aunque JAL-AM incorpora modelado del oponente, en estos experimentos no logra estabilizarse en el equilibrio. En general, Cournot muestra que no basta con maximizar la recompensa observada: también es necesario evaluar si la política aprendida es estable frente a desviaciones unilaterales, que es precisamente la idea central del equilibrio de Nash.
 
 
 \section{Conclusion}
