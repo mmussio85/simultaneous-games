@@ -383,12 +383,6 @@ En el experimento de FP vs FP, ambos agentes convergen hacia el equilibrio de Na
     \caption{Histogramas FP vs Random en MP.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/fp_vs_random.png}
-    \caption{Reward y Comparación política promedio para FP vs Random.}
-\end{figure}
-
 Cuando FP se enfrenta a un agente aleatorio, el algoritmo logra explotar correctamente al oponente. Las recompensas se vuelven positivas para el agente FP, y los histogramas muestran una distribución de acciones que favorece la mejor respuesta frente a un oponente impredecible. Esto demuestra la capacidad de FP para adaptarse a diferentes tipos de oponentes, aunque en este caso el agente aleatorio no representa un desafío estratégico significativo.
 
 \subsubsection*{FP vs RM}
@@ -397,12 +391,6 @@ Cuando FP se enfrenta a un agente aleatorio, el algoritmo logra explotar correct
     \centering
     \includegraphics[width=\textwidth]{figures/MP/convergencia_FPvsRM.png}
     \caption{Convergencia FP vs RM en MP.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/histograma_FPvsRM.png}
-    \caption{Histogramas FP vs RM en MP.}
 \end{figure}
 
 \begin{figure}[H]
@@ -454,11 +442,6 @@ Como resultado, la política de cada agente no converge hacia un equilibrio esta
     \caption{Histogramas IQL vs JALAM en MP.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/iql_vs_jalam.png}
-    \caption{Reward y Comparación política promedio para IQL vs JALAM.}
-\end{figure}
 En el enfrentamiento entre IQL y JAL-AM, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. 
 
 Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL, lo que sugiere que el modelado explícito del oponente en JAL-AM ayuda a reducir parcialmente los efectos de la no estacionariedad.
@@ -475,12 +458,6 @@ Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL
     \centering
     \includegraphics[width=\textwidth]{figures/MP/histograma_IQLvsRandom.png}
     \caption{Histogramas IQL vs Random en MP.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/iql_vs_random.png}
-    \caption{Reward y Comparación política promedio para IQL vs Random.}
 \end{figure}
 
 Cuando IQL se enfrenta a un agente aleatorio, el algoritmo logra adaptarse parcialmente, obteniendo recompensas positivas en promedio. 
@@ -527,12 +504,6 @@ Los histogramas muestran una distribución de acciones que varía, aunque con un
     \caption{Histogramas RM vs Random en MP.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/rm_vs_random.png}
-    \caption{Reward y Comparación política promedio para RM vs Random.}
-\end{figure}
-
 Cuando RM se enfrenta a un agente aleatorio, el algoritmo logra explotar al oponente de manera efectiva. Las recompensas se vuelven positivas para el agente RM, y los histogramas muestran una distribución de acciones que favorece la mejor respuesta frente a un oponente impredecible. 
 
 Esto demuestra la capacidad de RM para adaptarse a diferentes tipos de oponentes, aunque en este caso el agente aleatorio no representa un desafío estratégico significativo.
@@ -560,12 +531,6 @@ Esto demuestra la capacidad de RM para adaptarse a diferentes tipos de oponentes
 En el enfrentamiento entre RM y RM, ambos algoritmos logran aproximar el equilibrio de Nash de manera rápida y estable. 
 
 Las recompensas oscilan alrededor de cero, y los histogramas indican que ambos agentes distribuyen sus acciones de manera uniforme, reflejando la naturaleza mixta del equilibrio. RM muestra una convergencia más rápida y estable que FP, lo que se traduce en una aproximación más eficiente hacia el equilibrio de Nash.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/MP/all_algos_comparison.png}
-    \caption{Reward y Comparación política promedio para RM vs RM.}
-\end{figure}
 
 Todos los agentes logran aproximar el equilibrio de Nash, aunque con diferentes velocidades y niveles de estabilidad. RM es el algoritmo que muestra la convergencia más rápida y estable, seguido por FP. 
 
@@ -603,12 +568,6 @@ La convergencia se da de manera relativamente rápida, y las recompensas oscilan
     \centering
     \includegraphics[width=\textwidth]{figures/Blotto/blotto_fp_vs_random.png}
     \caption{Convergencia FP vs Random en Blotto.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/Blotto/fp_vs_random.png}
-    \caption{Reward y Comparación política promedio para FP vs Random.}
 \end{figure}
 
 Debido a que el agente FP descubre la estrategia dominante (2, 2, 2), logra explotar al agente aleatorio, obteniendo recompensas cero en promedio. 
@@ -657,14 +616,8 @@ En el experimento de IQL vs IQL en Blotto, ambos agentes presentan un comportami
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_jalam.png}
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_jal_am.png}
     \caption{Convergencia IQL vs JALAM en Blotto.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/Blotto/iql_vs_jalam.png}
-    \caption{Reward y Comparación política promedio para IQL vs JALAM.}
 \end{figure}
 
 En el enfrentamiento entre IQL y JAL-AM en Blotto, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL.
@@ -700,7 +653,7 @@ En el enfrentamiento entre RM y RM en Blotto, ambos algoritmos logran aproximar 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Blotto/blotto_jalam_vs_jalam.png}
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_jal_am_vs_jal_am.png}
     \caption{Convergencia JALAM vs JALAM en Blotto.}
 \end{figure}
 
@@ -1317,10 +1270,9 @@ Sin embargo, la velocidad de convergencia no es igual. FP converge de forma limp
     \caption{Experimento mixto entre Regret Matching y Fictitious Play en Cournot.}
 \end{figure}
 
-En el experimento mixto entre RM y FP, ambos agentes convergen rápidamente hacia la cantidad de equilibrio $q^*=4$. De las graficas se puedo apreciar que RM se ajusta antes, mientras que FP necesita algunas iteraciones más para estabilizar su estimación de la estrategia del rival. 
+En el experimento mixto entre RM y FP, ambos agentes convergen rápidamente hacia la cantidad de equilibrio $q^*=4$. De las gráficas se puede apreciar que FP se estabiliza de forma más directa, mientras que RM presenta algunas oscilaciones iniciales antes de concentrar su política cerca del equilibrio.
 Aun así, ambos terminan produciendo cantidades cercanas al equilibrio de Nash.
-También se observa que el uso combinado de IQL y JAL-AM hace que los agentes lleguen más rápido a la zona del equilibrio de Nash. 
-Esto ocurre porque ambos algoritmos aportan información complementaria, por un lado IQL ajusta su política directamente a partir de la recompensa que recibe cada agente, mientras que JAL-AM incorpora un modelo del comportamiento del oponente y aprende valores asociados a acciones conjuntas. Al combinar ambos enfoques, el sistema puede explorar y corregir sus cantidades con mayor rapidez, acercándose antes a $q^*=4$.
+También se observa que el uso combinado de RM y FP no impide la convergencia. Esto ocurre porque ambos algoritmos actualizan sus decisiones a partir de información histórica del juego: FP estima la estrategia promedio del rival y responde a ella, mientras que RM ajusta sus probabilidades según el arrepentimiento acumulado por no haber elegido otras cantidades. Al interactuar entre sí, estas reglas de actualización llevan a que las cantidades se corrijan progresivamente hasta ubicarse cerca de $q^*=4$.
 
 \subsubsection*{Cournot con dos jugadores: algoritmos de aprendizaje por refuerzo multiagente (IQL y JAL-AM)}
 
@@ -1362,6 +1314,26 @@ Al pasar de dos a tres firmas, el equilibrio por firma baja de $q=4$ a $q=3$, ya
 
 La distribución de estrategias confirma este comportamiento. En ambos algoritmos, la mayor parte de la probabilidad se concentra alrededor de la cantidad de equilibrio $q^*=3$, lo que indica que las firmas aprendieron a producir cerca del valor esperado por el modelo de Cournot. Sin embargo, FP presenta una distribución más dispersa, con pequeñas probabilidades asignadas a cantidades alejadas del equilibrio. RM, en cambio, concentra con mayor fuerza la probabilidad cerca de $q=3$, aunque todavía aparecen diferencias entre firmas, especialmente en una de ellas, que asigna parte de su probabilidad a cantidades algo mayores. Esto muestra que ambos algoritmos capturan el equilibrio, pero no con el mismo grado de concentración estratégica.
 
+\paragraph*{Experimento Mixto: 2 FP + 1 RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/experimento_mixto_3j_2fp1rm.png}
+    \caption{Experimento mixto con dos firmas FP y una firma RM en Cournot con 3 jugadores.}
+\end{figure}
+
+También se evaluó una configuración mixta con dos firmas entrenadas mediante FP y una firma entrenada mediante RM. A diferencia de los experimentos homogéneos, donde FP y RM logran acercarse al equilibrio de Cournot, en este caso la interacción entre reglas de actualización distintas genera una dinámica más inestable. Las firmas no logran coordinarse de forma robusta alrededor de $q^*=3$ y las cantidades elegidas permanecen más dispersas durante el entrenamiento.
+
+Este resultado sugiere que, al pasar a tres jugadores, mezclar algoritmos puede amplificar la no estacionariedad del entorno. Cada firma actualiza su política a partir de señales históricas diferentes: FP responde a frecuencias observadas, mientras que RM ajusta sus probabilidades según arrepentimientos acumulados. Cuando estos mecanismos conviven en un mercado con tres firmas, las mejores respuestas cambian de forma más irregular y la convergencia se vuelve menos limpia que en self-play.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cournot/experimento_mixto_3j_1fp2rm.png}
+    \caption{Experimento mixto con una firma FP y dos firmas RM en Cournot con 3 jugadores.}
+\end{figure}
+
+Además, se probó la configuración inversa, con una firma FP y dos firmas RM. Los resultados fueron aún peores: ninguna de las firmas logró converger de manera estable al equilibrio. En esta variante, la presencia de dos agentes RM introduce ajustes simultáneos más fuertes sobre las probabilidades de acción, mientras que la firma FP intenta responder a un historial que cambia constantemente. Como consecuencia, las políticas no se estabilizan alrededor de una cantidad común y el sistema queda oscilando sin alcanzar una convergencia clara.
+
 \subsubsection*{Tres jugadores: mercado medio}
 
 Para evaluar si el comportamiento se mantiene al aumentar el tamaño del mercado, se probó una configuración intermedia con $a=50$, $b=1$, $c=10$, tres firmas y $51$ acciones posibles entre $0$ y $25$ unidades. En este caso, el equilibrio de Nash teórico es:
@@ -1392,11 +1364,9 @@ La cantidad total de equilibrio es $Q^*=30$, el precio de equilibrio es $P^*=20$
 
 En el mercado medio, RM logra concentrar la estrategia de las tres firmas exactamente alrededor de $q^*=10$. Esto muestra que el algoritmo sigue capturando correctamente la mejor respuesta aun cuando el espacio de acciones es más grande que en el experimento base.
 
-FP también logra llegar al equilibrio para las tres firmas, pero necesita más iteraciones para hacerlo. En el entrenamiento anterior, con $800$ iteraciones, una de las firmas todavía quedaba levemente desplazada hacia $q=9.5$. Al extender el entrenamiento a $1200$ iteraciones, esa asimetría desaparece y las tres políticas terminan concentrándose en $q^*=10$.
-Este punto es importante porque muestra que FP no estaba fallando en el mercado medio, sino que necesitaba más historial para estabilizar correctamente sus creencias sobre los rivales. Como FP responde a frecuencias acumuladas, cuando el espacio de acciones crece, las diferencias iniciales pueden tardar más en corregirse. Con suficientes iteraciones, la estimación histórica se ajusta y la mejor respuesta vuelve a coincidir con el equilibrio.
+FP también logra llegar al equilibrio para las tres firmas, pero necesita más iteraciones para hacerlo, esto se debe a que que necesitaba más historial para estabilizar correctamente sus creencias sobre los rivales. Como FP responde a frecuencias acumuladas, cuando el espacio de acciones crece, las diferencias iniciales pueden tardar más en corregirse. Con suficientes iteraciones, la estimación histórica se ajusta y la mejor respuesta vuelve a coincidir con el equilibrio.
 
 La figura de distribuciones de estrategia permite ver con más detalle cómo cada algoritmo asigna probabilidad a las distintas cantidades posibles.
-
 En el caso de RM, las tres firmas muestran picos muy concentrados sobre $q=10$, con prácticamente ninguna probabilidad asignada a otras cantidades. Esto significa que RM no solo se acerca al equilibrio en promedio, sino que prácticamente juega $q^*$ como estrategia pura, lo cual es consistente con la naturaleza del juego.
 
 En el caso de FP, la distribución final también queda concentrada sobre $q=10$ para las tres firmas. La diferencia respecto a RM está en la velocidad: RM se concentra antes, mientras que FP necesita acumular más observaciones para que las frecuencias históricas de los rivales dejen de estar sesgadas por las primeras iteraciones. Por eso, el paso de $800$ a $1200$ iteraciones cambia la lectura del resultado: con más entrenamiento, FP alcanza el equilibrio de Nash en todos sus agentes.
@@ -1440,6 +1410,8 @@ Los resultados de Cournot muestran que los algoritmos basados en teoría de jueg
 Al aumentar el tamaño del mercado, FP y RM mantienen el comportamiento esperado, pero la convergencia se vuelve más exigente. En el mercado medio ambos algoritmos se concentran en $q^*=10$. RM llega a ese comportamiento con mayor rapidez, mientras que FP necesita más de $800$ iteraciones y recién con $1200$ iteraciones logra estabilizar a las tres firmas exactamente en el equilibrio. En el mercado grande ocurre algo similar, las estrategias aprendidas se ubican alrededor de $q^*=22.5$, aunque aparecen más oscilaciones porque el espacio de acciones es mayor y pequeñas diferencias de cantidad afectan la producción total, el precio y las ganancias de todas las firmas.
 
 En particular, RM muestra una concentración más fuerte alrededor del equilibrio cuando el mercado crece, mientras que FP también se aproxima correctamente pero necesita más historial para ajustar su estimación de los rivales. Esto indica que ambos algoritmos escalan razonablemente a mercados más grandes, aunque el aumento del número de acciones hace que el aprendizaje sea menos limpio y más sensible a cantidades vecinas al equilibrio.
+
+Esta diferencia también se observa en las distribuciones finales de estrategia. FP suele asignar pequeñas probabilidades a varias cantidades, incluso algunas alejadas del equilibrio, porque su estimación se construye a partir de las frecuencias históricas de juego y conserva cierta influencia de las primeras iteraciones. RM, en cambio, tiende a concentrar más masa de probabilidad alrededor del equilibrio de Nash, ya que las acciones con menor arrepentimiento acumulado ganan peso y las cantidades menos convenientes van perdiendo probabilidad. Por lo tanto, en estos experimentos RM funciona mejor si se evalúa la concentración estratégica alrededor del equilibrio, aunque FP también logra aproximarlo correctamente.
 
 Los resultados de IQL y JAL-AM se interpretan como referencia secundaria, los mismos muestran que maximizar la recompensa observada no alcanza para garantizar estabilidad estratégica. En Cournot, lo central es verificar si la política aprendida permanece cerca de un equilibrio frente a desviaciones unilaterales.
 
