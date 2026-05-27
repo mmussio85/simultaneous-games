@@ -287,6 +287,392 @@ Matrices de utilidades $(u_0, u_1)$, donde las filas corresponden a \texttt{agen
 
 Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre cada uno de los ambientes descritos anteriormente. En todos los casos se utilizaron 20.000 episodios por experimento y 10 semillas aleatorias distintas, con el objetivo de obtener estimaciones estadísticamente robustas. Los resultados se presentan como el promedio sobre las semillas, acompañado de intervalos de confianza del 95\%.
 
+\subsection{Matching-Pennies}
+
+En Matching Pennies buscamos estudiar convergencias a equilibrios, historgramas y comparativas en enfrentamiento de agentes.
+
+
+\subsubsection*{FP vs FP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_FPvsFP.png}
+    \caption{Convergencia FP vs FP en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_FPvsFP.png}
+    \caption{Histogramas FP vs FP en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/fp_vs_fp.png}
+    \caption{Reward y Comparación política promedio para FP vs FP.}
+\end{figure}
+
+En el experimento de FP vs FP, ambos agentes convergen hacia el equilibrio de Nash esperado, que corresponde a una estrategia mixta uniforme. Las recompensas oscilan alrededor de cero, lo cual es consistente con un juego de suma cero. Los histogramas muestran que las acciones se distribuyen de manera uniforme a lo largo del entrenamiento, reflejando la naturaleza mixta del equilibrio.
+
+\subsubsection*{FP vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_FPvsRandom.png}
+    \caption{Convergencia FP vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_FPvsRandom.png}
+    \caption{Histogramas FP vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/fp_vs_random.png}
+    \caption{Reward y Comparación política promedio para FP vs Random.}
+\end{figure}
+
+Cuando FP se enfrenta a un agente aleatorio, el algoritmo logra explotar correctamente al oponente. Las recompensas se vuelven positivas para el agente FP, y los histogramas muestran una distribución de acciones que favorece la mejor respuesta frente a un oponente impredecible. Esto demuestra la capacidad de FP para adaptarse a diferentes tipos de oponentes, aunque en este caso el agente aleatorio no representa un desafío estratégico significativo.
+
+\subsubsection*{FP vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_FPvsRM.png}
+    \caption{Convergencia FP vs RM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_FPvsRM.png}
+    \caption{Histogramas FP vs RM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/fp_vs_rm.png}
+    \caption{Reward y Comparación política promedio para FP vs RM.}
+\end{figure}
+
+En el enfrentamiento entre FP y RM, ambos algoritmos logran aproximar el equilibrio de Nash, aunque RM muestra una convergencia más rápida y estable. Las recompensas oscilan alrededor de cero, y los histogramas indican que ambos agentes distribuyen sus acciones de manera uniforme, 
+
+reflejando la naturaleza mixta del equilibrio. Sin embargo, RM parece adaptarse más rápidamente a las estrategias de FP, lo que se traduce en una convergencia más rápida hacia el equilibrio.
+
+\subsubsection*{IQL vs IQL}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_IQLvsIQL.png}
+    \caption{Convergencia IQL vs IQL en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_IQLvsIQL.png}
+    \caption{Histogramas IQL vs IQL en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/iql_vs_iql.png}
+    \caption{Reward y Comparación política promedio para IQL vs IQL.}
+\end{figure}
+En el experimento de IQL vs IQL, ambos agentes presentan un comportamiento inestable. Las recompensas oscilan fuertemente durante todo el entrenamiento, y los histogramas muestran una distribución de acciones que varía considerablemente entre episodios. 
+
+Esto refleja el problema de no estacionariedad en el aprendizaje por refuerzo multiagente, donde cada agente asume que el entorno es estacionario mientras el oponente también está aprendiendo y modificando su estrategia. 
+
+Como resultado, la política de cada agente no converge hacia un equilibrio estable, sino que continúa fluctuando a lo largo del tiempo.
+
+\subsubsection*{IQL vs JALAM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_IQLvsJALAM.png}
+    \caption{Convergencia IQL vs JALAM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_IQLvsJALAM.png}
+    \caption{Histogramas IQL vs JALAM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/iql_vs_jalam.png}
+    \caption{Reward y Comparación política promedio para IQL vs JALAM.}
+\end{figure}
+En el enfrentamiento entre IQL y JAL-AM, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. 
+
+Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL, lo que sugiere que el modelado explícito del oponente en JAL-AM ayuda a reducir parcialmente los efectos de la no estacionariedad.
+
+\subsubsection*{IQL vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_IQLvsRandom.png}
+    \caption{Convergencia IQL vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_IQLvsRandom.png}
+    \caption{Histogramas IQL vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/iql_vs_random.png}
+    \caption{Reward y Comparación política promedio para IQL vs Random.}
+\end{figure}
+
+Cuando IQL se enfrenta a un agente aleatorio, el algoritmo logra adaptarse parcialmente, obteniendo recompensas positivas en promedio. 
+
+Sin embargo, la inestabilidad del aprendizaje por refuerzo multiagente sigue presente, y los histogramas muestran una distribución de acciones que varía considerablemente entre episodios. 
+
+Esto sugiere que aunque IQL puede explotar a un oponente aleatorio, la falta de modelado explícito del oponente y la asunción de estacionariedad limitan su capacidad para mantener una estrategia estable a lo largo del tiempo.
+
+\subsubsection*{JALAM vs JALAM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_JALAMvsJALAM.png}
+    \caption{Convergencia JALAM vs JALAM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_JALAMvsJALAM.png}
+    \caption{Histogramas JALAM vs JALAM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/jalam_vs_jalam.png}
+    \caption{Reward y Comparación política promedio para JALAM vs JALAM.}
+\end{figure}
+
+En el experimento de JAL-AM vs JAL-AM, ambos agentes logran adaptarse mutuamente, aunque todavía presentan cierta inestabilidad. Las recompensas oscilan, pero tienden a mantenerse alrededor de cero, lo que es consistente con un juego de suma cero. 
+
+Los histogramas muestran una distribución de acciones que varía, aunque con una tendencia a acercarse a la estrategia mixta del equilibrio de Nash.
+
+\subsubsection*{RM vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_RMvsRandom.png}
+    \caption{Convergencia RM vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_RMvsRandom.png}
+    \caption{Histogramas RM vs Random en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/rm_vs_random.png}
+    \caption{Reward y Comparación política promedio para RM vs Random.}
+\end{figure}
+
+Cuando RM se enfrenta a un agente aleatorio, el algoritmo logra explotar al oponente de manera efectiva. Las recompensas se vuelven positivas para el agente RM, y los histogramas muestran una distribución de acciones que favorece la mejor respuesta frente a un oponente impredecible. 
+
+Esto demuestra la capacidad de RM para adaptarse a diferentes tipos de oponentes, aunque en este caso el agente aleatorio no representa un desafío estratégico significativo.
+
+\subsubsection*{RM vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/convergencia_RMvsRM.png}
+    \caption{Convergencia RM vs RM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/histograma_RMvsRM.png}
+    \caption{Histogramas RM vs RM en MP.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/rm_vs_rm.png}
+    \caption{Reward y Comparación política promedio para RM vs RM.}
+\end{figure}
+
+En el enfrentamiento entre RM y RM, ambos algoritmos logran aproximar el equilibrio de Nash de manera rápida y estable. 
+
+Las recompensas oscilan alrededor de cero, y los histogramas indican que ambos agentes distribuyen sus acciones de manera uniforme, reflejando la naturaleza mixta del equilibrio. RM muestra una convergencia más rápida y estable que FP, lo que se traduce en una aproximación más eficiente hacia el equilibrio de Nash.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/MP/all_algos_comparison.png}
+    \caption{Reward y Comparación política promedio para RM vs RM.}
+\end{figure}
+
+Todos los agentes logran aproximar el equilibrio de Nash, aunque con diferentes velocidades y niveles de estabilidad. RM es el algoritmo que muestra la convergencia más rápida y estable, seguido por FP. 
+
+IQL presenta un comportamiento inestable debido a la no estacionariedad del entorno, mientras que JAL-AM logra mejorar respecto a IQL al incorporar modelado del oponente, aunque todavía presenta cierta inestabilidad.
+
+\subsubsection*{Conclusiones}
+En el ambiente de Matching Pennies, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia el equilibrio de Nash, con RM mostrando una convergencia más rápida y estable.
+Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad. 
+En general, los resultados reflejan las fortalezas y limitaciones de cada algoritmo en un entorno competitivo de suma cero, destacando la importancia de considerar la naturaleza del juego y el tipo de oponentes al seleccionar un enfoque de aprendizaje multiagente.
+
+\subsection{Blotto}
+
+Se realizaron experimentos en el ambiente de Blotto enfrentando a los algoritmos implementados entre sí y contra un agente aleatorio. El objetivo fue analizar la capacidad de adaptación estratégica y convergencia hacia equilibrios en un entorno con un espacio de acciones más complejo que Matching Pennies.
+
+\subsubsection*{FP vs FP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_fp_vs_fp.png}
+    \caption{Convergencia FP vs FP en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/fp_vs_fp.png}
+    \caption{Reward y Comparación política promedio para FP vs FP.}
+\end{figure}
+
+Evaluando ambos gráficos, el agente FP descubre (2, 2, 2) como una estrategia dominante, lo que sugiere que ambos agentes convergen hacia un equilibrio de Nash donde asignan recursos de manera uniforme entre los campos de batalla. 
+La convergencia se da de manera relativamente rápida, y las recompensas oscilan alrededor de cero, lo que es consistente con un juego de suma cero.
+
+\subsubsection*{FP vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_fp_vs_random.png}
+    \caption{Convergencia FP vs Random en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/fp_vs_random.png}
+    \caption{Reward y Comparación política promedio para FP vs Random.}
+\end{figure}
+
+Debido a que el agente FP descubre la estrategia dominante (2, 2, 2), logra explotar al agente aleatorio, obteniendo recompensas cero en promedio. 
+
+La política del agente FP se adapta para maximizar su recompensa frente a un oponente impredecible, mientras que el agente aleatorio no representa un desafío estratégico significativo.
+
+
+
+
+\subsubsection*{FP vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_fp_vs_rm.png}
+    \caption{Convergencia FP vs RM en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/fp_vs_rm.png}
+    \caption{Reward y Comparación política promedio para FP vs RM.}
+\end{figure}
+En el enfrentamiento entre FP y RM en Blotto, FP comverge hacia la estrategia dominante (2, 2, 2), mientras que RM muestra una convergencia más lenta y menos estable.
+
+Las recompensas tienden a cero, y la convergencia de la política promedio converge rapidamente hacia la politica dominante.
+
+
+
+\subsubsection*{IQL vs IQL}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_iql.png}
+    \caption{Convergencia IQL vs IQL en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/iql_vs_iql.png}
+    \caption{Reward y Comparación política promedio para IQL vs IQL.}
+\end{figure}
+
+En el experimento de IQL vs IQL en Blotto, ambos agentes presentan un comportamiento inestable, con recompensas que oscilan en cero durante todo el entrenamiento.
+
+\subsubsection*{IQL vs JALAM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_jalam.png}
+    \caption{Convergencia IQL vs JALAM en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/iql_vs_jalam.png}
+    \caption{Reward y Comparación política promedio para IQL vs JALAM.}
+\end{figure}
+
+En el enfrentamiento entre IQL y JAL-AM en Blotto, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL.
+
+\subsubsection*{IQL vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_random.png}
+    \caption{Convergencia IQL vs Random en Blotto.}
+\end{figure}
+
+
+Se observa un aprendizaje parcial por parte de IQL, aunque la inestabilidad sigue presente.
+
+\subsubsection*{RM vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_rm_vs_rm.png}
+    \caption{Convergencia RM vs RM en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/rm_vs_rm.png}
+    \caption{Reward y Comparación política promedio para RM vs RM.}
+\end{figure}
+
+En el enfrentamiento entre RM y RM en Blotto, ambos algoritmos logran aproximar la estrategia dominante de manera rápida y estable. Las recompensas oscilan alrededor de cero. 
+
+\subsubsection*{JALAM vs JALAM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/blotto_jalam_vs_jalam.png}
+    \caption{Convergencia JALAM vs JALAM en Blotto.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/jalam_vs_jalam.png}
+    \caption{Reward y Comparación política promedio para JALAM vs JALAM.}
+\end{figure}
+
+En esta partida, ambos agentes juegan muy mal, con recompensas oscilando en cero, pero sin mostrar una convergencia clara hacia la estrategia dominante. 
+
+Esto sugiere que el modelado explícito del oponente en JAL-AM no es suficiente para garantizar una convergencia estable en un entorno con un espacio de acciones más complejo como Blotto, especialmente cuando ambos agentes están aprendiendo simultáneamente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Blotto/simplex_trajectory.png}
+    \caption{Trayectoria de politica en simplex.}
+\end{figure}
+
+La figura muestra la rápida comvergencia que se da hacia la estrategia dominante (2, 2, 2) para ambos agentes, lo que es consistente con los resultados observados en los gráficos de recompensa y comparación de políticas.
+
+\subsubsection*{Conclusiones}
+En el ambiente de Blotto, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia la estrategia dominante, con RM mostrando una convergencia más rápida y estable. 
+
+Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad. En general, los resultados reflejan las fortalezas y limitaciones de cada algoritmo en un entorno competitivo con un espacio de acciones más complejo, destacando la importancia de considerar la naturaleza del juego y el tipo de oponentes al seleccionar un enfoque de aprendizaje multiagente.
+
+
 \subsection{Rock-Paper-Scissors}
 
 Rock-Paper-Scissors (RPS) es un juego de suma cero con dos agentes y tres acciones posibles: Rock (R), Paper (P) y Scissors (S). El único equilibrio de Nash del juego corresponde a la estrategia mixta uniforme $\pi^* = (1/3,\, 1/3,\, 1/3)$ para ambos jugadores.
