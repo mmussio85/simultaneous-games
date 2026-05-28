@@ -375,6 +375,8 @@ Matrices de utilidades $(u_0, u_1)$, donde las filas corresponden a \texttt{agen
 
 Para evaluar el desempeño de los algoritmos implementados, se realizaron experimentos sobre los ambientes descritos anteriormente. La cantidad de episodios, repeticiones y semillas aleatorias se ajustó según las características de cada ambiente y el objetivo de cada análisis. En algunos casos se priorizó estudiar la trayectoria de aprendizaje de una ejecución representativa, mientras que en otros se utilizaron múltiples semillas para obtener resultados promedio y reducir el efecto de la aleatoriedad. Cuando corresponde, las curvas se reportan como promedios sobre distintas ejecuciones y se acompañan con medidas de variabilidad.
 
+Vale aclarar que para el caso de gráficos de convergencia e histogramas de acciones, la semilla es fija para cada episodio, mientras que para el resto de los gráficos se optó por promediar sobre distintas semillas para obtener una visión más general del comportamiento de los algoritmos.
+
 \subsection{Matching-Pennies}
 
 En Matching Pennies buscamos estudiar convergencias a equilibrios, historgramas y comparativas en enfrentamiento de agentes.
@@ -461,18 +463,18 @@ Esto refleja el problema de no estacionariedad en el aprendizaje por refuerzo mu
 
 Como resultado, la política de cada agente no converge hacia un equilibrio estable, sino que continúa fluctuando a lo largo del tiempo.
 
-\subsubsection*{IQL vs JALAM}
+\subsubsection*{IQL vs JAL-AM}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/MP/convergencia_IQLvsJALAM.png}
-    \caption{Convergencia IQL vs JALAM en MP.}
+    \caption{Convergencia IQL vs JAL-AM en MP.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/MP/histograma_IQLvsJALAM.png}
-    \caption{Histogramas IQL vs JALAM en MP.}
+    \caption{Histogramas IQL vs JAL-AM en MP.}
 \end{figure}
 
 En el enfrentamiento entre IQL y JAL-AM, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. 
@@ -499,7 +501,7 @@ Sin embargo, la inestabilidad del aprendizaje por refuerzo multiagente sigue pre
 
 Esto sugiere que aunque IQL puede explotar a un oponente aleatorio, la falta de modelado explícito del oponente y la asunción de estacionariedad limitan su capacidad para mantener una estrategia estable a lo largo del tiempo.
 
-\subsubsection*{JALAM vs JALAM}
+\subsubsection*{JAL-AM vs JAL-AM}
 
 \begin{figure}[H]
     \centering
@@ -571,7 +573,9 @@ IQL presenta un comportamiento inestable debido a la no estacionariedad del ento
 
 \subsubsection*{Conclusiones}
 En el ambiente de Matching Pennies, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia el equilibrio de Nash, con RM mostrando una convergencia más rápida y estable.
+
 Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad. 
+
 En general, los resultados reflejan las fortalezas y limitaciones de cada algoritmo en un entorno competitivo de suma cero, destacando la importancia de considerar la naturaleza del juego y el tipo de oponentes al seleccionar un enfoque de aprendizaje multiagente.
 
 \subsection{Blotto}
@@ -645,12 +649,12 @@ Las recompensas tienden a cero, y la convergencia de la política promedio conve
 
 En el experimento de IQL vs IQL en Blotto, ambos agentes presentan un comportamiento inestable, con recompensas que oscilan en cero durante todo el entrenamiento.
 
-\subsubsection*{IQL vs JALAM}
+\subsubsection*{IQL vs JAL-AM}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/Blotto/blotto_iql_vs_jal_am.png}
-    \caption{Convergencia IQL vs JALAM en Blotto.}
+    \caption{Convergencia IQL vs JAL-AM en Blotto.}
 \end{figure}
 
 En el enfrentamiento entre IQL y JAL-AM en Blotto, se observa que JAL-AM logra adaptarse mejor a las estrategias de IQL, aunque ambos agentes siguen mostrando un comportamiento inestable. Las recompensas oscilan, pero JAL-AM tiende a obtener mejores resultados que IQL.
@@ -682,12 +686,12 @@ Se observa un aprendizaje parcial por parte de IQL, aunque la inestabilidad sigu
 
 En el enfrentamiento entre RM y RM en Blotto, ambos algoritmos logran aproximar la estrategia dominante de manera rápida y estable. Las recompensas oscilan alrededor de cero. 
 
-\subsubsection*{JALAM vs JALAM}
+\subsubsection*{JAL-AM vs JAL-AM}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/Blotto/blotto_jal_am_vs_jal_am.png}
-    \caption{Convergencia JALAM vs JALAM en Blotto.}
+    \caption{Convergencia JAL-AM vs JAL-AM en Blotto.}
 \end{figure}
 
 \begin{figure}[H]
@@ -706,7 +710,7 @@ Esto sugiere que el modelado explícito del oponente en JAL-AM no es suficiente 
     \caption{Trayectoria de politica en simplex.}
 \end{figure}
 
-La figura muestra la rápida comvergencia que se da hacia la estrategia dominante (2, 2, 2) para ambos agentes, lo que es consistente con los resultados observados en los gráficos de recompensa y comparación de políticas.
+La figura muestra la rápida convergencia que se da hacia la estrategia dominante (2, 2, 2) para ambos agentes, lo que es consistente con los resultados observados en los gráficos de recompensa y comparación de políticas.
 
 \subsubsection*{Conclusiones}
 En el ambiente de Blotto, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia la estrategia dominante, con RM mostrando una convergencia más rápida y estable. 
@@ -992,7 +996,7 @@ En el histograma se ve que RM elige consistentemente la acción de "no ceder", m
     \caption{Reward y Comparación política promedio para RM vs RM en Chicken.}
 \end{figure}
 
-La comvergencia de los agentes fue buena(tendiendo a uno de los equilibrios puros), aunque con más oscilación que FP vs FP. 
+La convergencia de los agentes fue buena(tendiendo a uno de los equilibrios puros), aunque con más oscilación que FP vs FP. 
 
 Esto también se ve reflado en las rewards, en donde el intervalo va de 1 a 6, a fiderencia del 2 a 7 en FP, y esto se debe a las oscilaciones anteriormente mencionadas, las que reducen la taza de rewards, por ejemplo en escenarios de S y S.
 
@@ -1739,6 +1743,7 @@ RM tiende a concentrar más la probabilidad alrededor del equilibrio de Nash, mi
 
 Los resultados de IQL y JAL-AM se interpretan como referencia secundaria, los mismos muestran que maximizar la recompensa observada no alcanza para garantizar estabilidad estratégica. En Cournot, lo central es verificar si la política aprendida permanece cerca de un equilibrio frente a desviaciones unilaterales.
 
+Otra observación interesante es que en general los agentes no han capturado equilibrios no puros, aunque esta situación si nos ocurrió una vez en BoS, sin embargo, tras re ejecutar el notebook en reiteradas ocaciones, no pudimos reproducir el escenario.
 
 \clearpage
 \section{Conclusion}
