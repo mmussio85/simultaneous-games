@@ -680,6 +680,349 @@ En el ambiente de Blotto, los algoritmos FP y RM demostraron una capacidad sóli
 
 Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad. En general, los resultados reflejan las fortalezas y limitaciones de cada algoritmo en un entorno competitivo con un espacio de acciones más complejo, destacando la importancia de considerar la naturaleza del juego y el tipo de oponentes al seleccionar un enfoque de aprendizaje multiagente.
 
+\subsection{Battle-Of-Sexes}
+
+\subsubsection*{FP vs FP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_fp_vs_fp.png}
+    \caption{Convergencia FP vs FP en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_fp_vs_fp.png}
+    \caption{Histograma de acciones para FP vs FP en Battle of Sexes.}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/fp_vs_fp.png}
+    \caption{Reward y Comparación política promedio para FP vs FP.}
+\end{figure}
+
+En el experimento de FP vs FP en Battle of Sexes, ambos agentes convergen hacia uno de los dos equilibrios de Nash puros, donde ambos eligen la misma acción (Cine o Partido).
+
+El reward ~1.25 (entre 0 y 2) con banda ancha sugiere que en distintas corridas/episodios los agentes coordinan en diferentes equilibrios puros, o hay oscilación transitoria antes de converger.
+
+Según podemos ver en el histograma, ambos agentes terminan eligiendo la misma acción con alta frecuencia, lo que indica que logran coordinarse exitosamente a la hora de buscar un equilibrio.
+
+\subsubsection*{FP vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_fp_vs_random.png}
+    \caption{Convergencia FP vs Random en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_fp_vs_random.png}
+    \caption{Histograma de acciones para FP vs Random en Battle of Sexes.}
+\end{figure}
+
+
+El agente random no adapta su comportamiento, por lo que FP lo "lee" y encuentra la mejor respuesta pura. Esto muestra que FP es un algoritmo racional ante oponentes estáticos.
+
+la curva es suave y monótona, lo que refleja que FP necesita acumular suficiente evidencia estadística antes de comprometerse con la acción dominante.
+
+Según los histogramas, el agente Random elige ambas acciones con frecuencia similar, mientras que el agente FP termina eligiendo consistentemente la acción que le da mayor recompensa frente a un oponente impredecible.
+
+\subsubsection*{FP vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_fp_vs_rm.png}
+    \caption{Histograma de acciones para FP vs RM en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/fp_vs_rm.png}
+    \caption{Reward y Comparación política promedio para FP vs RM en Battle of Sexes.}
+\end{figure}
+
+Observando la convergencia con respecto a la politica promedio, se ve que ambos agentes convergen rápidamente al equilibrio (cine, cine). 
+
+Comparado con FP vs FP (~1.25), el reward es significativamente mayor, como así la convergencia más rápida. Esto ocurre porque el oponente no adapta su estrategia, permitiendo que agent_0 explote consistentemente la mejor respuesta pura (Cine).
+
+\subsubsection*{IQL vs IQL}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_iql_vs_iql.png}
+    \caption{Convergencia IQL vs IQL en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_iql_vs_iql.png}
+    \caption{Histograma de acciones para IQL vs IQL en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/iql_vs_iql.png}
+    \caption{Reward y Comparación política promedio para IQL vs IQL en Battle of Sexes.}
+\end{figure}
+
+
+En el experimento de IQL vs IQL en Battle of Sexes,ambos agentes presentan un comportamiento inestable. Aparente contradicción con el gráfico de convergencia
+
+El histograma muestra Cine dominante, mientras que el gráfico de política termina cerca de 0. La explicación: el histograma acumula todas las rondas — y durante la fase temprana (rondas 1–500), ambos agentes jugaron Cine frecuentemente con alta exploración (epsilon alto). Esas primeras rondas aportan la mayoría de los 9791 Cines, aunque la política final apunte a Partido.
+
+\subsubsection*{IQL vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_iql_vs_random.png}
+    \caption{Convergencia IQL vs Random en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_iql_vs_random.png}
+    \caption{Histograma de acciones para IQL vs Random en Battle of Sexes.}
+\end{figure}
+
+IQL identifica correctamente que Cine es la mejor respuesta ante un oponente Random, pero no garantiza convergencia estable — la exploración y la tasa de aprendizaje generan oscilación post-convergencia.
+
+
+\subsubsection*{RM vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_rm_vs_rm.png}
+    \caption{Convergencia RM vs RM en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_rm_vs_rm.png}
+    \caption{Histograma de acciones para RM vs RM en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/rm_vs_rm.png}
+    \caption{Reward y Comparación política promedio para RM vs RM en Battle of Sexes.}
+\end{figure}
+
+RM vs RM converge rápidamente y de forma estable a un NE puro, logrando coordinación perfecta. 
+
+El histograma muestra que ambos agentes eligen la misma acción (Cine) con alta frecuencia, lo que indica una coordinación exitosa.
+
+La Reward promedio es un número cercano a 1.4, lo cual es consistente ya que es un número entre 1 y 2, dependiendo de la frecuencia con la que ambos agentes elijan Cine (2) o Partido (1).
+
+\subsubsection*{RM vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_rm_vs_random.png}
+    \caption{Convergencia RM vs Random en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_rm_vs_random.png}
+    \caption{Histograma de acciones para RM vs Random en Battle of Sexes.}
+\end{figure}
+
+Este experimento es el que muestra convergencia más rápida de todas, La rigidez del oponente aleatorio (0.5 fijo) convierte el problema de aprendizaje en casi trivial para RM.
+
+El histograma muestra que el agente RM elige consistentemente la acción que le da mayor recompensa frente a un oponente impredecible, mientras que el agente aleatorio elige ambas acciones con frecuencia similar. Esto demuestra la capacidad de RM para adaptarse a diferentes tipos de oponentes, aunque en este caso el agente aleatorio no representa un desafío estratégico significativo.
+
+\subsubsection*{JAL-AM vs JAL-AM}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_jal_vs_jal.png}
+    \caption{Convergencia JALAM vs JALAM en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/bos_histogram_jal-am_vs_jal-am.png}
+    \caption{Histograma de acciones para JALAM vs JALAM en Battle of Sexes.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/jalam_vs_jalam.png}
+    \caption{Reward y Comparación política promedio para JALAM vs JALAM en Battle of Sexes.}
+\end{figure}
+
+JAL-AM en BoS exhibe una inestabilidad muy alta debido a la naturaleza del juego y a la dinámica de aprendizaje. Aunque ambos agentes logran adaptarse mutuamente, las recompensas oscilan considerablemente, lo que sugiere que no logran coordinarse de manera consistente en uno de los equilibrios puros.
+
+El histograma muestra que ambos agentes eligen ambas acciones con frecuencia, lo que indica una falta de coordinación estable. La Reward promedio es un número cercano a 1 pero con mucha variabilidad, lo que refleja la oscilación entre los equilibrios puros.
+
+\subsubsection*{Comparativa de rewards}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/BoS/rewards_comparison.png}
+    \caption{Comparativa de rewards para todos los enfrentamientos en Battle of Sexes.}
+\end{figure}
+
+Todos los experimentos producen rewards ≥ 1.20 para ambos agentes, muy por encima del equilibrio mixto (línea azul 0.667). Esto confirma que todos los algoritmos logran algún grado de coordinación en Equilibrios de Nash puros, que son más eficientes que mezclar aleatoriamente.
+
+Considerando las rewards para ambos agentes, destacan RM vs FP y RM vs RM, como los experimientos que recolectan más rewards en forma combinada.
+
+\subsubsection*{Conclusiones}
+En el ambiente de Battle of Sexes, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia equilibrios de Nash puros, con RM mostrando una convergencia más rápida y estable. Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad.
+
+
+\subsection{Chicken}
+
+\subsubsection*{FP vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_fp_vs_random.png}
+    \caption{Convergencia FP vs Random en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_fp_vs_random.png}
+    \caption{Histograma de acciones para FP vs Random en Chicken.}
+\end{figure}
+
+FP aprende a "no ceder" porque sabe que el oponente aleatorio cederá el 50% de las veces,  más de lo necesario para que L sea rentable. Esto muestra que FP es un algoritmo racional ante oponentes estáticos.
+
+El histograma muestra que el agente Random elige ambas acciones con frecuencia similar, mientras que el agente FP termina eligiendo consistentemente la acción de "no ceder", lo que demuestra la capacidad de FP para adaptarse a diferentes tipos de oponentes.
+
+\subsubsection*{FP vs FP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_fp.png}
+    \caption{Convergencia FP vs FP en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_fp_vs_fp.png}
+    \caption{Histograma de acciones para FP vs FP en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/fp_vs_fp.png}
+    \caption{Reward y Comparación política promedio para FP vs FP en Chicken.}
+\end{figure}
+
+FP converge rápidamente a un equilibrio puro(agente_0 cede y agente_1 no cede), el equilibrio se construye en forma coordinada por ambos agentes.
+
+En terminos de reward acumuladas, la reward ~4.5 dento de un intervalo entre 2 y 7, lo cual tiene sentido porque son las ganancias de los agentes cuando se alcanzan equilibrios puros. 
+
+El histiograma muerstra una marcada tendencia del agente_0 a elegir "ceder" y del agente_1 a elegir "no ceder.
+
+\subsubsection*{RM vs Random}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_rm_vs_random.png}
+    \caption{Convergencia RM vs Random en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_rm_vs_random.png}
+    \caption{Histograma de acciones para RM vs Random en Chicken.}
+\end{figure}
+
+RM elije ceder, ya que el agente aleatorio al sortear ceder y no ceder al 50%,hace que ceder sea la mejor respuesta en promedio.
+
+En el histograma se ve que RM elige consistentemente la acción de "no ceder", mientras que el agente aleatorio elige ambas acciones con frecuencia similar. 
+
+
+\subsubsection*{RM vs RM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_rm.png}
+    \caption{Convergencia RM vs RM en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_rm_vs_rm.png}
+    \caption{Histograma de acciones para RM vs RM en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/rm_vs_rm.png}
+    \caption{Reward y Comparación política promedio para RM vs RM en Chicken.}
+\end{figure}
+
+La comvergencia de los agentes fue buena(tendiendo a uno de los equilibrios puros), aunque con más oscilación que FP vs FP. 
+
+Esto también se ve reflado en las rewards, en donde el intervalo va de 1 a 6, a fiderencia del 2 a 7 en FP, y esto se debe a las oscilaciones anteriormente mencionadas, las que reducen la taza de rewards, por ejemplo en escenarios de S y S.
+
+\subsubsection*{IQL vs IQL}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_iql_vs_iql.png}
+    \caption{Histograma de acciones para IQL vs IQL en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/iql_vs_iql.png}
+    \caption{Reward y Comparación política promedio para IQL vs IQL en Chicken.}
+\end{figure}
+
+Los agentes IQL nunca converge a equilibrios ni puros ni mixtos, ya que cada agente tiene a elegir L, pero la ganancia es considerablemente alta, ya que (L,L) paga 6 a cada agente.
+
+De todas maneras, IQL falla en su objetivo de alcanzar un equilibrio.
+
+\subsubsection*{JAL-AM vs JAL-AM}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_jal_am_vs_jal_am.png}
+    \caption{Histograma de acciones para JAL-AM vs JAL-AM en Chicken.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/jal_am_vs_jal_am.png}
+    \caption{Reward y Comparación política promedio para JAL-AM vs JAL-AM en Chicken.}
+\end{figure}
+
+JAL-AM en Chicken el agente_0 aprende a ser consistentemente agresivo (L), agente_1 mezcla hacia S. Sin embargo, no converge a ningún equilibrio de Nash puro ni al mixto, y el reward oscila permanentemente. La modelización de acciones conjuntas crea la asimetría observada, pero el mecanismo de promedio no logra estabilizar el sistema en un equilibrio.
+
+\subsubsection*{Comparación de rewards}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/reward_comparison.png}
+    \caption{Comparación de rewards para JAL-AM vs JAL-AM en Chicken.}
+\end{figure}
+
+En Chicken, la capacidad de romper la simetría y asignar acciones diferenciadas (L y S) determina el reward. FP lo logra deterministamente y de forma equitativa; IQL lo logra caóticamente pero con buen resultado; RM y JALAM lo logran pero de forma asimétrica, siempre favoreciendo a agente_1.
+
+\subsubsection*{Juegos cruzados}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Chicken/cross_play.png}
+    \caption{Juegos cruzados en Chicken.}
+\end{figure}
+
+En los juegos cruzados, FP y RM logran coordinarse exitosamente, mientras que IQL y JAL-AM presentan comportamientos más erráticos. Esto resalta la importancia de la estabilidad y la capacidad de adaptación en entornos multiagente competitivos.
+
+\subsubsection*{Conclusiones}
+En el ambiente de Chicken, los algoritmos FP y RM demostraron una capacidad sólida para converger hacia equilibrios de Nash puros, con FP mostrando una convergencia más rápida y estable. 
+
+Por otro lado, IQL presentó un comportamiento inestable debido a la no estacionariedad del entorno, aunque logró adaptarse parcialmente a oponentes aleatorios. JAL-AM mostró una mejora respecto a IQL al incorporar modelado del oponente, aunque todavía presentó cierta inestabilidad. 
+
+En general, los resultados reflejan las fortalezas y limitaciones de cada algoritmo en un entorno competitivo con múltiples equilibrios, destacando la importancia de considerar la naturaleza del juego y el tipo de oponentes al seleccionar un enfoque de aprendizaje multiagente.
 
 \subsection{Rock-Paper-Scissors}
 
