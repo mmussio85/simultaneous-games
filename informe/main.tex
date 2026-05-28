@@ -74,14 +74,9 @@ Los sistemas multiagente (Multi-Agent Systems, MAS) constituyen un área de estu
 
 En MARL, cada agente observa el estado del entorno, ejecuta acciones y recibe recompensas que guían el proceso de aprendizaje. Sin embargo, a diferencia del caso single-agent, la presencia de múltiples agentes introduce desafíos adicionales, tales como la no estacionariedad del entorno, la necesidad de coordinación y la existencia de equilibrios estratégicos. Debido a esto, muchos algoritmos de aprendizaje multiagente combinan conceptos provenientes tanto del aprendizaje por refuerzo como de la teoría de juegos.
 
-El objetivo de este trabajo es implementar y analizar distintos algoritmos clásicos de aprendizaje multiagente, evaluando su comportamiento en diversos ambientes competitivos y cooperativos. En particular, se implementaron los siguientes algoritmos:
+El objetivo de este trabajo es implementar y analizar distintos algoritmos clásicos de aprendizaje multiagente, evaluando su comportamiento en diversos ambientes competitivos y cooperativos. Para ello, se desarrollaron implementaciones de Fictitious Play (FP), Regret Matching (RM), Independent Q-Learning (IQL) y Joint-Action Learning with Agent Modeling (JAL-AM).
 
-\begin{itemize}
-    \item Fictitious Play (FP)
-    \item Regret Matching (RM)
-    \item Independent Q-Learning (IQL)
-    \item Joint-Action Learning with Agent Modeling (JAL-AM)
-\end{itemize}
+El código utilizado para los experimentos se encuentra disponible públicamente en el repositorio \href{https://github.com/mmussio85/simultaneous-games}{\texttt{mmussio85/simultaneous-games}}.
 
 De acuerdo con la consigna del obligatorio, los algoritmos fueron validados utilizando diferentes ambientes de prueba, incluyendo Matching Pennies, Rock-Paper-Scissors (RPS), Blotto y Foraging. Asimismo, se realizaron múltiples experimentos enfrentando distintos agentes entre sí, por ejemplo FP vs FP, FP vs RM e IQL vs IQL, con el objetivo de analizar propiedades como convergencia, estabilidad, capacidad de coordinación y adaptación estratégica.
 
@@ -89,6 +84,7 @@ Los ambientes seleccionados permiten estudiar diferentes tipos de interacción m
 
 El informe se encuentra organizado de la siguiente manera. En primer lugar, se presenta el marco teórico necesario sobre sistemas multiagente, aprendizaje por refuerzo y teoría de juegos. Luego, se describen los algoritmos implementados y los ambientes utilizados. Posteriormente, se detallan los aspectos de implementación y el diseño experimental empleado para evaluar los algoritmos. Finalmente, se presentan y analizan los resultados obtenidos, discutiendo las fortalezas y limitaciones observadas en cada enfoque.
 
+\clearpage
 \section{Marco Teórico}
 
 \subsection{Aprendizaje por Refuerzo Multiagente}
@@ -99,18 +95,13 @@ A diferencia del aprendizaje por refuerzo tradicional, en MARL el entorno se vue
 
 \subsection{Juegos Simultáneos}
 
-En este trabajo se consideran principalmente juegos simultáneos, donde todos los agentes seleccionan sus acciones al mismo tiempo.
-
-Un juego puede representarse mediante:
+En este trabajo se consideran principalmente juegos simultáneos, donde todos los agentes seleccionan sus acciones al mismo tiempo. Un juego puede representarse mediante:
 
 \[
 G = (I, A, R)
 \]
 
-\begin{itemize}
-    \item $I$ es el conjunto de jugadores.
-    \item $A$ representa las acciones disponibles.
-    \item $R$ representa las recompensas asociadas a las acciones conjuntas.
+Donde \textit{I}  es el conjunto de jugadores, \textit{A} representa las acciones disponiblesy \textit{R} representa las recompensas asociadas a las acciones conjuntas.
 \end{itemize}
 
 \subsubsection{Equilibrio de Nash}
@@ -153,6 +144,7 @@ Joint-Action Learning with Agent Modeling (JAL-AM) extiende Q-Learning incorpora
 Q(s,a_i,a_{-i})
 \]
 
+\clearpage
 \section{Ambientes}
 
 Con el objetivo de evaluar el comportamiento de los algoritmos implementados, se realizaron experimentos sobre distintos ambientes competitivos y cooperativos. Cada ambiente presenta características diferentes, permitiendo analizar propiedades como convergencia, estabilidad, adaptación estratégica y coordinación entre agentes.
@@ -179,7 +171,7 @@ Este ambiente resulta útil para analizar convergencia hacia estrategias mixtas 
 
 \subsection{Rock-Paper-Scissors}
 
-Rock-Paper-Scissors (RPS) es un juego simultáneo de suma cero donde cada jugador puede seleccionar una de tres acciones: Rock, Paper o Scissors.
+Rock-Paper-Scissors (RPS) es un juego simultáneo de suma cero con dos agentes y tres acciones posibles: Rock (R), Paper (P) y Scissors (S).
 
 Las reglas son las siguientes:
 
@@ -201,7 +193,7 @@ S & (-1,1) & (1,-1) & (0,0)
 \end{array}
 \]
 
-El equilibrio de Nash de este juego corresponde a una estrategia mixta uniforme.
+El único equilibrio de Nash del juego corresponde a la estrategia mixta uniforme $\pi^* = (1/3,\, 1/3,\, 1/3)$ para ambos jugadores. Por este motivo, este ambiente resulta útil para evaluar si los algoritmos logran aproximarse a una política balanceada y si las recompensas se mantienen alrededor de cero en el largo plazo.
 
 
 \subsection{Blotto}
@@ -236,6 +228,25 @@ Configuración & \texttt{agent\_0} & \texttt{agent\_1} & \texttt{agent\_2} & Per
 
 En esta notación, \texttt{agent\_0} elige entre \textit{Top} (T) y \textit{Bottom} (B), \texttt{agent\_1} elige entre \textit{Left} (L) y \textit{Right} (R), y \texttt{agent\_2} elige entre \textit{West} (W), \textit{East} (E) y, en las configuraciones 3 y 4, \textit{North} (N).
 
+\begin{table}[H]
+\centering
+\begin{tabular}{c|p{4.2cm}|p{2.2cm}|p{6.2cm}}
+\hline
+Config. & Equilibrios de Nash & Pagos & Observación principal \\
+\hline
+1 & $(B,R,W)$ & $(3,4,2)$ & Equilibrio puro claro; se espera concentración en una acción por agente. \\
+2 & $(B,L,W)$ y $(B,L,E)$ & $(1,1,1)$ & \texttt{agent\_2} puede mezclar entre $W$ y $E$ sin salir del equilibrio. \\
+3 & $(T,R,W)$, $(T,R,N)$, $(B,L,W)$ y $(B,L,N)$ & Bajos o desbalanceados & Equilibrios puros débiles; no se espera convergencia limpia. \\
+4 & $(B,L,W)$ y $(B,L,N)$ & $(1,1,1)$ & \texttt{agent\_2} puede mezclar entre $W$ y $N$ dentro del equilibrio. \\
+\hline
+\end{tabular}
+\caption{Resumen estratégico de las configuraciones de Three-Player Game.}
+\end{table}
+
+En algunas configuraciones, un agente puede tener más de una acción equivalente dentro del equilibrio. En ese caso, no necesariamente se espera que una acción tenga probabilidad $1$ y las demás probabilidad $0$: el agente puede mantener probabilidad positiva en varias acciones sin dejar de estar en equilibrio de Nash. Además, como las gráficas resumen entrenamientos promedio, también puede ocurrir que distintas ejecuciones terminen cerca de equilibrios distintos, haciendo que el promedio no llegue exactamente a $1$ en una sola acción.
+
+\subsubsection*{Configuración 1}
+
 La matriz de pagos utilizada corresponde a la configuración 1 del ambiente. Las filas representan las acciones de \texttt{agent\_0}, las columnas las acciones de \texttt{agent\_1}, y cada tabla fija la acción de \texttt{agent\_2}.
 
 \[
@@ -257,6 +268,18 @@ B & (1,6,1) & (0,0,1)
 \]
 
 El equilibrio de Nash puro se encuentra en el perfil $(B,R,W)$, con pagos $(3,4,2)$. Ningún agente puede mejorar unilateralmente desviándose de esa acción mientras los demás mantienen su estrategia. Por este motivo, la evaluación del ambiente se centra en la probabilidad asignada por cada agente a su acción de equilibrio y en la distancia de la política aprendida respecto al equilibrio.
+
+\subsubsection*{Configuración 2}
+
+En la configuración 2, el juego mantiene dos acciones por agente. Los perfiles $(B,L,W)$ y $(B,L,E)$ son equilibrios de Nash puros con pagos $(1,1,1)$. Además, como para \texttt{agent\_2} las acciones $W$ y $E$ dan el mismo pago cuando los otros agentes juegan $(B,L)$, cualquier mezcla entre $W$ y $E$ también es compatible con un equilibrio: \texttt{agent\_0} juega $B$, \texttt{agent\_1} juega $L$ y \texttt{agent\_2} puede repartir probabilidad entre $W$ y $E$. También existen perfiles con recompensa conjunta mayor, como $(T,R,W)$ y $(T,R,E)$, que entregan pagos $(3,3,3)$, pero no son equilibrios de Nash porque algún agente puede mejorar desviándose unilateralmente.
+
+\subsubsection*{Configuración 3}
+
+La configuración 3 aumenta la complejidad porque \texttt{agent\_2} tiene tres acciones: $W$, $E$ y $N$. En esta matriz aparecen perfiles con pagos altos, por ejemplo $(T,L,E)$ y $(B,R,E)$ con pagos $(2,2,2)$, pero no son equilibrios puros porque \texttt{agent\_2} puede desviarse para obtener una recompensa mayor. La matriz también contiene varios equilibrios puros débiles, como $(T,R,W)$, $(T,R,N)$, $(B,L,W)$ y $(B,L,N)$, pero estos perfiles tienen pagos bajos o desbalanceados y muchas indiferencias. Por este motivo, no se espera una convergencia tan limpia como en las configuraciones con equilibrio puro claro y atractivo.
+
+\subsubsection*{Configuración 4}
+
+La configuración 4 también utiliza tres acciones para \texttt{agent\_2}, pero modifica varios pagos respecto a la configuración 3 e introduce mayor asimetría entre los agentes. Sus equilibrios de Nash puros son $(B,L,W)$ y $(B,L,N)$, ambos con pagos $(1,1,1)$. Al igual que en la configuración 2, hay una parte común en los equilibrios: \texttt{agent\_0} debe jugar $B$ y \texttt{agent\_1} debe jugar $L$. Para \texttt{agent\_2}, las acciones $W$ y $N$ son equivalentes dentro del equilibrio, mientras que $E$ no forma parte de esos perfiles de equilibrio.
 
 
 \subsection{Foraging}
@@ -282,7 +305,7 @@ El ambiente permite estudiar coordinación, competencia por recursos escasos y c
     \caption{Configuraciones evaluadas del ambiente Foraging.}
 \end{table}
 
-La evaluación de Foraging se basa principalmente en métricas de desempeño: recompensa promedio por episodio, cantidad promedio de pasos hasta recolectar la comida y distribución de recompensas entre agentes.
+En los experimentos de Foraging se evaluaron IQL y JAL-AM, ya que ambos algoritmos permiten aprender políticas dependientes del estado. A diferencia de los juegos matriciales, este ambiente no se evalúa mediante una distancia directa a un equilibrio de Nash conocido, sino usando métricas de aprendizaje por refuerzo: recompensa promedio por episodio, cantidad promedio de pasos hasta recolectar la comida y distribución de recompensas entre agentes.
 
 Además, como es un juego multiagente, también interesa analizar la estabilidad de las políticas aprendidas en relación con el equilibrio de Nash. En este caso no hay un equilibrio simple y conocido como en RPS, porque el juego tiene estados y se desarrolla a lo largo de varios pasos. Por eso, se evalúa de forma empírica si los agentes logran coordinarse y si alguno podría mejorar claramente cambiando su política mientras los demás mantienen la suya.
 
@@ -337,6 +360,7 @@ Matrices de utilidades $(u_0, u_1)$, donde las filas corresponden a \texttt{agen
 
 \texttt{agent\_0} obtiene más utilidad coordinando en Cine; \texttt{agent\_1}, coincidiendo en Partido. La descoordinación da $0$ a ambos.
 
+\clearpage
 \section{Experimentos}
 
 
@@ -683,9 +707,7 @@ Por otro lado, IQL presentó un comportamiento inestable debido a la no estacion
 
 \subsection{Rock-Paper-Scissors}
 
-Rock-Paper-Scissors (RPS) es un juego de suma cero con dos agentes y tres acciones posibles: Rock (R), Paper (P) y Scissors (S). El único equilibrio de Nash del juego corresponde a la estrategia mixta uniforme $\pi^* = (1/3,\, 1/3,\, 1/3)$ para ambos jugadores.
-
-Para analizar el comportamiento de los algoritmos en este ambiente, se ejecutaron experimentos de \textit{self-play} enfrentando a cada algoritmo consigo mismo, así como experimentos de \textit{cross-play} enfrentando algoritmos distintos entre sí y contra un agente aleatorio (Random).
+En este ambiente se evaluó si los algoritmos logran aproximarse a la estrategia mixta uniforme esperada y mantener recompensas promedio cercanas a cero. Para ello, se ejecutaron experimentos de \textit{self-play}, enfrentando a cada algoritmo consigo mismo, y experimentos de \textit{cross-play}, enfrentando algoritmos distintos entre sí y contra un agente aleatorio (Random).
 
 
 
@@ -707,7 +729,7 @@ En self-play, FP muestra el comportamiento clásico esperado en RPS. Las recompe
 
 La política instantánea nunca converge completamente, sino que continúa oscilando alrededor del equilibrio de Nash. Sin embargo, la política promedio acumulada sí converge claramente hacia $(1/3,1/3,1/3)$.
 
-Esto también puede observarse en las trayectorias de la política: ambos agentes generan espirales alrededor del centro del triángulo y terminan estabilizándose cerca del equilibrio mixto.
+Esto también puede observarse en las trayectorias de la política, donde ambos agentes generan espirales alrededor del centro del triángulo y terminan estabilizándose cerca del equilibrio mixto.
 
 \subsubsection*{RM vs RM}
 
@@ -723,9 +745,9 @@ Esto también puede observarse en las trayectorias de la política: ambos agente
     \caption{Trayectoria de políticas para RM vs RM en el simplex.}
 \end{figure}
 
-RM mostró un comportamiento todavía más estable que FP. Las oscilaciones de la política instantánea son menores y la política promedio acumulada converge rápidamente hacia el equilibrio de Nash.
+RM mostró un comportamiento similar al de FP, ya que cuenta con oscilaciones de la política instantánea y la política promedio acumulada converge rápidamente hacia el equilibrio de Nash.
 
-En el trayectoria de la política, se observa que las trayectorias permanecen mucho más concentradas cerca del centro, reflejando la propiedad de no-arrepentimiento del algoritmo.
+En la trayectoria de la política, se observa que las trayectorias permanecen concentradas cerca del centro, reflejando la propiedad de no-arrepentimiento del algoritmo.
 
 \subsubsection*{IQL vs IQL}
 
@@ -735,17 +757,17 @@ En el trayectoria de la política, se observa que las trayectorias permanecen mu
     \caption{IQL vs IQL en RPS.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/RPS/simplex_iql_vs_iql.png}
-    \caption{Trayectoria de políticas para IQL vs IQL en el simplex.}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{figures/RPS/simplex_iql_vs_iql.png}
+%     \caption{Trayectoria de políticas para IQL vs IQL en el simplex.}
+% \end{figure}
 
 IQL fue el algoritmo más inestable en RPS. Aunque la política promedio acumulada logra acercarse parcialmente al equilibrio de Nash, la política instantánea presenta fluctuaciones importantes durante todo el entrenamiento.
 
 Esto ocurre porque cada agente aprende asumiendo que el entorno es estacionario, cuando en realidad la política del oponente cambia continuamente.
 
-Las trayectorias en el simplex son considerablemente más erráticas que en FP o RM, mostrando movimientos bruscos y una mayor dispersión alrededor del equilibrio.
+% Las trayectorias en el simplex son considerablemente más erráticas que en FP o RM, mostrando movimientos bruscos y una mayor dispersión alrededor del equilibrio.
 
 Aun así, el promedio acumulado termina relativamente cerca de $(1/3,1/3,1/3)$, aunque con bastante más varianza.
 
@@ -757,21 +779,20 @@ Aun así, el promedio acumulado termina relativamente cerca de $(1/3,1/3,1/3)$, 
     \caption{JAL-AM vs JAL-AM en RPS.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/RPS/simplex_jalam_vs_jalam.png}
-    \caption{Trayectoria de políticas para JAL-AM vs JAL-AM en el simplex.}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{figures/RPS/simplex_jalam_vs_jalam.png}
+%     \caption{Trayectoria de políticas para JAL-AM vs JAL-AM en el simplex.}
+% \end{figure}
 
-JAL-AM obtuvo resultados considerablemente mejores que IQL. Al incorporar modelado explícito de las acciones del oponente, el algoritmo logra reducir parcialmente los efectos de la no estacionariedad.
-
+JAL-AM obtuvo resultados considerablemente mejores que IQL. Al incorporar modelado explícito de las acciones del oponente, el algoritmo logra reducir parcialmente los efectos de la no estacionariedad. 
 Las oscilaciones de la política instantánea son menores y la política promedio acumulada converge más rápidamente hacia $(1/3, 1/3, 1/3)$ que en IQL. Además, la trayectoria de la estrategia mixta evidencia una mayor concentración alrededor del equilibrio, aunque todavía con más variabilidad que FP o RM.
 
 De todas formas, no se esperaba que JAL-AM tenga un comportamiento perfectamente estable en RPS, dado que Rock-Paper-Scissors es un juego de suma cero donde la mejor respuesta cambia constantemente dependiendo de la política del oponente. En este tipo de entornos, modelar al oponente no garantiza convergencia estable, ya que ambos agentes continúan adaptándose mutuamente todo el tiempo.
 
-Por lo tanto, el hecho de que JAL-AM siga mostrando oscilaciones y trayectorias que orbitan alrededor del equilibrio, sin converger completamente en política instantánea, era un resultado esperable. Aun así, el algoritmo logra mantenerse más cerca del equilibrio que IQL, dado que JAL-AM intenta estimar qué acciones está realizando el oponente y utiliza esa información para actualizar sus valores de manera más informada. Aunque esto no elimina completamente la no estacionariedad, sí permite reducir parcialmente su impacto. 
+% Por lo tanto, el hecho de que JAL-AM siga mostrando oscilaciones y trayectorias que orbitan alrededor del equilibrio, sin converger completamente en política instantánea, era un resultado esperable. Aun así, el algoritmo logra mantenerse más cerca del equilibrio que IQL, dado que JAL-AM intenta estimar qué acciones está realizando el oponente y utiliza esa información para actualizar sus valores de manera más informada. Aunque esto no elimina completamente la no estacionariedad, sí permite reducir parcialmente su impacto. 
 
-En cambio en IQL, cada agente actualiza sus valores Q asumiendo que las probabilidades de transición y recompensa no cambian. Sin embargo, en un entorno multiagente esto no se cumple, ya que el oponente también está aprendiendo y modificando continuamente su política. Esto provoca que los valores Q se vuelvan inestables y que la política oscile constantemente.
+% En cambio en IQL, cada agente actualiza sus valores Q asumiendo que las probabilidades de transición y recompensa no cambian. Sin embargo, en un entorno multiagente esto no se cumple, ya que el oponente también está aprendiendo y modificando continuamente su política. Esto provoca que los valores Q se vuelvan inestables y que la política oscile constantemente.
 
 
 
@@ -792,7 +813,7 @@ En cambio en IQL, cada agente actualiza sus valores Q asumiendo que las probabil
 
 Cuando FP y RM compiten entre sí, ambos logran aproximar correctamente el equilibrio de Nash.
 
-Las recompensas permanecen centradas alrededor de cero y las políticas promedio convergen rápidamente hacia la distribución uniforme $(1/3,1/3,1/3)$.
+Las recompensas permanecen centradas alrededor de cero y las políticas promedio convergen rápidamente hacia el equilibrio de Nash.
 
 Puede observarse que RM parece adaptarse ligeramente más rápido durante las primeras iteraciones, mientras que FP mantiene oscilaciones más amplias. Sin embargo, en el largo plazo ambos terminan comportándose de forma muy similar.
 
@@ -822,7 +843,14 @@ FP obtiene los mejores resultados, lo cual tiene sentido dado que modela explíc
 
 RM también logra explotar correctamente al agente aleatorio. En cambio, IQL y JAL-AM presentan resultados más variables debido a la exploración y a la naturaleza más inestable del aprendizaje por refuerzo multiagente.
 
-\subsubsection*{Distancia al equilibrio de Nash}
+
+\subsubsection*{Observaciones}
+
+% La comparación final confirma lo observado anteriormente.
+% FP y RM son los algoritmos que convergen de forma más rápida y estable hacia el equilibrio de Nash. RM presenta la menor distancia sostenida al equilibrio durante gran parte del entrenamiento.
+
+% IQL es claramente el algoritmo más inestable y con mayor distancia al equilibrio, mientras que JAL-AM mejora significativamente sobre IQL gracias al modelado explícito del oponente, aunque sigue siendo más ruidoso que FP y RM.
+
 
 \begin{figure}[H]
     \centering
@@ -830,13 +858,8 @@ RM también logra explotar correctamente al agente aleatorio. En cambio, IQL y J
     \caption{Distancia L1 al equilibrio de Nash.}
 \end{figure}
 
-La comparación final confirma lo observado anteriormente.
 
-FP y RM son los algoritmos que convergen de forma más rápida y estable hacia el equilibrio de Nash. RM presenta la menor distancia sostenida al equilibrio durante gran parte del entrenamiento.
 
-IQL es claramente el algoritmo más inestable y con mayor distancia al equilibrio. JAL-AM mejora significativamente sobre IQL gracias al modelado explícito del oponente, aunque sigue siendo más ruidoso que FP y RM.
-
-\subsubsection*{Conclusiones}
 
 Los experimentos realizados en Rock-Paper-Scissors muestran diferencias claras entre los algoritmos basados en teoría de juegos (FP y RM) y los algoritmos de aprendizaje por refuerzo multiagente (IQL y JAL-AM).
 
@@ -850,20 +873,15 @@ IQL fue claramente el algoritmo más inestable. Las políticas instantáneas con
 
 JAL-AM logró mejorar considerablemente respecto a IQL gracias al modelado explícito del oponente. Las políticas presentaron oscilaciones permanentes, algo esperable en un juego competitivo de suma cero como RPS, sin embargo, las trayectorias resultan más estables y cercanas al equilibrio de Nash que en IQL.
 
-En general, los resultados muestran que:
-\begin{itemize}
-    \item FP y RM son especialmente adecuados para juegos simultáneos estáticos como RPS.
-    \item RM fue el algoritmo más estable y con convergencia más rápida hacia el equilibrio.
-    \item IQL sufre considerablemente la no estacionariedad del entorno multiagente.
-    \item JAL-AM logra mitigar parcialmente este problema mediante modelado explícito del oponente.
-    \item La distancia al equilibrio de Nash resulta una métrica muy útil para visualizar estabilidad y calidad de convergencia de los distintos algoritmos.
-\end{itemize}
-
 Finalmente, los experimentos muestran cómo pequeños cambios en la forma de modelar al oponente producen diferencias importantes en estabilidad y convergencia dentro de entornos multiagente competitivos.
 
 \subsection{Three-Player Game}
 
-En Three-Player Game se evaluó si los algoritmos logran converger al equilibrio de Nash puro $(B,R,W)$. A diferencia de RPS, donde el equilibrio es mixto y las trayectorias pueden oscilar alrededor del centro del simplex, en este ambiente se espera que cada agente asigne probabilidad cercana a $1$ a su acción de equilibrio: \texttt{agent\_0} a $B$, \texttt{agent\_1} a $R$ y \texttt{agent\_2} a $W$.
+En Three-Player Game se evaluó el comportamiento de los algoritmos sobre todas las configuraciones del ambiente. El objetivo fue analizar si las políticas aprendidas se acercan a los equilibrios de Nash descritos previamente y cómo cambia la convergencia cuando la matriz de pagos introduce múltiples equilibrios, indiferencias o incentivos de desviación.
+
+A diferencia de RPS, donde el equilibrio es mixto y las trayectorias pueden oscilar alrededor del centro del simplex, en estos juegos se espera que los agentes concentren su probabilidad en acciones de equilibrio cuando existe un perfil puro claro. En la configuración 1, por ejemplo, esto corresponde al perfil $(B,R,W)$: \texttt{agent\_0} debe asignar probabilidad cercana a $1$ a $B$, \texttt{agent\_1} a $R$ y \texttt{agent\_2} a $W$.
+
+Para la configuración 1 se evaluaron FP, RM, entrenamientos mixtos entre ambos, IQL y JAL-AM. Para las configuraciones 2, 3 y 4 se evaluaron FP, RM y combinaciones mixtas entre ambos algoritmos.
 
 \subsubsection*{FP y RM en self-play}
 
@@ -915,9 +933,9 @@ Esto sugiere que, para este juego, la combinación de FP y RM no introduce inest
     \caption{Entrenamiento de JAL-AM en Three-Player Game.}
 \end{figure}
 
-IQL logra recompensas promedio cercanas a las del equilibrio, pero sus políticas no se concentran completamente en la acción de Nash. La probabilidad de la acción de equilibrio queda alrededor de valores intermedios y presenta oscilaciones, reflejando nuevamente el problema de no estacionariedad: cada agente aprende como si los otros fueran parte del entorno, aunque sus políticas también cambian durante el entrenamiento.
+IQL logra recompensas promedio cercanas a las del equilibrio, pero sus políticas no se concentran completamente en la acción de Nash. La probabilidad de la acción de equilibrio queda alrededor de valores intermedios y presenta oscilaciones, reflejando nuevamente el problema de no estacionariedad.
 
-JAL-AM mejora parcialmente este comportamiento al modelar las acciones de los otros agentes. Las recompensas llegan incluso a valores levemente superiores en promedio, pero las políticas siguen sin converger de forma limpia a probabilidad $1$ en las acciones de equilibrio. Esto muestra que una recompensa alta no implica necesariamente estar cerca de un equilibrio de Nash estable.
+En JAL-AM Las recompensas promedio tambien esta son cercanas al equilibrio pero con mucha varianza, pero las políticas siguen sin converger de forma limpia a probabilidad $1$ en las acciones de equilibrio. Esto muestra que una recompensa alta no implica necesariamente estar cerca de un equilibrio de Nash estable.
 
 \subsubsection*{Distancia al equilibrio de Nash}
 
@@ -927,15 +945,12 @@ JAL-AM mejora parcialmente este comportamiento al modelar las acciones de los ot
     \caption{Distancia L1 al equilibrio de Nash en Three-Player Game.}
 \end{figure}
 
-La comparación de distancia L1 confirma las diferencias entre algoritmos. FP, RM y los entrenamientos mixtos alcanzan distancias cercanas a cero para los tres agentes. En cambio, IQL y JAL-AM permanecen con distancias considerablemente mayores, alrededor de $0.5$ para varios agentes al final del entrenamiento.
+La comparación de distancia L1 confirma las diferencias entre algoritmos. FP, RM y los entrenamientos mixtos alcanzan distancias cercanas a cero para los tres agentes, o que significa que todos los agenten logran acercarce fuertemente al equilibrio de Nash.
 
-\subsubsection*{Configuraciones adicionales}
+\subsubsection*{Configuración 2.}
 
-Además de la configuración 1, se realizaron experimentos sobre las configuraciones 2, 3 y 4 del ambiente. Estas configuraciones corresponden a otros juegos de tres jugadores, con distintas matrices de recompensa y, en las configuraciones 3 y 4, con tres acciones disponibles para \texttt{agent\_2}. Para estos experimentos se evaluaron FP, RM y combinaciones mixtas entre ambos algoritmos.
 
-\textbf{Configuración 2.}
-
-En la configuración 2, el juego mantiene dos acciones por agente. Los perfiles $(B,L,W)$ y $(B,L,E)$ son equilibrios de Nash puros con pagos $(1,1,1)$. También existe un perfil con pagos mayores, $(T,R,W)$, que entrega $(3,3,3)$, pero no es estable porque uno de los agentes tiene incentivo a desviarse unilateralmente.
+En las gráficas, las etiquetas de la forma \textit{Agente 0-T} o \textit{Agente 1-R} indican la probabilidad que asigna cada agente a una acción concreta. Por ejemplo, \textit{Agente 0-T} representa la probabilidad de que \texttt{agent\_0} elija la acción $T$ (\textit{Top}), mientras que \textit{Agente 0-B} corresponde a la acción $B$ (\textit{Bottom}). De forma análoga, \textit{Agente 1-L} y \textit{Agente 1-R} representan las acciones $L$ (\textit{Left}) y $R$ (\textit{Right}) de \texttt{agent\_1}, y \textit{Agente 2-W} y \textit{Agente 2-E} representan las acciones $W$ (\textit{West}) y $E$ (\textit{East}) de \texttt{agent\_2}.
 
 \begin{figure}[H]
     \centering
@@ -955,23 +970,17 @@ En la configuración 2, el juego mantiene dos acciones por agente. Los perfiles 
     \caption{Entrenamiento mixto con dos agentes FP y un agente RM en Three-Player Game, configuración 2.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/2rmp1fp_c2.png}
-    \caption{Entrenamiento mixto con dos agentes RM y un agente FP en Three-Player Game, configuración 2.}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{figures/ThreePlayers/comparison_c2.png}
+%     \caption{Comparación de recompensas entre FP, RM y entrenamientos mixtos en Three-Player Game, configuración 2.}
+% \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/comparison_c2.png}
-    \caption{Comparación de recompensas entre FP, RM y entrenamientos mixtos en Three-Player Game, configuración 2.}
-\end{figure}
+En las curvas de políticas, una línea cerca de $1$ significa que esa acción se elige casi siempre, y una línea cerca de $0$ significa que esa acción casi no se elige. Por eso, en esta configuración se espera que \textit{Agente 0-B} tienda a $1$ y \textit{Agente 0-T} tienda a $0$, mientras que \textit{Agente 1-L} tienda a $1$ y \textit{Agente 1-R} tienda a $0$. Ese comportamiento indica que los dos primeros agentes aprendieron la parte común de los equilibrios de Nash: $(B,L)$.
 
-En esta configuración, todos los entrenamientos terminan con recompensas promedio finales cercanas a $(1,1,1)$. Esto indica que FP, RM y las combinaciones mixtas convergen hacia la zona de equilibrio puro. Aunque el perfil $(3,3,3)$ es más atractivo desde el punto de vista de recompensa conjunta, no se sostiene estratégicamente porque no es un equilibrio de Nash. Los algoritmos, por lo tanto, terminan reforzando el perfil estable y no el perfil de mayor pago inmediato.
+Todos los entrenamientos terminan con recompensas promedio finales cercanas a $(1,1,1)$. Esto muestra que FP, RM y las combinaciones mixtas convergen hacia el conjunto de equilibrios de Nash de la configuración 2, aunque no hacia los perfiles de mayor recompensa conjunta. En particular, \texttt{agent\_2} puede repartir probabilidad entre $W$ y $E$ sin salir del equilibrio, como se explicó en la descripción del ambiente. También se realizaron varios entrenamientos cruzados combinando FP y RM en distintos agentes. Como todos mostraron el mismo comportamiento cualitativo y recompensas finales similares, se incluye una única gráfica mixta representativa.
 
-\textbf{Configuración 3.}
-
-La configuración 3 aumenta la complejidad porque \texttt{agent\_2} tiene tres acciones: $W$, $E$ y $N$. En esta matriz aparecen perfiles con pagos altos, por ejemplo $(T,L,E)$ y $(B,R,E)$ con pagos $(2,2,2)$, pero no son equilibrios puros porque \texttt{agent\_2} puede desviarse para obtener una recompensa mayor. Por este motivo, no se espera una convergencia tan limpia como en las configuraciones con equilibrio puro claro.
+\subsubsection*{Configuración 3.}
 
 \begin{figure}[H]
     \centering
@@ -988,26 +997,15 @@ La configuración 3 aumenta la complejidad porque \texttt{agent\_2} tiene tres a
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures/ThreePlayers/2fpp1rm_c3.png}
-    \caption{Entrenamiento mixto con dos agentes FP y un agente RM en Three-Player Game, configuración 3.}
+    \caption{Entrenamiento mixto con dos agentes FP y un agente RM.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/2rmp1fp_c3.png}
-    \caption{Entrenamiento mixto con dos agentes RM y un agente FP en Three-Player Game, configuración 3.}
-\end{figure}
+En esta configuración, la interpretación de las curvas es la misma que antes, cada línea representa la probabilidad asignada por un agente a una acción. Sin embargo, las políticas no se concentran de forma tan clara como en la configuración 2. 
+Esto es consistente con la estructura del ambiente, dado que, existen varias zonas estratégicamente estables, pero ninguna combina una recompensa alta y balanceada para todos los agentes.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/comparison_c3.png}
-    \caption{Comparación de recompensas entre FP, RM y entrenamientos mixtos en Three-Player Game, configuración 3.}
-\end{figure}
+Las recompensas finales reflejan esta dificultad, FP, RM y el entrenamiento mixto no convergen a un perfil dominante con recompensa alta para todos, sino a comportamientos más inestables y desbalanceados. Que algunas de las politicas no lleguen limpiamente a $1$ no implica necesariamente que el entrenamiento sea incorrecto; puede indicar que distintas ejecuciones se estabilizan en regiones diferentes o que los agentes alternan entre respuestas con incentivos similares. 
 
-En la configuración 3 se observa un comportamiento más inestable. Las recompensas finales quedan desbalanceadas entre agentes: FP termina aproximadamente en $(0.5,0.5,0)$, RM en $(0.4,0.6,0)$, y los entrenamientos mixtos desplazan la recompensa entre los dos primeros agentes, pero mantienen a \texttt{agent\_2} cerca de $0$. Esto muestra que la ausencia de un equilibrio puro atractivo y estable dificulta la coordinación. Los algoritmos no colapsan a una única acción dominante, sino que se mueven entre regiones donde algunos agentes obtienen recompensa positiva y otros quedan sin ganancia.
-
-\textbf{Configuración 4.}
-
-La configuración 4 también utiliza tres acciones para \texttt{agent\_2}, pero modifica varios pagos respecto a la configuración 3 e introduce mayor asimetría entre los agentes. Esto permite evaluar si FP y RM siguen encontrando perfiles estables cuando los incentivos no están distribuidos de forma simétrica.
+\subsubsection*{Configuración 4.}
 
 \begin{figure}[H]
     \centering
@@ -1027,23 +1025,13 @@ La configuración 4 también utiliza tres acciones para \texttt{agent\_2}, pero 
     \caption{Entrenamiento mixto con dos agentes FP y un agente RM en Three-Player Game, configuración 4.}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/2rmp1fp_c4.png}
-    \caption{Entrenamiento mixto con dos agentes RM y un agente FP en Three-Player Game, configuración 4.}
-\end{figure}
+En la configuración 4, las políticas se estabilizan con mayor claridad que en la configuración 3. En las curvas se observa que \textit{Agente 0-B} y \textit{Agente 1-L} concentran la mayor parte de la probabilidad, mientras que \textit{Agente 0-T} y \textit{Agente 1-R} pierden peso. Para \texttt{agent\_2}, la probabilidad puede quedar repartida entre las acciones equivalentes del equilibrio, por lo que no es necesario que una única acción llegue exactamente a $1$.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ThreePlayers/comparison_c4.png}
-    \caption{Comparación de recompensas entre FP, RM y entrenamientos mixtos en Three-Player Game, configuración 4.}
-\end{figure}
-
-En la configuración 4, a pesar de la asimetría de la matriz de pagos, los cuatro entrenamientos evaluados terminan con recompensas promedio cercanas a $(1,1,1)$. Esto sugiere que FP y RM logran identificar nuevamente una zona estable del juego. A diferencia de la configuración 3, aquí las modificaciones en la matriz permiten que las políticas se estabilicen con mayor claridad, tanto en self-play como en los entrenamientos mixtos.
+A pesar de la asimetría de la matriz de pagos, FP, RM y el entrenamiento mixto terminan con recompensas promedio cercanas a $(1,1,1)$. Esto sugiere que los algoritmos logran identificar nuevamente una zona estable del juego. 
 
 \subsubsection*{Observaciones}
 
-Los resultados de Three-Player Game muestran que la estructura del juego tiene un efecto directo sobre la convergencia. En la configuración 1, donde existe un equilibrio puro claro en $(B,R,W)$, FP y RM identifican rápidamente el perfil estable y concentran sus políticas en las acciones de equilibrio. En la configuración 2 ocurre algo similar: aunque existe un perfil con mayor recompensa conjunta, los algoritmos terminan convergiendo a perfiles de equilibrio con pagos $(1,1,1)$ porque son estratégicamente estables.
+Los resultados de Three-Player Game muestran que la estructura del juego tiene un efecto directo sobre la convergencia. En la configuración 1, donde existe un equilibrio puro claro en $(B,R,W)$, FP y RM identifican rápidamente el perfil estable y concentran sus políticas en las acciones de equilibrio. En la configuración 2 ocurre algo similar, aunque existe un perfil con mayor recompensa conjunta, los algoritmos terminan convergiendo a perfiles de equilibrio con pagos $(1,1,1)$ porque son estratégicamente estables.
 
 La configuración 3 muestra el caso más difícil. Al incorporar una tercera acción para \texttt{agent\_2} y no presentar un equilibrio puro atractivo, las recompensas quedan desbalanceadas y aparecen comportamientos más oscilatorios. En cambio, la configuración 4, aunque también es más grande y asimétrica, permite que FP, RM y las combinaciones mixtas vuelvan a estabilizarse cerca de recompensas $(1,1,1)$.
 
@@ -1051,20 +1039,11 @@ En conjunto, estos experimentos muestran que FP y RM son robustos cuando existe 
 
 \subsection{Foraging}
 
-A diferencia de los juegos matriciales, Foraging es un ambiente secuencial con estado. Por este motivo, no se evalúa mediante una distancia directa a un equilibrio de Nash conocido, sino usando métricas de aprendizaje por refuerzo: recompensa promedio, pasos promedio hasta recolectar la comida y distribución de recompensas entre agentes.
+En esta sección se presentan los entrenamientos realizados sobre las configuraciones de Foraging descritas previamente. El objetivo es comparar cómo evolucionan IQL y JAL-AM en ambientes secuenciales con estado, observando la recompensa promedio, la cantidad de pasos necesarios para completar los episodios y el reparto de recompensa entre agentes.
 
-En estos experimentos se evaluaron IQL y JAL-AM, ya que ambos algoritmos permiten aprender políticas dependientes del estado. Se utilizaron cuatro configuraciones con distinta complejidad:
+\subsubsection*{Configuraciones 0: grilla 5x5 con dos agentes}
 
-\begin{itemize}
-    \item \texttt{Foraging-5x5-2p-1f-v3}: grilla pequeña, dos agentes y un recurso.
-    \item \texttt{Foraging-8x8-2p-1f-v3}: grilla más grande, dos agentes y un recurso.
-    \item \texttt{Foraging-8x8-3p-1f-v3}: tres agentes, mayor complejidad de coordinación.
-    \item \texttt{Foraging-8x8-3p-1f-coop-v3}: tres agentes en modo cooperativo, donde la cooperación es necesaria para recolectar el recurso.
-\end{itemize}
 
-\subsubsection*{Configuraciones 0 y 1: grillas con dos agentes}
-
-\textbf{Grilla 5x5.}
 
 \begin{figure}[H]
     \centering
@@ -1092,11 +1071,12 @@ En estos experimentos se evaluaron IQL y JAL-AM, ya que ambos algoritmos permite
 
 En la grilla 5x5 ambos algoritmos aprenden rápidamente a llegar a la comida, sin embargo se observa un comportamiento desbalanceado entre ambos agentes, durante las primeras iteraciones las recompensas son relativamente similares, pero rápidamente \texttt{agent\_0} incrementa su recompensa promedio por episodio y se estabiliza en valores cercanos a $0.7 - 0.8$. En cambio, \texttt{agent\_1} reduce progresivamente su recompensa y permanece en valores considerablemente menores.
 
-JAL-AM muestra una evolución algo más estable que IQL, aunque no elimina el desbalance.
+Además podemos ver que, JAL-AM muestra una evolución algo más estable que IQL, aunque no elimina el desbalance.
 
 Al observar la ejecución de la política entrenada, se aprecia que ambos agentes se desplazan de forma coordinada hacia la comida y que el recurso se recolecta exitosamente en pocos pasos.
 
-\textbf{Grilla 8x8.}
+\subsubsection*{Configuraciones 1: grilla 8x8 con dos agentes}
+
 
 \begin{figure}[H]
     \centering
@@ -1150,7 +1130,7 @@ En la grilla 8x8 se repite la misma dinámica general, pero el aprendizaje es m�
     \caption{Episodio entrenado con JAL-AM en Foraging 8x8 con 3 agentes.}
 \end{figure}
 
-Con tres agentes aparece una cooperación parcial: dos agentes suelen coordinarse alrededor del recurso y un tercero queda relegado. Esto ocurre tanto con IQL como con JAL-AM. JAL-AM produce curvas algo más suaves, pero no elimina el desbalance entre agentes.
+Con tres agentes aparece una cooperación, donde dos agentes suelen coordinarse alrededor del recurso y un tercero queda relegado. Esto ocurre tanto con IQL como con JAL-AM. JAL-AM produce curvas algo más suaves, pero no elimina el desbalance entre agentes.
 
 La ejecución de la política entrenada muestra un comportamiento interesante, en el segundo step \texttt{agent\_2} ejecuta \texttt{NONE}, lo que sugiere que aprendió a esperar a su compañero antes de recolectar la comida. De esta forma, la recolección puede ocurrir de manera coordinada y con recompensa compartida.
 
@@ -1169,7 +1149,7 @@ La ejecución de la política entrenada muestra un comportamiento interesante, e
     \caption{Episodio con JAL-AM x2 + IQL x1.}
 \end{figure}
 
-También se realizaron otros experimentos con equipos mixtos, cambiando la proporción de agentes IQL y JAL-AM. Como los resultados obtenidos fueron muy similares, se muestra únicamente el caso \texttt{JAL-AM x2 + IQL x1} como ejemplo representativo. En general, la mezcla de algoritmos no modifica sustancialmente la dinámica no cooperativa de tres agentes: la coordinación efectiva emerge entre algunos miembros del equipo y un agente puede quedar con baja recompensa. Esto indica que el algoritmo utilizado no es el único factor determinante; la posición relativa, la exploración temprana y las trayectorias aprendidas también influyen fuertemente.
+También se realizaron otros experimentos con equipos mixtos, cambiando la proporción de agentes IQL y JAL-AM. Como los resultados obtenidos fueron muy similares, se muestra únicamente el caso \texttt{JAL-AM x2 + IQL x1} como ejemplo representativo. En general, la mezcla de algoritmos no modifica sustancialmente la dinámica no cooperativa de tres agentes, la coordinación efectiva emerge entre algunos miembros del equipo y un agente puede quedar con baja recompensa. Esto indica que el algoritmo utilizado no es el único factor determinante; la posición relativa, la exploración temprana y las trayectorias aprendidas también influyen fuertemente.
 
 
 \subsubsection*{Configuración 3: grilla 8x8 cooperativa con tres agentes}
@@ -1227,17 +1207,17 @@ Los experimentos de Foraging muestran que la estructura del ambiente tiene un im
 Este comportamiento es consistente con la definición teórica de los agentes. En IQL, cada agente aprende de forma independiente, por lo que una ventaja temprana de posición o exploración puede reforzarse con el tiempo. 
 JAL-AM reduce parcialmente este problema al modelar las acciones de los demás, podemos ver como tiende a producir curvas más estables, pero sin embargo esto no elimina la no estacionariedad ni garantiza un reparto equilibrado.
 
-Las gráficas de pasos requeridos muestran que, al comienzo del entrenamiento, los episodios suelen estar por encima de los 50 pasos, lo que indica que los agentes todavía no logran llegar a la comida de forma eficiente. A medida que avanzan los episodios, en todos los casos se reduce significativamente la cantidad de pasos necesarios, hasta lograr llegar siempre al recurso.
+Las gráficas de pasos requeridos muestran que, al comienzo del entrenamiento, los episodios suelen estar por encima de los 50 pasos, lo que indica que los agentes todavía no logran llegar a la comida de forma eficiente, pero rapidamente se reduce significativamente la cantidad de pasos necesarios para llegar siempre al recurso.
 
 Las visualizaciones de las políticas entrenadas ayudan a interpretar mejor este resultado. 
 Permiten comprobar que los agentes con mayor recompensa son los que ejecutan \texttt{LOAD} del recurso, 
-pero también muestran que los agentes con menor recompensa en la mayoria de los casos se desplazan correctamente hacia la comida, mostrando que la politica que aprendieron no es una política inútil.
+pero también muestran que los agentes con menor recompensa en la mayoria de los casos se desplazan correctamente hacia la comida, mostrando que la politica que aprendieron no es una política útil.
 
 Además, para una misma configuración los agentes comienzan siempre desde las mismas posiciones iniciales porque se utiliza el mismo \textit{seed}. Esto puede favorecer sistemáticamente a un agente si queda mejor ubicado respecto a la comida. Se realizaron pruebas adicionales rotando el \textit{seed} en cada iteración para reducir este sesgo, pero los resultados fueron peores y el desbalance entre agentes se mantuvo.
 
 Cuando el entorno fuerza la cooperación, las diferencias entre agentes se reducen y emerge un comportamiento coordinado más claro. 
 En este caso, la necesidad de actuar conjuntamente domina la dinámica del aprendizaje y favorece políticas donde todos los agentes participan de la recolección del recurso. 
-Además, los experimentos cruzados en el ambiente cooperativo necesitaron menos pasos que aquellos donde todos los agentes utilizaban el mismo algoritmo, lo que sugiere que combinar IQL y JAL-AM puede favorecer trayectorias más eficientes hacia el objetivo compartido. Esto puede deberse a que ambos algoritmos introducen sesgos de aprendizaje complementarios: IQL tiende a aprender trayectorias directas a partir de su propia recompensa, mientras que JAL-AM incorpora información sobre el comportamiento esperado de los demás agentes. En un entorno cooperativo, esta combinación puede facilitar que los agentes se ajusten mejor entre sí y reduzcan movimientos innecesarios.
+Además, los experimentos cruzados en el ambiente cooperativo necesitaron menos pasos que aquellos donde todos los agentes utilizaban el mismo algoritmo, lo que sugiere que combinar IQL y JAL-AM puede favorecer trayectorias más eficientes hacia el objetivo compartido. Esto puede deberse a que ambos algoritmos introducen sesgos de aprendizaje complementarios, donde IQL tiende a aprender trayectorias directas a partir de su propia recompensa, mientras que JAL-AM incorpora información sobre el comportamiento esperado de los demás agentes. En un entorno cooperativo, esta combinación puede facilitar que los agentes se ajusten mejor entre sí y reduzcan movimientos innecesarios.
 Esto nos permite concluir que tanto IQL como JAL-AM aprenden una política adecuada.
 
 \subsection{Cournot}
@@ -1262,7 +1242,7 @@ Tanto Regret Matching como Fictitious Play logran aproximar correctamente el equ
 
 En ambos algoritmos, las cantidades elegidas por las firmas terminan cerca de $q^*=4$ y las ganancias se estabilizan alrededor de $32$.
 
-Sin embargo, la velocidad de convergencia no es igual. FP converge de forma limpia luego de algunas iteraciones iniciales, mientras que RM necesita aproximadamente $300$ iteraciones para estabilizarse alrededor del equilibrio de Nash. Esto ocurre porque RM ajusta su política a partir de arrepentimientos acumulados, al inicio, pequeñas diferencias entre acciones pueden generar oscilaciones, y recién después de acumular suficiente evidencia las probabilidades se concentran en cantidades cercanas a $q^*=4$.
+Sin embargo, la velocidad de convergencia no es igual, FP converge de forma limpia luego de algunas iteraciones iniciales, mientras que RM necesita aproximadamente $300$ iteraciones para estabilizarse alrededor del equilibrio de Nash. Esto ocurre porque RM ajusta su política a partir de arrepentimientos acumulados, al inicio, pequeñas diferencias entre acciones pueden generar oscilaciones, y recién después de acumular suficiente evidencia las probabilidades se concentran en cantidades cercanas a $q^*=4$.
 
 \begin{figure}[H]
     \centering
@@ -1314,7 +1294,7 @@ Al pasar de dos a tres firmas, el equilibrio por firma baja de $q=4$ a $q=3$, ya
 
 La distribución de estrategias confirma este comportamiento. En ambos algoritmos, la mayor parte de la probabilidad se concentra alrededor de la cantidad de equilibrio $q^*=3$, lo que indica que las firmas aprendieron a producir cerca del valor esperado por el modelo de Cournot. Sin embargo, FP presenta una distribución más dispersa, con pequeñas probabilidades asignadas a cantidades alejadas del equilibrio. RM, en cambio, concentra con mayor fuerza la probabilidad cerca de $q=3$, aunque todavía aparecen diferencias entre firmas, especialmente en una de ellas, que asigna parte de su probabilidad a cantidades algo mayores. Esto muestra que ambos algoritmos capturan el equilibrio, pero no con el mismo grado de concentración estratégica.
 
-\paragraph*{Experimento Mixto: 2 FP + 1 RM}
+\textbf{Experimento Mixto: 2 FP + 1 RM}
 
 \begin{figure}[H]
     \centering
@@ -1324,15 +1304,9 @@ La distribución de estrategias confirma este comportamiento. En ambos algoritmo
 
 También se evaluó una configuración mixta con dos firmas entrenadas mediante FP y una firma entrenada mediante RM. A diferencia de los experimentos homogéneos, donde FP y RM logran acercarse al equilibrio de Cournot, en este caso la interacción entre reglas de actualización distintas genera una dinámica más inestable. Las firmas no logran coordinarse de forma robusta alrededor de $q^*=3$ y las cantidades elegidas permanecen más dispersas durante el entrenamiento.
 
-Este resultado sugiere que, al pasar a tres jugadores, mezclar algoritmos puede amplificar la no estacionariedad del entorno. Cada firma actualiza su política a partir de señales históricas diferentes: FP responde a frecuencias observadas, mientras que RM ajusta sus probabilidades según arrepentimientos acumulados. Cuando estos mecanismos conviven en un mercado con tres firmas, las mejores respuestas cambian de forma más irregular y la convergencia se vuelve menos limpia que en self-play.
+Este resultado sugiere que, al pasar a tres jugadores, mezclar algoritmos puede amplificar la no estacionariedad del entorno. Cada firma actualiza su política a partir de señales históricas diferentes, FP responde a frecuencias observadas, mientras que RM ajusta sus probabilidades según arrepentimientos acumulados. Cuando estos mecanismos conviven en un mercado con tres firmas, las mejores respuestas cambian de forma más irregular y la convergencia se vuelve menos limpia que en self-play.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{figures/cournot/experimento_mixto_3j_1fp2rm.png}
-    \caption{Experimento mixto con una firma FP y dos firmas RM en Cournot con 3 jugadores.}
-\end{figure}
-
-Además, se probó la configuración inversa, con una firma FP y dos firmas RM. Los resultados fueron aún peores: ninguna de las firmas logró converger de manera estable al equilibrio. En esta variante, la presencia de dos agentes RM introduce ajustes simultáneos más fuertes sobre las probabilidades de acción, mientras que la firma FP intenta responder a un historial que cambia constantemente. Como consecuencia, las políticas no se estabilizan alrededor de una cantidad común y el sistema queda oscilando sin alcanzar una convergencia clara.
+Además, se probó la configuración inversa, con una firma FP y dos firmas RM. Los resultados fueron aún peores, ninguna de las firmas logró converger de manera estable al equilibrio.
 
 \subsubsection*{Tres jugadores: mercado medio}
 
@@ -1369,17 +1343,17 @@ FP también logra llegar al equilibrio para las tres firmas, pero necesita más 
 La figura de distribuciones de estrategia permite ver con más detalle cómo cada algoritmo asigna probabilidad a las distintas cantidades posibles.
 En el caso de RM, las tres firmas muestran picos muy concentrados sobre $q=10$, con prácticamente ninguna probabilidad asignada a otras cantidades. Esto significa que RM no solo se acerca al equilibrio en promedio, sino que prácticamente juega $q^*$ como estrategia pura, lo cual es consistente con la naturaleza del juego.
 
-En el caso de FP, la distribución final también queda concentrada sobre $q=10$ para las tres firmas. La diferencia respecto a RM está en la velocidad: RM se concentra antes, mientras que FP necesita acumular más observaciones para que las frecuencias históricas de los rivales dejen de estar sesgadas por las primeras iteraciones. Por eso, el paso de $800$ a $1200$ iteraciones cambia la lectura del resultado: con más entrenamiento, FP alcanza el equilibrio de Nash en todos sus agentes.
+En el caso de FP, la distribución final también queda concentrada sobre $q=10$ para las tres firmas. La diferencia respecto a RM está en la velocidad: RM se concentra antes, mientras que FP necesita acumular más observaciones para que las frecuencias históricas de los rivales dejen de estar sesgadas por las primeras iteraciones.
 
 \subsubsection*{Tres jugadores: mercado de tamaño grande}
 
 Luego se escaló el problema a un mercado grande con $a=100$, $b=1$, $c=10$, tres firmas y $91$ acciones posibles entre $0$ y $45$ unidades. El equilibrio de Nash teórico pasa a:
 
 \[
-q^* = \frac{a-c}{(n+1)b} = \frac{100-10}{4 \cdot 1} = 22.5
+q^* = \frac{a-c}{(n+1)b} = \frac{100-16}{4 \cdot 1} = 21
 \]
 
-La cantidad total de equilibrio es $Q^*=67.5$, el precio de equilibrio es $P^*=32.5$ y la ganancia esperada por firma es $\pi^*=506.25$.
+La cantidad total de equilibrio es $Q^*=63$, el precio de equilibrio es $P^*=37$ y la ganancia esperada por firma es $\pi^*=441$.
 
 \begin{figure}[H]
     \centering
@@ -1399,23 +1373,22 @@ La cantidad total de equilibrio es $Q^*=67.5$, el precio de equilibrio es $P^*=3
     \caption{Distribuciones de estrategia de RM y FP en Cournot con 3 jugadores y mercado grande.}
 \end{figure}
 
-En el mercado grande se observa con más claridad el efecto de escalar el espacio de acciones. RM sigue ubicando a las firmas muy cerca del equilibrio, con las cantidades más probables quedan alrededor de $22$, $22.5$ y $23$, todas prácticamente centradas en $q^*=22.5$. Las ganancias oscilan alrededor de la ganancia de Nash, pero las oscilaciones son mayores que en el mercado medio porque una desviación pequeña en cantidad tiene un impacto más grande sobre la producción total y sobre el precio.
+En el mercado grande se observa con más claridad el efecto de escalar el espacio de acciones. RM sigue ubicando a las firmas muy cerca del equilibrio, con las cantidades más probables quedan alrededor de $21$. Las ganancias oscilan alrededor de la ganancia de Nash, pero las oscilaciones son mayores que en el mercado medio porque una desviación pequeña en cantidad tiene un impacto más grande sobre la producción total y sobre el precio.
 
 FP también se mueve hacia la zona del equilibrio, pero su convergencia es menos limpia. Al haber $91$ acciones disponibles, necesita más observaciones para estimar correctamente la distribución histórica de los rivales. Además, en Cournot las firmas están acopladas por la producción total, entonces, si una firma produce un poco más, baja el precio para todas; si produce un poco menos, puede mejorar la ganancia de las otras. Por eso, cerca del equilibrio aparecen ajustes constantes entre cantidades vecinas. Lo importante es que las políticas no se dispersan por todo el espacio de acciones, sino que se concentran alrededor de la cantidad teórica, indicando que ambos algoritmos escalan razonablemente al mercado grande.
 
 \subsubsection*{Observaciones}
 
-Los resultados de Cournot muestran que los algoritmos basados en teoría de juegos, especialmente FP y RM, capturan bien la estructura estratégica del problema. Esto se debe a que el equilibrio depende directamente de responder de manera óptima a la cantidad esperada de los otros jugadores. En este ambiente, aprender una buena política no consiste solamente en obtener una ganancia alta en una iteración puntual, sino en estabilizar una cantidad que siga siendo razonable cuando las demás firmas también ajustan su producción.
+Los resultados de Cournot muestran que los algoritmos basados en teoría de juegos, especialmente FP y RM, capturan bien la estructura estratégica del problema. En este ambiente, aprender una buena política no consiste solamente en obtener una ganancia alta en una iteración puntual, sino en estabilizar una cantidad que siga siendo razonable cuando las demás firmas también ajustan su producción.
 
-Al aumentar el tamaño del mercado, FP y RM mantienen el comportamiento esperado, pero la convergencia se vuelve más exigente. En el mercado medio ambos algoritmos se concentran en $q^*=10$. RM llega a ese comportamiento con mayor rapidez, mientras que FP necesita más de $800$ iteraciones y recién con $1200$ iteraciones logra estabilizar a las tres firmas exactamente en el equilibrio. En el mercado grande ocurre algo similar, las estrategias aprendidas se ubican alrededor de $q^*=22.5$, aunque aparecen más oscilaciones porque el espacio de acciones es mayor y pequeñas diferencias de cantidad afectan la producción total, el precio y las ganancias de todas las firmas.
+Al aumentar el tamaño del mercado, ambos algoritmos mantienen el comportamiento esperado, aunque la convergencia se vuelve más exigente. En el mercado medio las estrategias se concentran alrededor de $q^*=10$, mientras que en el mercado grande se ubican cerca de $q^*=21$. En este último caso aparecen más oscilaciones, ya que el espacio de acciones es mayor y pequeñas diferencias de cantidad afectan la producción total, el precio y las ganancias de todas las firmas.
 
-En particular, RM muestra una concentración más fuerte alrededor del equilibrio cuando el mercado crece, mientras que FP también se aproxima correctamente pero necesita más historial para ajustar su estimación de los rivales. Esto indica que ambos algoritmos escalan razonablemente a mercados más grandes, aunque el aumento del número de acciones hace que el aprendizaje sea menos limpio y más sensible a cantidades vecinas al equilibrio.
-
-Esta diferencia también se observa en las distribuciones finales de estrategia. FP suele asignar pequeñas probabilidades a varias cantidades, incluso algunas alejadas del equilibrio, porque su estimación se construye a partir de las frecuencias históricas de juego y conserva cierta influencia de las primeras iteraciones. RM, en cambio, tiende a concentrar más masa de probabilidad alrededor del equilibrio de Nash, ya que las acciones con menor arrepentimiento acumulado ganan peso y las cantidades menos convenientes van perdiendo probabilidad. Por lo tanto, en estos experimentos RM funciona mejor si se evalúa la concentración estratégica alrededor del equilibrio, aunque FP también logra aproximarlo correctamente.
+RM tiende a concentrar más la probabilidad alrededor del equilibrio de Nash, mientras que FP también lo aproxima correctamente pero con distribuciones finales más dispersas. Además, se intentó evaluar mercados más grandes y escenarios con mayor cantidad de firmas, pero el costo computacional no permitió que todos los algoritmos finalizaran en un tiempo razonable. Esta limitación fue especialmente notoria en Fictitious Play, mientras que Regret Matching resultó considerablemente más rápido, lo que sugiere que FP presenta mayores dificultades para escalar a problemas de gran tamaño.
 
 Los resultados de IQL y JAL-AM se interpretan como referencia secundaria, los mismos muestran que maximizar la recompensa observada no alcanza para garantizar estabilidad estratégica. En Cournot, lo central es verificar si la política aprendida permanece cerca de un equilibrio frente a desviaciones unilaterales.
 
 
+\clearpage
 \section{Conclusion}
 
 En juegos de sistemas multiagentes, el desempeño de los agentes depende fuertemente de la estructura del juego, de si es competitivo, cooperativo o mixto, y de si el entorno se mantiene estacionario mientras los agentes aprenden. Fictitious Play suele ser útil cuando el agente puede aproximar el comportamiento promedio del oponente y responder a sus frecuencias históricas, aunque puede oscilar si el rival cambia constantemente. Regret Matching tiende a ser robusto en juegos repetidos, porque ajusta su política reduciendo el arrepentimiento acumulado y puede aproximar equilibrios en términos de comportamiento promedio. IQL es simple y práctico, pero suele ser más inestable en escenarios multiagente, ya que cada agente aprende como si los demás fueran parte del entorno, ignorando que también están aprendiendo. JAL-AM, al modelar acciones conjuntas y estimar el comportamiento promedio del rival, suele capturar mejor la dependencia estratégica entre agentes que IQL, aunque también puede sufrir oscilaciones si todos los agentes adaptan sus políticas simultáneamente.
@@ -1424,13 +1397,14 @@ En el caso de juegos matriciales como Matching Pennies y Rock-Paper-Scissors, el
 
 Una conclusión importante es que MARL no puede entenderse únicamente como una extensión directa del aprendizaje por refuerzo clásico. Al combinar aprendizaje por refuerzo con teoría de juegos, aparecen dificultades que no tienen la misma fuerza en el caso de un único agente. La más clara en los experimentos realizados fue la no estacionariedad: desde la perspectiva de un agente independiente, las transiciones y recompensas cambian porque los demás agentes también actualizan sus políticas. Esto explica las oscilaciones observadas en IQL y, en menor medida, en JAL-AM. A su vez, los experimentos cooperativos muestran la importancia de distinguir entre recompensa individual y desempeño colectivo: en tareas de coordinación, la política aprendida debe resolver problemas de asignación de crédito, observabilidad parcial y acción conjunta. En conjunto, los resultados confirman que la elección del algoritmo debe depender del modelo de interacción: enfoques basados en teoría de juegos son especialmente adecuados cuando el equilibrio estratégico es el objeto central de análisis, mientras que enfoques de aprendizaje por refuerzo multiagente resultan más generales pero requieren mecanismos adicionales para manejar la no estacionariedad, la coordinación y el modelado de otros agentes.
 
+            \clearpage
             \nocite{*}
             \bibliographystyle{apalike}
             \bibliography{Libros.bib}
 
 
 %Pequeño disclaimer por si usas fotos con derechos de autor que sacaste de Internet. Nunca está de más. 
-\centering \small Los créditos de las fotografías pertenecen a sus respectivos autores. ©
+% \centering \small Los créditos de las fotografías pertenecen a sus respectivos autores. ©
 
 \centering\vspace*{\fill} 
 \end{document}
