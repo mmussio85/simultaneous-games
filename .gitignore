@@ -41,7 +41,6 @@ uv.lock
 *.synctex.gz
 *.toc
 
-*.pdf
 *.pyc
 **/*.pyc
 **/__pycache__/
