@@ -115,15 +115,19 @@ En juegos como Matching Pennies y Rock-Paper-Scissors, el equilibrio se encuentr
 
 \subsection{Fictitious Play}
 
-Fictitious Play (FP) es un algoritmo donde cada agente estima las estrategias de los demás jugadores a partir de las acciones observadas previamente y responde utilizando una mejor respuesta.
+Fictitious Play (FP) es un algoritmo donde cada agente estima las estrategias de los demás jugadores a partir de las acciones observadas previamente y responde utilizando una mejor respuesta. El agente mantiene una creencia sobre la política promedio de sus oponentes, calculada a partir de frecuencias históricas, y elige la acción que maximiza su recompensa esperada frente a esa creencia. Por eso puede jugar acciones puras en cada iteración, aunque su comportamiento promedio puede aproximarse a una estrategia mixta.
+
+En juegos competitivos de suma cero, como Matching Pennies o Rock-Paper-Scissors, se espera que la política promedio de FP se acerque al equilibrio mixto. En juegos con equilibrios puros claros o de coordinación, suele concentrar progresivamente su política en acciones compatibles con el comportamiento observado de los demás agentes.
 
 \subsection{Regret Matching}
 
-Regret Matching (RM) es un algoritmo basado en el concepto de arrepentimiento (regret). Las probabilidades de seleccionar acciones aumentan para aquellas acciones que hubieran generado mejores recompensas en iteraciones anteriores.
+Regret Matching (RM) es un algoritmo basado en el concepto de arrepentimiento (regret). El agente compara la recompensa obtenida con la que habría recibido si hubiera elegido otras acciones en el pasado, aumentando la probabilidad de aquellas acciones con arrepentimiento positivo. De esta forma, la política resultante es estocástica y depende de los regrets acumulados durante el entrenamiento.
+
+En juegos de suma cero, RM suele favorecer la aproximación a equilibrios en términos de comportamiento promedio, especialmente cuando ambos agentes reducen su arrepentimiento con el tiempo. En juegos de coordinación o con equilibrios puros, puede concentrar rápidamente la probabilidad en acciones ventajosas, aunque puede oscilar si varias acciones tienen incentivos parecidos.
 
 \subsection{Independent Q-Learning}
 
-Independent Q-Learning (IQL) aplica Q-Learning de manera independiente para cada agente.
+Independent Q-Learning (IQL) aplica Q-Learning de manera independiente para cada agente. Cada agente aprende una función de valor propia, asociando estados y acciones individuales con recompensas esperadas, sin representar explícitamente las acciones elegidas por los demás. Desde su punto de vista, los otros agentes forman parte del entorno.
 
 La actualización de la función Q se realiza mediante:
 
@@ -135,6 +139,8 @@ r + \gamma \max_{a'} Q(s',a') - Q(s,a)
 \right]
 \]
 
+La política de IQL se deriva de los valores Q aprendidos, favoreciendo acciones con mayor valor estimado y manteniendo exploración durante el entrenamiento. Su ventaja principal es la simplicidad, pero en juegos competitivos puede ser inestable porque cada agente aprende mientras los demás también cambian su política. En ambientes de coordinación puede aprender políticas útiles, aunque no garantiza por sí solo una convergencia estable ni un reparto equilibrado de recompensas.
+
 \subsection{Joint-Action Learning with Agent Modeling}
 
 Joint-Action Learning with Agent Modeling (JAL-AM) extiende Q-Learning incorporando modelos sobre las acciones de los demás agentes, aprendiendo valores asociados a acciones conjuntas.
@@ -142,6 +148,10 @@ Joint-Action Learning with Agent Modeling (JAL-AM) extiende Q-Learning incorpora
 \[
 Q(s,a_i,a_{-i})
 \]
+
+A diferencia de IQL, JAL-AM evalúa las acciones propias considerando también posibles acciones de los demás agentes. Para eso mantiene un modelo del comportamiento de los oponentes, generalmente basado en frecuencias observadas, y lo utiliza para calcular el valor esperado de sus decisiones.
+
+En juegos competitivos, JAL-AM puede reducir parte de la no estacionariedad al hacer explícito el efecto de las acciones del oponente, aunque no elimina completamente las oscilaciones cuando todos los agentes aprenden simultáneamente. En ambientes cooperativos o de coordinación, el modelado de acciones conjuntas puede ayudar a identificar comportamientos compatibles, pero su desempeño depende de la calidad del modelo aprendido y del tamaño del espacio de acciones conjuntas.
 
 \clearpage
 \section{Ambientes}
@@ -1210,7 +1220,7 @@ Las gráficas de pasos requeridos muestran que, al comienzo del entrenamiento, l
 
 Las visualizaciones de las políticas entrenadas ayudan a interpretar mejor este resultado. 
 Permiten comprobar que los agentes con mayor recompensa son los que ejecutan \texttt{LOAD} del recurso, 
-pero también muestran que los agentes con menor recompensa en la mayoria de los casos se desplazan correctamente hacia la comida, mostrando que la politica que aprendieron no es una política útil.
+pero también muestran que los agentes con menor recompensa en la mayoria de los casos se desplazan correctamente hacia la comida, mostrando que la politica que aprendieron es una política útil.
 
 Además, para una misma configuración los agentes comienzan siempre desde las mismas posiciones iniciales porque se utiliza el mismo \textit{seed}. Esto puede favorecer sistemáticamente a un agente si queda mejor ubicado respecto a la comida. Se realizaron pruebas adicionales rotando el \textit{seed} en cada iteración para reducir este sesgo, pero los resultados fueron peores y el desbalance entre agentes se mantuvo.
 
@@ -1346,7 +1356,7 @@ En el caso de FP, la distribución final también queda concentrada sobre $q=10$
 
 \subsubsection*{Tres jugadores: mercado de tamaño grande}
 
-Luego se escaló el problema a un mercado grande con $a=100$, $b=1$, $c=10$, tres firmas y $91$ acciones posibles entre $0$ y $45$ unidades. El equilibrio de Nash teórico pasa a:
+Luego se escaló el problema a un mercado grande con $a=100$, $b=1$, $c=16$, tres firmas y $81$ acciones posibles entre $0$ y $40$ unidades. El equilibrio de Nash teórico pasa a:
 
 \[
 q^* = \frac{a-c}{(n+1)b} = \frac{100-16}{4 \cdot 1} = 21
