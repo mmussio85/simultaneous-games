@@ -783,7 +783,7 @@ Según los histogramas, el agente Random elige ambas acciones con frecuencia sim
 
 Observando la convergencia con respecto a la politica promedio, se ve que ambos agentes convergen rápidamente al equilibrio (cine, cine). 
 
-Comparado con FP vs FP (~1.25), el reward es significativamente mayor, como así la convergencia más rápida. Esto ocurre porque el oponente no adapta su estrategia, permitiendo que agent_0 explote consistentemente la mejor respuesta pura (Cine).
+Comparado con FP vs FP (~1.25), el reward es significativamente mayor, como así la convergencia más rápida. Esto ocurre porque el oponente no adapta su estrategia, permitiendo que \texttt{agent\_0} explote consistentemente la mejor respuesta pura (Cine).
 
 \subsubsection*{IQL vs IQL}
 
@@ -899,11 +899,11 @@ El histograma muestra que ambos agentes eligen ambas acciones con frecuencia, lo
 \subsubsection*{Comparativa de rewards}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/BoS/rewards_comparison.png}
+    \includegraphics[width=\textwidth]{figures/BoS/reward_comparison.png}
     \caption{Comparativa de rewards para todos los enfrentamientos en Battle of Sexes.}
 \end{figure}
 
-Todos los experimentos producen rewards ≥ 1.20 para ambos agentes, muy por encima del equilibrio mixto (línea azul 0.667). Esto confirma que todos los algoritmos logran algún grado de coordinación en Equilibrios de Nash puros, que son más eficientes que mezclar aleatoriamente.
+Todos los experimentos producen rewards $\geq 1.20$ para ambos agentes, muy por encima del equilibrio mixto (línea azul 0.667). Esto confirma que todos los algoritmos logran algún grado de coordinación en Equilibrios de Nash puros, que son más eficientes que mezclar aleatoriamente.
 
 Considerando las rewards para ambos agentes, destacan RM vs FP y RM vs RM, como los experimientos que recolectan más rewards en forma combinada.
 
@@ -917,7 +917,7 @@ En el ambiente de Battle of Sexes, los algoritmos FP y RM demostraron una capaci
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_fp_vs_random.png}
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_fp_random.png}
     \caption{Convergencia FP vs Random en Chicken.}
 \end{figure}
 
@@ -951,17 +951,17 @@ El histograma muestra que el agente Random elige ambas acciones con frecuencia s
     \caption{Reward y Comparación política promedio para FP vs FP en Chicken.}
 \end{figure}
 
-FP converge rápidamente a un equilibrio puro(agente_0 cede y agente_1 no cede), el equilibrio se construye en forma coordinada por ambos agentes.
+FP converge rápidamente a un equilibrio puro(\texttt{agente\_0} cede y \texttt{agente\_1} no cede), el equilibrio se construye en forma coordinada por ambos agentes.
 
 En terminos de reward acumuladas, la reward ~4.5 dento de un intervalo entre 2 y 7, lo cual tiene sentido porque son las ganancias de los agentes cuando se alcanzan equilibrios puros. 
 
-El histiograma muerstra una marcada tendencia del agente_0 a elegir "ceder" y del agente_1 a elegir "no ceder.
+El histiograma muerstra una marcada tendencia del \texttt{agente\_0} a elegir "ceder" y del \texttt{agente\_1} a elegir "no ceder".
 
 \subsubsection*{RM vs Random}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_rm_vs_random.png}
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_convergence_rm_random.png}
     \caption{Convergencia RM vs Random en Chicken.}
 \end{figure}
 
@@ -1022,17 +1022,17 @@ De todas maneras, IQL falla en su objetivo de alcanzar un equilibrio.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_jal_am_vs_jal_am.png}
+    \includegraphics[width=\textwidth]{figures/Chicken/chicken_histogram_jal-am_vs_jal-am.png}
     \caption{Histograma de acciones para JAL-AM vs JAL-AM en Chicken.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Chicken/jal_am_vs_jal_am.png}
+    \includegraphics[width=\textwidth]{figures/Chicken/jalam_vs_jalam.png}
     \caption{Reward y Comparación política promedio para JAL-AM vs JAL-AM en Chicken.}
 \end{figure}
 
-JAL-AM en Chicken el agente_0 aprende a ser consistentemente agresivo (L), agente_1 mezcla hacia S. Sin embargo, no converge a ningún equilibrio de Nash puro ni al mixto, y el reward oscila permanentemente. La modelización de acciones conjuntas crea la asimetría observada, pero el mecanismo de promedio no logra estabilizar el sistema en un equilibrio.
+JAL-AM en Chicken el \texttt{agente\_0} aprende a ser consistentemente agresivo (L), \texttt{agente\_1} mezcla hacia S. Sin embargo, no converge a ningún equilibrio de Nash puro ni al mixto, y el reward oscila permanentemente. La modelización de acciones conjuntas crea la asimetría observada, pero el mecanismo de promedio no logra estabilizar el sistema en un equilibrio.
 
 \subsubsection*{Comparación de rewards}
 
@@ -1042,13 +1042,13 @@ JAL-AM en Chicken el agente_0 aprende a ser consistentemente agresivo (L), agent
     \caption{Comparación de rewards para JAL-AM vs JAL-AM en Chicken.}
 \end{figure}
 
-En Chicken, la capacidad de romper la simetría y asignar acciones diferenciadas (L y S) determina el reward. FP lo logra deterministamente y de forma equitativa; IQL lo logra caóticamente pero con buen resultado; RM y JALAM lo logran pero de forma asimétrica, siempre favoreciendo a agente_1.
+En Chicken, la capacidad de romper la simetría y asignar acciones diferenciadas (L y S) determina el reward. FP lo logra deterministamente y de forma equitativa; IQL lo logra caóticamente pero con buen resultado; RM y JALAM lo logran pero de forma asimétrica, siempre favoreciendo a \texttt{agente\_1}.
 
 \subsubsection*{Juegos cruzados}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/Chicken/cross_play.png}
+    \includegraphics[width=\textwidth]{figures/Chicken/cross_play_matrix.png}
     \caption{Juegos cruzados en Chicken.}
 \end{figure}
 
